@@ -1,7 +1,5 @@
 const { ctrlWrapper } = require("../utils");
 
-require("dotenv").config();
-
 const axios = require("axios");
 const xml2js = require("xml2js");
 
@@ -9,10 +7,9 @@ const util = require("util");
 const parseStringPromise = util.promisify(xml2js.parseString);
 // const { query } = require("express");
 
-const { YML_URL } = process.env;
-
 const getProducts = async (req, res) => {
-  const url = YML_URL;
+  const url =
+    "https://brovko.salesdrive.me/export/yml/export.yml?publicKey=aYcKPKGzZgqwrGsQ2bXXErzE4d8T-YXxJOmKKoayHI84wLVjBm1h_LWz632yguyQ3S07J9mdTZx";
   //   try {
   //     const response = await axios.get(url);
   //     const xmlData = response.data;
