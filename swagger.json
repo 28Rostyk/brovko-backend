@@ -1,0 +1,24 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+    "version": "2.0.2",
+    "title": "Swagger for Brovko-project",
+    "description": "Showing off swagger-ui-express"
+  },
+   "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth endpoints"
+    },
+    {
+      "name": "Products",
+      "description": "Products endpoints"
+    }
+  ],
+    "paths": {},
+    "components": {}
+  
+}
