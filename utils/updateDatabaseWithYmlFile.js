@@ -8,39 +8,57 @@ const ymlFilePath =
 console.log(ymlFilePath);
 
 async function updateProduct(offerData) {
-  //   console.log("Updating product:", offerData.$.id);
-  //   const existingOffer = await Products.findOne({ id: offerData.$.id });
-  //   if (existingOffer) {
-  //     existingOffer.available = offerData.$.available === "true";
-  //     existingOffer.in_stock = offerData.$.in_stock === "true";
-  //     existingOffer.price = parseFloat(offerData.price[0]);
-  //     existingOffer.name = offerData.name[0];
-  //     existingOffer.description = offerData.description[0];
-  //     existingOffer.url = offerData.url[0];
-  //     existingOffer.picture = offerData.picture[0];
-  //     existingOffer.keywords = offerData.keywords[0];
-  //     await existingOffer.save();
-  //     console.log("Product updated:", offerData.$.id);
-  //   } else {
-  //     // Create new offer
-  const newOffer = new Products({
-    id: offerData.$.id,
-    // available: offerData.$.available === "true",
-    // in_stock: offerData.$.in_stock === "true",
-    price: parseFloat(offerData.price[0]),
-    name: offerData.name[0],
-    description: offerData.description[0],
-    url: offerData.url ? offerData.url[0] : "",
-    picture: offerData.picture ? offerData.picture[0] : "",
-    keywords: offerData.keywords ? offerData.keywords[0] : "",
-    // owner: userId,
-  });
-  await newOffer.save();
-  console.log("Added:", newOffer);
-}
-// }
+  const existingOffer = await Products.findOne({ id: offerData.id });
 
-async function updateDatabaseWithYmlFile(url, userId) {
+  if (!existingOffer) {
+    // Додати новий товар, якщо не існує
+    const newOffer = new Products({
+      id: offerData.id || "",
+      currencyId: offerData.currencyId || "",
+      categoryId: offerData.categoryId || "",
+      vendor: offerData.vendor || "",
+      vendorCode: offerData.vendorCode || "",
+      barcode: offerData.barcode || "",
+      price: offerData.price,
+      name: offerData.name,
+      description: offerData.description,
+      url: offerData.url || "",
+      picture: offerData.picture || "",
+      keywords: offerData.keywords || "",
+      available: offerData.available || false,
+      inStock: offerData.inStock || false,
+    });
+
+    await newOffer.save();
+    console.log("Added:", newOffer.id);
+  } else {
+    // Порівняти змінені поля і оновити тільки якщо є зміни
+    let hasChanges = false;
+
+    if (existingOffer.price !== offerData.price) {
+      existingOffer.price = offerData.price;
+      hasChanges = true;
+    }
+    if (existingOffer.name !== offerData.name) {
+      existingOffer.name = offerData.name;
+      hasChanges = true;
+    }
+    if (existingOffer.description !== offerData.description) {
+      existingOffer.description = offerData.description;
+      hasChanges = true;
+    }
+    // Додайте інші поля для порівняння
+
+    if (hasChanges) {
+      await existingOffer.save();
+      console.log("Updated:", existingOffer.id);
+    } else {
+      console.log("No changes for:", existingOffer.id);
+    }
+  }
+}
+
+async function updateDatabaseWithYmlFile(url) {
   try {
     const response = await axios.get(url);
     const xml = response.data;
@@ -55,12 +73,22 @@ async function updateDatabaseWithYmlFile(url, userId) {
       const offers = result.yml_catalog.shop[0].offers[0].offer;
 
       for (const offerData of offers) {
-        const existingOffer = await Products.findOne({ id: offerData.$.id });
-
-        if (!existingOffer) {
-          // Якщо продукт з таким id не існує, то додати його
-          await updateProduct(offerData, userId);
-        }
+        await updateProduct({
+          id: offerData.$.id,
+          currencyId: offerData.currencyId ? offerData.currencyId[0] : "",
+          categoryId: offerData.categoryId ? offerData.categoryId[0] : "",
+          vendor: offerData.vendor ? offerData.vendor[0] : "",
+          vendorCode: offerData.vendorCode ? offerData.vendorCode[0] : "",
+          barcode: offerData.barcode ? offerData.barcode[0] : "",
+          price: parseFloat(offerData.price[0]),
+          name: offerData.name[0],
+          description: removeHtmlTags(offerData.description[0]),
+          url: offerData.url ? offerData.url[0] : "",
+          picture: offerData.picture ? offerData.picture[0] : "",
+          keywords: offerData.keywords ? offerData.keywords[0] : "",
+          available: offerData.available === "true",
+          inStock: offerData.in_stock === "true",
+        });
       }
     });
   } catch (error) {
@@ -68,9 +96,18 @@ async function updateDatabaseWithYmlFile(url, userId) {
   }
 }
 
-// Оновлювати базу даних за вказаним URL кожні 10 хвилин
-setInterval(async () => {
+// Оновлювати базу даних за вказаним URL
+async function updateDatabase() {
   await updateDatabaseWithYmlFile(ymlFilePath);
-}, 10000);
+}
+
+// Оновлювати базу даних за вказаним URL тільки якщо є зміни в XML
+setInterval(async () => {
+  await updateDatabase();
+}, 30000);
+
+function removeHtmlTags(html) {
+  return html.replace(/<\/?div>/g, "");
+}
 
 module.exports = updateDatabaseWithYmlFile;

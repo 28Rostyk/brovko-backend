@@ -11,7 +11,7 @@ const productSchema = new Schema(
     available: {
       type: Boolean,
     },
-    in_stock: {
+    inStock: {
       type: Boolean,
     },
 
@@ -36,6 +36,15 @@ const productSchema = new Schema(
     picture: {
       type: String,
     },
+    vendor: {
+      type: String,
+    },
+    vendorCode: {
+      type: String,
+    },
+    barcode: {
+      type: String,
+    },
     keywords: {
       type: String,
     },
@@ -56,12 +65,14 @@ const addSchema = Joi.object({
   id: Joi.string(),
   name: Joi.string(),
   available: Joi.boolean(),
-  in_stock: Joi.boolean(),
+  inStock: Joi.boolean(),
   price: Joi.number(),
   currencyId: Joi.string(),
   categoryId: Joi.string(),
   description: Joi.string(),
   vendor: Joi.string(),
+  vendorCode: Joi.string(),
+  barcode: Joi.string(),
   url: Joi.string(),
   picture: Joi.string(),
   keywords: Joi.string(),
