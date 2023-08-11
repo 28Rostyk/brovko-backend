@@ -51,7 +51,7 @@ async function updateDatabaseWithYmlFile(url, userId) {
         console.error(err);
         return;
       }
-      console.log("XML parsed successfully");
+      // console.log("XML parsed successfully");
       const offers = result.yml_catalog.shop[0].offers[0].offer;
 
       for (const offerData of offers) {
