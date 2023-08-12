@@ -7,6 +7,7 @@ const cors = require("cors");
 
 const productRouter = require("./routes/api/products");
 const userRouter = require("./routes/api/user");
+const ordersRouter = require("./routes/api/orders");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/products", productRouter);
 app.use("/api/user", userRouter);
+app.use("/api/orders", ordersRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

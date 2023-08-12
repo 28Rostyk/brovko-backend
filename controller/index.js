@@ -1,3 +1,4 @@
+const { addOrder } = require("./orders/addOrder");
 const { getProducts, deleteContact } = require("./productsControllers");
 const { current, login, logout, register } = require("./user");
 module.exports = {
@@ -7,4 +8,5 @@ module.exports = {
   login,
   logout,
   register,
+  addOrder,
 };
