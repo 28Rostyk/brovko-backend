@@ -73,6 +73,9 @@ async function updateDatabaseWithYmlFile(url) {
       const offers = result.yml_catalog.shop[0].offers[0].offer;
 
       for (const offerData of offers) {
+        const description = offerData.description
+          ? offerData.description[0]
+          : "";
         await updateProduct({
           id: offerData.$.id,
           currencyId: offerData.currencyId ? offerData.currencyId[0] : "",
@@ -82,7 +85,7 @@ async function updateDatabaseWithYmlFile(url) {
           barcode: offerData.barcode ? offerData.barcode[0] : "",
           price: parseFloat(offerData.price[0]),
           name: offerData.name[0],
-          description: removeHtmlTags(offerData.description[0]),
+          description: removeHtmlTags(description),
           url: offerData.url ? offerData.url[0] : "",
           picture: offerData.picture ? offerData.picture[0] : "",
           keywords: offerData.keywords ? offerData.keywords[0] : "",
