@@ -88,68 +88,57 @@ const orderSchema = new Schema({
         label: String,
         name: String,
         type: String,
-        options: [
-          {
-            value: Number,
-            text: String,
-          },
-        ],
+        options: {
+          type: Array,
+        },
       },
       shipping_method: {
         label: String,
         name: String,
         type: String,
-        options: [
-          {
-            value: Number,
-            text: String,
-          },
-        ],
+        options: {
+          type: Array,
+        },
       },
       typeId: {
         label: String,
         name: String,
         type: String,
-        options: [
-          {
-            value: Number,
-            text: String,
-          },
-        ],
+        options: {
+          type: Array,
+        },
       },
       statusId: {
         label: String,
         name: String,
         type: String,
-        options: [
-          {
-            value: Number,
-            text: String,
-          },
-        ],
+        options: {
+          type: Array,
+        },
       },
       rejectionReason: {
         label: String,
         name: String,
         type: String,
-        options: [],
+        options: {
+          type: Array,
+        },
       },
       userId: {
         label: String,
         name: String,
         type: String,
-        options: [],
+        options: {
+          type: Array,
+        },
       },
       sajt: {
         label: String,
         name: String,
         type: String,
-        options: [
-          {
-            value: Number,
-            text: String,
-          },
-        ],
+        options: {
+          type: Array,
+        },
       },
       contacts: {
         fields: {
@@ -157,7 +146,9 @@ const orderSchema = new Schema({
             label: String,
             name: String,
             type: String,
-            options: [],
+            options: {
+              type: Array,
+            },
           },
         },
       },
