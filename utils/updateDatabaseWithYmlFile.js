@@ -3,7 +3,8 @@ const xml2js = require("xml2js");
 const { Products } = require("../models/products");
 
 const ymlFilePath =
-  "https://brovko.salesdrive.me/export/yml/export.yml?publicKey=a77upGS-L672GGwbU3qiAGdHdAqGgbz33-hPkFBwQ5sS8IIHkH0I1gkANDFI7GW7";
+  "https://brovko.salesdrive.me/export/yml/export.yml?publicKey=duoIZYyPUfXlQGLfqfbV_LeuIgGM24LscKdVt3tPQdf-3_fdJhXH9b68GrPsvbzU";
+// "https://brovko.salesdrive.me/export/yml/export.yml?publicKey=a77upGS-L672GGwbU3qiAGdHdAqGgbz33-hPkFBwQ5sS8IIHkH0I1gkANDFI7GW7";
 
 console.log(ymlFilePath);
 
