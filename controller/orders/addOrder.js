@@ -41,7 +41,7 @@ const addOrder = async (req, res) => {
       // Якщо заявка не знайдена, то створити нову заявку
       existingOrder = new Order({
         id: orderId,
-        data: updatedData,
+        data: webhookData,
       });
 
       await existingOrder.save();
