@@ -82,78 +82,62 @@ const orderSchema = new Schema({
       elevator: Number,
     },
   },
-  // meta: {
-  //   fields: {
-  //     payment_method: {
-  //       label: String,
-  //       name: String,
-  //       type: String,
-  //       options: {
-  //         type: Array,
-  //       },
-  //     },
-  //     shipping_method: {
-  //       label: String,
-  //       name: String,
-  //       type: String,
-  //       options: {
-  //         type: Array,
-  //       },
-  //     },
-  //     typeId: {
-  //       label: String,
-  //       name: String,
-  //       type: String,
-  //       options: {
-  //         type: Array,
-  //       },
-  //     },
-  //     statusId: {
-  //       label: String,
-  //       name: String,
-  //       type: String,
-  //       options: {
-  //         type: Array,
-  //       },
-  //     },
-  //     rejectionReason: {
-  //       label: String,
-  //       name: String,
-  //       type: String,
-  //       options: {
-  //         type: Array,
-  //       },
-  //     },
-  //     userId: {
-  //       label: String,
-  //       name: String,
-  //       type: String,
-  //       options: {
-  //         type: Array,
-  //       },
-  //     },
-  //     sajt: {
-  //       label: String,
-  //       name: String,
-  //       type: String,
-  //       options: {
-  //         type: Array,
-  //       },
-  //     },
-  //     contacts: {
-  //       fields: {
-  //         userId: {
-  //           label: String,
-  //           name: String,
-  //           type: String,
-  //           options: {
-  //             type: Array,
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // },
+  meta: {
+    fields: {
+      payment_method: {
+        label: String,
+        name: String,
+        type: String,
+        options: [],
+      },
+      shipping_method: {
+        label: String,
+        name: String,
+        type: String,
+        options: [],
+      },
+      typeId: {
+        label: String,
+        name: String,
+        type: String,
+        options: [],
+      },
+      statusId: {
+        label: String,
+        name: String,
+        type: String,
+        options: [],
+      },
+      rejectionReason: {
+        label: String,
+        name: String,
+        type: String,
+        options: [],
+      },
+      userId: {
+        label: String,
+        name: String,
+        type: String,
+        options: [],
+      },
+      sajt: {
+        label: String,
+        name: String,
+        type: String,
+        options: [],
+      },
+      contacts: {
+        fields: {
+          userId: {
+            label: String,
+            name: String,
+            type: String,
+            options: [],
+          },
+        },
+      },
+    },
+  },
 });
 
 // {
