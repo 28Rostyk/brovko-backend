@@ -4,25 +4,25 @@ const Order = require("../../models/orders");
 const { ctrlWrapper } = require("../../utils");
 
 const addOrder = async (req, res) => {
-  const webhookData = req.body; // Отримайте всі дані вебхуку
-
-  console.log(webhookData.data.id);
+  const webhookData = req.body;
 
   try {
-    // Спробуйте знайти існуючу заявку за певним ідентифікатором, наприклад, за id
     const existingOrder = await Order.findOne({
       "data.id": webhookData.data.id,
     });
 
     if (existingOrder) {
-      // Якщо заявка знайдена, оновіть її поля, включаючи статус
-      existingOrder.data.statusId = webhookData.data.statusId;
-      await existingOrder.save(); // Збережіть зміни
-      res.status(200).json(existingOrder); // Поверніть оновлену заявку
+      // Замінюємо всі дані замовлення на нові дані
+      Object.assign(existingOrder, webhookData);
+      await existingOrder.save();
+      res.status(200).json(existingOrder);
     } else {
-      // Якщо заявка не знайдена, створіть нову заявку
-      const newOrder = await Order.create(webhookData);
-      res.status(201).json(newOrder); // Поверніть створений об'єкт у відповідь
+      // Створюємо новий об'єкт Order
+      const newOrder = new Order(webhookData);
+
+      // Зберігаємо нове замовлення
+      const savedOrder = await newOrder.save();
+      res.status(201).json(savedOrder);
     }
   } catch (error) {
     console.error("Помилка під час збереження даних:", error);

@@ -108,7 +108,7 @@ async function updateDatabase() {
 // Оновлювати базу даних за вказаним URL тільки якщо є зміни в XML
 setInterval(async () => {
   await updateDatabase();
-}, 30000);
+}, 600000);
 
 function removeHtmlTags(html) {
   return html.replace(/<\/?div>/g, "");
