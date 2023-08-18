@@ -12,17 +12,28 @@ const addOrder = async (req, res) => {
     });
 
     if (existingOrder) {
-      // Замінюємо всі дані замовлення на нові дані
       Object.assign(existingOrder, webhookData);
       await existingOrder.save();
       res.status(200).json(existingOrder);
     } else {
-      // Створюємо новий об'єкт Order
       const newOrder = new Order(webhookData);
-
-      // Зберігаємо нове замовлення
       const savedOrder = await newOrder.save();
       res.status(201).json(savedOrder);
+    }
+
+    const findOneAndDelete = webhookData.meta.fields.statusId.options.find(
+      (item) => item.value === 16
+    );
+
+    // Додаємо цей блок коду для видалення за статусом
+    if (findOneAndDelete) {
+      const deletedOrder = await Order.findOneAndDelete({
+        "data.id": webhookData.data.id,
+      });
+
+      if (deletedOrder) {
+        console.log("Замовлення було видалено зі статусом 'Видалений'");
+      }
     }
   } catch (error) {
     console.error("Помилка під час збереження даних:", error);

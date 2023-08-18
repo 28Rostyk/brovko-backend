@@ -5,10 +5,8 @@ const { ctrlWrapper } = require("../../utils");
 
 const getAllOrdersAuth = async (req, res) => {
   const { email } = req.user;
-  console.log(email);
 
   const data = await Orders.find({ "contacts.email": email });
-  // console.log(data);
 
   const ordersWithMatchingEmail = data.filter((order) => {
     return order.data.contacts.some(
