@@ -16,6 +16,9 @@ const fieldSchema = new Schema({
 
 const orderSchema = new Schema(
   {
+    owner: {
+      email: String,
+    },
     info: {
       webhookType: String,
       webhookEvent: String,
