@@ -16,6 +16,10 @@
     {
       "name": "Products",
       "description": "Products endpoints"
+    },
+    {
+      "name": "Orders",
+      "description": "Products endpoints"
     }
   ],
   "paths": {
@@ -83,7 +87,36 @@
         }
       }
     },
-    "/api/auth/logout": {
+     "api/user/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Current user",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful current",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/logout": {
       "post": {
         "tags": ["Auth"],
         "summary": "User logout",
@@ -94,6 +127,29 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/products": {
+      "post": {
+        "tags": ["Products"],
+        "summary": "Getting all products",
+         "parameters": [],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful getting all products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching products"
           }
         }
       }
@@ -154,6 +210,49 @@
           },
           "user": {
             "type": "object"
+          }
+        }
+      },
+      "CurrentRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string"
+          },
+          "favoriteOrders": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductsRequest": {
+        "type": "object",
+        "properties": {
+          "totalPage": {
+            "type": "string"
+          },
+          "totalItems": {
+            "type": "string"
+          },
+          "perPage": {
+            "type": "string"
+          },
+          "currentPage": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array"
           }
         }
       }
