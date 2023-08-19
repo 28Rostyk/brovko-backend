@@ -1,4 +1,4 @@
-const HttpError = require("../../helpers");
+const { HttpError } = require("../../helpers");
 const Orders = require("../../models/orders");
 
 const { ctrlWrapper } = require("../../utils");
