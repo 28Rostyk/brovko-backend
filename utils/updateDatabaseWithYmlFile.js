@@ -1,10 +1,9 @@
 const axios = require("axios");
 const xml2js = require("xml2js");
 const { Products } = require("../models/products");
+const { YML_FILE_TEST } = process.env;
 
-const ymlFilePath =
-  "https://brovko.salesdrive.me/export/yml/export.yml?publicKey=duoIZYyPUfXlQGLfqfbV_LeuIgGM24LscKdVt3tPQdf-3_fdJhXH9b68GrPsvbzU";
-// "https://brovko.salesdrive.me/export/yml/export.yml?publicKey=a77upGS-L672GGwbU3qiAGdHdAqGgbz33-hPkFBwQ5sS8IIHkH0I1gkANDFI7GW7";
+const ymlFilePath = YML_FILE_TEST;
 
 console.log(ymlFilePath);
 
@@ -34,30 +33,43 @@ async function updateProduct(offerData) {
     console.log("Added:", newOffer.id);
   } else {
     // Порівняти змінені поля і оновити тільки якщо є зміни
+    const fieldsToCompare = [
+      "price",
+      "name",
+      "description",
+      "currencyId",
+      "categoryId",
+      "picture",
+      "vendor",
+      "vendorCode",
+      "barcode",
+      "url",
+      "keywords",
+      "available",
+      "inStock",
+      // ... інші поля для порівняння
+    ];
+
     let hasChanges = false;
 
-    if (existingOffer.price !== offerData.price) {
-      existingOffer.price = offerData.price;
-      hasChanges = true;
+    for (const field of fieldsToCompare) {
+      if (existingOffer[field] !== offerData[field]) {
+        existingOffer[field] = offerData[field];
+        hasChanges = true;
+      }
     }
-    if (existingOffer.name !== offerData.name) {
-      existingOffer.name = offerData.name;
-      hasChanges = true;
-    }
-    if (existingOffer.description !== offerData.description) {
-      existingOffer.description = offerData.description;
-      hasChanges = true;
-    }
-    // Додайте інші поля для порівняння
 
     if (hasChanges) {
-      await existingOffer.save();
-      console.log("Updated:", existingOffer.id);
+      const updatedOffer = new Products(existingOffer); // Створення нового об'єкту Mongoose Document
+      await updatedOffer.save();
+      console.log("Updated:", updatedOffer.id);
     } else {
       console.log("No changes for:", existingOffer.id);
     }
   }
 }
+
+let initialProductCount = 0; // Початкова кількість продуктів
 
 async function updateDatabaseWithYmlFile(url) {
   try {
@@ -70,15 +82,38 @@ async function updateDatabaseWithYmlFile(url) {
         console.error(err);
         return;
       }
-      // console.log("XML parsed successfully");
+
       const offers = result.yml_catalog.shop[0].offers[0].offer;
+      // Отримати ідентифікатори товарів з YML-файлу
+      const ymlProductIds = offers.map((offer) => offer.$.id);
+
+      // Отримати ідентифікатори товарів з бази даних
+      const dbProductIds = await Products.find({}, "id");
+
+      // Визначити ідентифікатори для видалення
+      const productsToDelete = dbProductIds.filter(
+        (dbProduct) => !ymlProductIds.includes(dbProduct.id)
+      );
+
+      // Видалити відповідні товари з бази даних
+      for (const productToDelete of productsToDelete) {
+        await Products.findOneAndDelete({ id: productToDelete.id });
+        console.log("Deleted:", productToDelete.id);
+      }
+
+      initialProductCount = offers.length; // Зберегти початкову кількість продуктів
 
       for (const offerData of offers) {
+        const productId = offerData.$.id;
+
+        // Перевірити, чи продукт вже був оброблений
+
         const description = offerData.description
           ? offerData.description[0]
           : "";
+
         await updateProduct({
-          id: offerData.$.id,
+          id: productId,
           currencyId: offerData.currencyId ? offerData.currencyId[0] : "",
           categoryId: offerData.categoryId ? offerData.categoryId[0] : "",
           vendor: offerData.vendor ? offerData.vendor[0] : "",
@@ -93,8 +128,17 @@ async function updateDatabaseWithYmlFile(url) {
           available: offerData.available === "true",
           inStock: offerData.in_stock === "true",
         });
+
+        // Ваша обробка продуктів тут
       }
     });
+
+    // Тут порівняння і оновлення бази даних
+    const currentProductCount = await Products.countDocuments(); // Поточна кількість продуктів в базі
+
+    if (currentProductCount > initialProductCount) {
+      await updateDatabase(); // Оновити базу даних
+    }
   } catch (error) {
     console.error("Error:", error);
   }
