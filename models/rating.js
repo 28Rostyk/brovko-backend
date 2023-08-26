@@ -5,8 +5,16 @@ const { handleSchemaErrors } = require("../midlewares");
 
 const ratingSchema = new Schema(
   {
-    productId: { type: String },
-    rating: { type: Number, default: 0 },
+    productId: { type: String, unique: true },
+    rating: { type: Number },
+    ratedBy: [
+      {
+        userId: { type: Schema.Types.ObjectId, ref: "User" },
+        name: String,
+        email: String,
+      },
+    ],
+    timestamp: { type: Date, default: Date.now },
   },
   { versionKey: false, timestamps: true }
 );

@@ -5,7 +5,7 @@ const { addRating } = require("../../controller");
 
 const { authenticate } = require("../../midlewares");
 
-ratingRouter.post("/", addRating);
+ratingRouter.post("/", authenticate, addRating);
 // ordersRouter.get("/auth", authenticate, getAllOrdersAuth);
 
 module.exports = ratingRouter;
