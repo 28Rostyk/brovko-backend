@@ -3,17 +3,19 @@ const { ctrlWrapper } = require("../../utils");
 const { Products } = require("../../models/products");
 const { HttpError } = require("../../helpers");
 
-const { updateDatabaseWithYmlFile } = require("../../utils"); // Шлях до функції оновлення з YML-файла
+const {
+  updateDatabaseWithYmlFile,
+  addCategoryWithYmlFile,
+} = require("../../utils"); // Шлях до функції оновлення з YML-файла
 
-const { YML_FILE, YML_FILE_TEST } = process.env;
-// const ymlFilePath = YML_FILE;
-const ymlFilePathTest = YML_FILE_TEST;
+const { YML_FILE } = process.env;
+
+const ymlFilePath = YML_FILE;
 
 const getProducts = async (req, res) => {
   const { page = 1, perPage = 10 } = req.query;
 
   try {
-    // await updateDatabaseWithYmlFile(YML_FILE);
     const skip = (page - 1) * perPage;
     const totalCount = await Products.countDocuments();
     const totalPages = Math.ceil(totalCount / perPage);
@@ -33,18 +35,6 @@ const getProducts = async (req, res) => {
     console.error("Error fetching products:", error);
     res.status(500).json({ message: "Error fetching products" });
   }
-};
-
-const deleteContact = async (req, res, next) => {
-  const { productId: id } = req.params;
-  console.log(id);
-  const result = await Products.findByIdAndDelete(id);
-  if (!result) {
-    throw HttpError(404, `Product with ${id} not found`);
-  }
-  res.json({
-    message: "Delete success",
-  });
 };
 
 const findProductsByCategory = async (req, res) => {
@@ -82,7 +72,8 @@ const findProductsByCategory = async (req, res) => {
 
 const updateDatabase = async (req, res) => {
   try {
-    await updateDatabaseWithYmlFile(ymlFilePathTest);
+    await addCategoryWithYmlFile(ymlFilePath);
+    await updateDatabaseWithYmlFile(ymlFilePath);
     res.status(200).json({ message: "Database updated successfully" });
   } catch (error) {
     console.error("Error updating database:", error);
@@ -92,7 +83,6 @@ const updateDatabase = async (req, res) => {
 
 module.exports = {
   getProducts: ctrlWrapper(getProducts),
-  deleteContact: ctrlWrapper(deleteContact),
   findProductsByCategory: ctrlWrapper(findProductsByCategory),
   updateDatabase: ctrlWrapper(updateDatabase),
 };
