@@ -21,8 +21,6 @@ const register = async (req, res) => {
     password: hashPassword,
   });
 
-  console.log(result);
-
   const payload = {
     id: result._id,
   };
