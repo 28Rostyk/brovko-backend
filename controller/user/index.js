@@ -4,10 +4,12 @@ const current = require("./current");
 const login = require("./login");
 const logout = require("./logout");
 const register = require("./register");
+const googleAuth = require("./googleAuth");
 
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   current: ctrlWrapper(current),
   logout: ctrlWrapper(logout),
+  googleAuth,
 };

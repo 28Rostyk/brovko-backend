@@ -5,7 +5,17 @@ const { validateBody } = require("../../utils");
 
 const userValidation = require("../../models/user");
 const controllers = require("../../controller/user");
-const { authenticate } = require("../../midlewares");
+const { authenticate, passport } = require("../../midlewares");
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { session: false }, controllers.googleAuth)
+);
 
 router.post("/register", validateBody(userValidation), controllers.register);
 router.post("/login", controllers.login);
