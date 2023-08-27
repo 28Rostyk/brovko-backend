@@ -11,6 +11,8 @@ const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
   callbackURL: "https://brovko-backend.onrender.com/api/user/google/callback",
+  // callbackURL: "http://localhost:5000/api/user/google/callback",
+  scope: ["profile"],
   passReqToCallback: true,
 };
 
@@ -24,6 +26,7 @@ const googleCallback = async (
   try {
     const { email } = profile;
     const user = await User.findOne({ email });
+
     if (user) {
       return done(null, user);
     }
@@ -31,7 +34,6 @@ const googleCallback = async (
     const newUser = await User.create({ email, password });
     done(null, newUser);
   } catch (error) {
-    console.log("error", error);
     done(error, false);
   }
 };
