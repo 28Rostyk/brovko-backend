@@ -8,6 +8,7 @@ const {
 const { current, login, logout, register } = require("./user");
 const { getCategory } = require("./category/getCategory");
 const { addRating } = require("./rating/addRating");
+const { getRatings } = require("./rating/getRating");
 module.exports = {
   getProducts,
   findProductsByCategory,
@@ -20,4 +21,5 @@ module.exports = {
   updateDatabase,
   getCategory,
   addRating,
+  getRatings,
 };

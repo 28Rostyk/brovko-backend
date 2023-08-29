@@ -1,11 +1,11 @@
 const express = require("express");
 const ratingRouter = express.Router();
 
-const { addRating } = require("../../controller");
+const { addRating, getRatings } = require("../../controller");
 
 const { authenticate } = require("../../midlewares");
 
 ratingRouter.post("/", authenticate, addRating);
-// ordersRouter.get("/auth", authenticate, getAllOrdersAuth);
+ratingRouter.get("/:productId", getRatings);
 
 module.exports = ratingRouter;
