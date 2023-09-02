@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 const { HttpError } = require("../../helpers");
 
-const { SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -25,14 +25,21 @@ const register = async (req, res) => {
     id: result._id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  // const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
+    expiresIn: "2m",
+  });
+  const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
+    expiresIn: "7d",
+  });
 
-  await User.findByIdAndUpdate(result._id, { token });
+  await User.findByIdAndUpdate(result._id, { accessToken, refreshToken });
 
   res.status(201).json({
     user: {
       email: result.email,
-      token,
+      accessToken,
+      refreshToken,
     },
   });
 };
