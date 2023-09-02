@@ -5,12 +5,14 @@ const URL_PATH = process.env.ADD_PRODUCT_PATH;
 async function createProduct(requestBody) {
   const url = URL_PATH;
   const headers = { "Content-Type": "application/json" };
+  const body = requestBody;
 
   try {
-    const response = await axios.post(url, requestBody, { headers });
+    const response = await axios.post(url, body, { headers });
     console.log("Post request response:", response.data);
+    return response.data;
   } catch (error) {
-    console.log("Error:", error.message);
+    console.log("Error in createProject:", error.message);
   }
 }
 
