@@ -3,7 +3,10 @@ const router = express.Router();
 
 const { validateBody } = require("../../utils");
 
-const userValidation = require("../../models/user");
+const {
+  userValidation,
+  refreshValidation,
+} = require("../../schemas/userValidation");
 const controllers = require("../../controller/user");
 const { authenticate, passport } = require("../../midlewares");
 
@@ -18,8 +21,14 @@ router.get(
   controllers.googleAuth
 );
 
+router.post(
+  "/refresh",
+  validateBody(refreshValidation),
+  controllers.refreshToken
+);
+
 router.post("/register", validateBody(userValidation), controllers.register);
-router.post("/login", controllers.login);
+router.post("/login", validateBody(userValidation), controllers.login);
 router.get("/current", authenticate, controllers.current);
 router.post("/logout", authenticate, controllers.logout);
 
