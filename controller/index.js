@@ -7,6 +7,8 @@ const { current, login, logout, register } = require("./user");
 const { getCategory } = require("./category/getCategory");
 const { addRating } = require("./rating/addRating");
 const { getRatings } = require("./rating/getRating");
+const { addProduct } = require("./products/addProduct");
+
 module.exports = {
   getProducts,
   findProductsByCategory,
@@ -20,4 +22,5 @@ module.exports = {
   getCategory,
   addRating,
   getRatings,
+  addProduct,
 };
