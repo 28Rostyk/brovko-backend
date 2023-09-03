@@ -3,7 +3,7 @@ const ordersRouter = express.Router();
 
 const { addOrder, getAllOrdersAuth } = require("../../controller");
 
-const { authenticate } = require("../../midlewares");
+const { authenticate } = require("../../middlewares");
 
 ordersRouter.post("/", addOrder);
 ordersRouter.get("/auth", authenticate, getAllOrdersAuth);

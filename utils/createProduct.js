@@ -1,18 +1,17 @@
 const axios = require("axios");
 
-const URL_PATH = process.env.ADD_PRODUCT_PATH;
+const { ADD_PRODUCT_PATH } = process.env;
 
-async function createProduct(requestBody) {
-  const url = URL_PATH;
-  const headers = { "Content-Type": "application/json" };
-  const body = requestBody;
-
+async function createProduct(body) {
   try {
-    const response = await axios.post(url, body, { headers });
-    console.log("Post request response:", response.data);
-    return response.data;
+    const url = ADD_PRODUCT_PATH;
+    const data = JSON.stringify(body);
+    const headers = { "Content-Type": "application/json" };
+
+    const response = await axios.post(url, data, { headers });
+    return response;
   } catch (error) {
-    console.log("Error in createProject:", error.message);
+    console.log("Error in createProject:", error);
   }
 }
 

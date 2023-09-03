@@ -3,7 +3,7 @@ const ratingRouter = express.Router();
 
 const { addRating, getRatings } = require("../../controller");
 
-const { authenticate } = require("../../midlewares");
+const { authenticate } = require("../../middlewares");
 
 ratingRouter.post("/", authenticate, addRating);
 ratingRouter.get("/:productId", getRatings);

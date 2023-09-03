@@ -8,7 +8,7 @@ const {
   refreshValidation,
 } = require("../../schemas/userValidation");
 const controllers = require("../../controller/user");
-const { authenticate, passport } = require("../../midlewares");
+const { authenticate, passport } = require("../../middlewares");
 
 router.get(
   "/google",
