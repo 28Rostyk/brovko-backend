@@ -1,6 +1,6 @@
 const { Schema, model, SchemaTypes } = require("mongoose");
 
-const { handleSchemaErrors } = require("../midlewares");
+const { handleSchemaErrors } = require("../middlewares");
 
 const optionSchema = new Schema({
   value: Number,

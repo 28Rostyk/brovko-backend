@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const handleSchemaErrors = require("../midlewares/handleSchemaErrors");
+const handleSchemaErrors = require("../middlewares/handleSchemaErrors");
 
 const userSchema = new Schema(
   {
