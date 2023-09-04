@@ -5,11 +5,14 @@ const { ADD_PRODUCT_PATH } = process.env;
 async function createProduct(body) {
   try {
     const url = ADD_PRODUCT_PATH;
-    const data = JSON.stringify(body);
     const headers = { "Content-Type": "application/json" };
+    const { id, name } = body.product[0];
 
-    const response = await axios.post(url, data, { headers });
-    return response;
+    const response = await axios.post(url, body, { headers });
+    return {
+      message: `Товар "${name}" з ID(${id}) успішно доданий до крамниці.`,
+      data: response.data,
+    };
   } catch (error) {
     console.log("Error in createProject:", error);
   }

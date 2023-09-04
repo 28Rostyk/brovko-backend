@@ -2,13 +2,12 @@ const { createProduct } = require("../../utils/createProduct");
 const { ctrlWrapper } = require("../../utils");
 
 const addProduct = async (req, res) => {
-  console.log(req.body);
-
   try {
     const response = await createProduct(req.body);
 
-    res.status(response.status).json({
-      message: response.data.message,
+    res.status(200).json({
+      status: response.data.status,
+      message: response.message,
     });
   } catch (error) {
     console.log("Error in Controller: ", error.message);
