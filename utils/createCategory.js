@@ -5,7 +5,6 @@ const { ADD_CATEGORY_PATH } = process.env;
 async function createCategory(body) {
   try {
     const url = ADD_CATEGORY_PATH;
-    // const url = "https://brovko.salesdrive.me/category-handler/";
     const headers = { "Content-Type": "application/json" };
     const { id, name } = body.category[0];
 
