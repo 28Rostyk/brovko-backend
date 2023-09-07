@@ -7,7 +7,9 @@ const {
   updateDatabase,
   addProduct,
 } = require("../../controller");
-const { checkNewProductData } = require("../../middlewares");
+const {
+  checkNewProductData,
+} = require("../../middlewares/checkNewProductData");
 const { addProductSchema, validateBody } = require("../../schemas");
 
 router.get("/", getProducts);

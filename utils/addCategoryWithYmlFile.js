@@ -1,6 +1,6 @@
 const axios = require("axios");
 const xml2js = require("xml2js");
-const { Category } = require("../models/caregory"); // Шлях до моделі Category
+const { Category } = require("../models/category"); // Шлях до моделі Category
 
 const { YML_FILE } = process.env;
 

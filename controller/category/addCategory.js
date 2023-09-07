@@ -1,8 +1,8 @@
-const { createProduct, ctrlWrapper } = require("../../utils");
+const { createCategory, ctrlWrapper } = require("../../utils");
 
-const addProduct = async (req, res) => {
+const addCategory = async (req, res) => {
   try {
-    const response = await createProduct(req.body);
+    const response = await createCategory(req.body);
 
     res.status(200).json({
       status: response.data.status,
@@ -14,4 +14,4 @@ const addProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct: ctrlWrapper(addProduct) };
+module.exports = { addCategory: ctrlWrapper(addCategory) };

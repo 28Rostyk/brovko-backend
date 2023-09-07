@@ -9,7 +9,7 @@ const productSchema = Joi.object({
 
   name: Joi.string()
     .required()
-    .messages({ "string.empty": "Вкажіть Назву товару. Вона є обов'язковою" }),
+    .messages({ "string.empty": "Вкажіть назву товару. Вона є обов'язковою" }),
 
   nameForDocuments: Joi.string().allow(""),
 
