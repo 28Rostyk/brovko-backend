@@ -1,14 +1,11 @@
-const { customAlphabet } = require("nanoid");
-const nanoid = customAlphabet("1234567890", 5);
+const { idGenerator } = require("../utils");
 
 async function checkNewProductData(req, res, next) {
   const receivedId = req.body.product[0].id;
-  const receiverPrice = req.body.product[0].costPerItem;
 
-  !receivedId && (req.body.product[0].id = nanoid());
-  !receiverPrice && (req.body.product[0].costPerItem = "00.00");
+  !receivedId && (req.body.product[0].id = idGenerator(5, "P"));
 
   next();
 }
 
-module.exports = checkNewProductData;
+module.exports = { checkNewProductData };

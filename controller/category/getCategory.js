@@ -1,4 +1,4 @@
-const { Category } = require("../../models/caregory");
+const { Category } = require("../../models/category");
 const { ctrlWrapper } = require("../../utils");
 
 const getCategory = async (req, res) => {
