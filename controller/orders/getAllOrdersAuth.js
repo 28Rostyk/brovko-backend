@@ -1,7 +1,5 @@
-const { HttpError } = require("../../helpers");
+const { HttpError, ctrlWrapper } = require("../../helpers");
 const Orders = require("../../models/orders");
-
-const { ctrlWrapper } = require("../../utils");
 
 const getAllOrdersAuth = async (req, res) => {
   const { email } = req.user;

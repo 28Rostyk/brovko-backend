@@ -1,5 +1,5 @@
-const { Rating } = require("../../models/rating");
-const { ctrlWrapper } = require("../../utils");
+const { Rating } = require("../../models");
+const { ctrlWrapper } = require("../../helpers");
 
 const getRatings = async (req, res) => {
   const productId = req.params.productId;

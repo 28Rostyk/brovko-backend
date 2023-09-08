@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const userRouter = express.Router();
 
 const { validateBody } = require("../../utils");
 
@@ -7,29 +7,32 @@ const {
   userValidation,
   refreshValidation,
 } = require("../../schemas/userValidation");
-const controllers = require("../../controller/user");
+const {
+  googleAuth,
+  refreshToken,
+  register,
+  login,
+  current,
+  logout,
+} = require("../../controller/user");
 const { authenticate, passport } = require("../../middlewares");
 
-router.get(
+userRouter.get(
   "/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
-router.get(
+userRouter.get(
   "/google/callback",
   passport.authenticate("google", { session: false }),
-  controllers.googleAuth
+  googleAuth
 );
 
-router.post(
-  "/refresh",
-  validateBody(refreshValidation),
-  controllers.refreshToken
-);
+userRouter.post("/refresh", validateBody(refreshValidation), refreshToken);
 
-router.post("/register", validateBody(userValidation), controllers.register);
-router.post("/login", validateBody(userValidation), controllers.login);
-router.get("/current", authenticate, controllers.current);
-router.post("/logout", authenticate, controllers.logout);
+userRouter.post("/register", validateBody(userValidation), register);
+userRouter.post("/login", validateBody(userValidation), login);
+userRouter.get("/current", authenticate, current);
+userRouter.post("/logout", authenticate, logout);
 
-module.exports = router;
+module.exports = { userRouter };

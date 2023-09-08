@@ -1,7 +1,7 @@
-const { Category } = require("../../models/category");
-const { ctrlWrapper } = require("../../utils");
+const { Category } = require("../../models");
+const { ctrlWrapper } = require("../../helpers");
 
-const getCategory = async (req, res) => {
+const getCategories = async (req, res) => {
   try {
     const caregory = await Category.find({}, "-createdAt -updatedAt");
     res.json({
@@ -14,5 +14,5 @@ const getCategory = async (req, res) => {
 };
 
 module.exports = {
-  getCategory: ctrlWrapper(getCategory),
+  getCategories: ctrlWrapper(getCategories),
 };

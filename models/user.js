@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const handleSchemaErrors = require("../middlewares/handleSchemaErrors");
+const { handleSchemaErrors } = require("../helpers");
 
 const userSchema = new Schema(
   {
@@ -45,4 +45,4 @@ userSchema.post("save", handleSchemaErrors);
 
 const User = model("user", userSchema);
 
-module.exports = User;
+module.exports = { User };

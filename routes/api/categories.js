@@ -1,13 +1,13 @@
 const express = require("express");
 const categoriesRouter = express.Router();
 
-const { getCategory, addCategory } = require("../../controller");
+const { getCategories, addCategory } = require("../../controller");
 const {
   checkNewCategoryData,
 } = require("../../middlewares/checkNewCategoryData");
 const { addCategorySchema, validateBody } = require("../../schemas");
 
-categoriesRouter.get("/", getCategory);
+categoriesRouter.get("/", getCategories);
 categoriesRouter.post(
   "/add-category",
   checkNewCategoryData,
@@ -15,4 +15,4 @@ categoriesRouter.post(
   addCategory
 );
 
-module.exports = categoriesRouter;
+module.exports = { categoriesRouter };

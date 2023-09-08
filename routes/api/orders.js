@@ -8,4 +8,4 @@ const { authenticate } = require("../../middlewares");
 ordersRouter.post("/", addOrder);
 ordersRouter.get("/auth", authenticate, getAllOrdersAuth);
 
-module.exports = ordersRouter;
+module.exports = { ordersRouter };
