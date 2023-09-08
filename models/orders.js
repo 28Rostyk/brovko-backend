@@ -1,6 +1,6 @@
 const { Schema, model, SchemaTypes } = require("mongoose");
 
-const { handleSchemaErrors } = require("../middlewares");
+const { handleSchemaErrors } = require("../helpers");
 
 const optionSchema = new Schema({
   value: Number,
@@ -119,4 +119,4 @@ orderSchema.post("save", handleSchemaErrors);
 
 const Order = model("orders", orderSchema);
 
-module.exports = Order;
+module.exports = { Order };

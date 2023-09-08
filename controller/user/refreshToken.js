@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { HttpError } = require("../../helpers");
-const User = require("../../models/user");
+const User = require("../../models");
 
 const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
@@ -31,4 +31,4 @@ const refreshToken = async (req, res, next) => {
   }
 };
 
-module.exports = refreshToken;
+module.exports = { refreshToken };

@@ -1,4 +1,5 @@
-const { createCategory, ctrlWrapper } = require("../../utils");
+const { createCategory } = require("../../services");
+const { ctrlWrapper } = require("../../helpers");
 
 const addCategory = async (req, res) => {
   try {

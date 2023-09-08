@@ -5,11 +5,14 @@ const swaggerDocument = require("./swagger.json");
 const logger = require("morgan");
 const cors = require("cors");
 
-const productRouter = require("./routes/api/products");
-const userRouter = require("./routes/api/user");
-const ordersRouter = require("./routes/api/orders");
-const categoriesRouter = require("./routes/api/categories");
-const ratingRouter = require("./routes/api/rating");
+const {
+  databaseRouter,
+  categoriesRouter,
+  ordersRouter,
+  productsRouter,
+  ratingRouter,
+  userRouter,
+} = require("./routes");
 
 const app = express();
 
@@ -20,11 +23,12 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/api/products", productRouter);
+app.use("/api/products", productsRouter);
 app.use("/api/user", userRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/ratings", ratingRouter);
+app.use("/api/update-database", databaseRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

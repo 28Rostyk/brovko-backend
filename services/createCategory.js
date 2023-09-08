@@ -18,4 +18,4 @@ async function createCategory(body) {
   }
 }
 
-module.exports = createCategory;
+module.exports = { createCategory };

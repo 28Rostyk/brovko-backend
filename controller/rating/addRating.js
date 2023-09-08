@@ -1,7 +1,6 @@
-const { Products } = require("../../models/products");
-const { Rating } = require("../../models/rating");
-const { ctrlWrapper } = require("../../utils");
-// const mongoose = require("mongoose");
+const { Products } = require("../../models");
+const { Rating } = require("../../models");
+const { ctrlWrapper } = require("../../helpers");
 
 const addRating = async (req, res) => {
   const userId = req.user.id; // Припустимо, що у вас є механізм авторизації та req.user містить інформацію про користувача

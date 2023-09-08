@@ -4,4 +4,4 @@ const handleSchemaErrors = (error, data, next) => {
   next();
 };
 
-module.exports = handleSchemaErrors;
+module.exports = {handleSchemaErrors};

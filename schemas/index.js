@@ -1,4 +1,4 @@
-const validateBody = require("./validateBody");
+const { validateBody } = require("./validateBody");
 const { addProductSchema } = require("./addProductSchema");
 const { addCategorySchema } = require("./addCategorySchema");
 

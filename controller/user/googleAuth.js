@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const User = require("../../models/user");
+const User = require("../../models");
 
 const { SECRET_KEY } = process.env;
 
@@ -17,4 +17,4 @@ const googleAuth = async (req, res) => {
   res.redirect(`http://localhost:3000/main?token=${token}`);
 };
 
-module.exports = googleAuth;
+module.exports = { googleAuth };

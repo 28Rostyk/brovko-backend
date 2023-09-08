@@ -1,14 +1,19 @@
-const { addOrder } = require("./orders/addOrder");
-const { getAllOrdersAuth } = require("./orders/getAllOrdersAuth");
+// додавання і отримання замовлення
+const { addOrder, getAllOrdersAuth } = require("./orders");
+// додавання і отримання категорій
+const { getCategories, addCategory } = require("./category");
+// додавання товару, отримання всіх товарів, пошук товару за категорією
+const {
+  addProduct,
+  findProductsByCategory,
+  getProducts,
+} = require("./products");
+// реєстрація, логінізація, вихід з логіну, оновлення токена, поточний користувач
 const { current, login, logout, register, refreshToken } = require("./user");
-const { updateDatabase } = require("./products/productsUpdate");
-const { getProducts } = require("./products/getProducts");
-const { findProductsByCategory } = require("./products/findProductsByCategory");
-const { getCategory } = require("./category/getCategory");
-const { addRating } = require("./rating/addRating");
-const { getRatings } = require("./rating/getRating");
-const { addProduct } = require("./products/addProduct");
-const { addCategory } = require("./category/addCategory");
+// додати рейтинг товару, отримати рейтинги всіх товарів
+const { addRating, getRatings } = require("./rating");
+
+const { updateDatabase } = require("./database");
 
 module.exports = {
   getProducts,
@@ -20,10 +25,10 @@ module.exports = {
   refreshToken,
   addOrder,
   getAllOrdersAuth,
-  updateDatabase,
-  getCategory,
+  getCategories,
   addRating,
   getRatings,
   addProduct,
   addCategory,
+  updateDatabase,
 };

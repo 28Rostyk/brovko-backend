@@ -19,4 +19,4 @@ async function createProduct(body) {
   }
 }
 
-module.exports = createProduct;
+module.exports = {createProduct};

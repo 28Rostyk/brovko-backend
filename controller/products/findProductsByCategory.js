@@ -1,6 +1,6 @@
-const { ctrlWrapper } = require("../../utils");
+const { ctrlWrapper } = require("../../helpers");
 
-const { Products } = require("../../models/products");
+const { Products } = require("../../models");
 
 const findProductsByCategory = async (req, res) => {
   const { categoryId } = req.params;

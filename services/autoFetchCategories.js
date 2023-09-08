@@ -1,6 +1,6 @@
 const axios = require("axios");
 const xml2js = require("xml2js");
-const { Category } = require("../models/category"); // Шлях до моделі Category
+const { Category } = require("../models"); // Шлях до моделі Category
 
 const { YML_FILE } = process.env;
 
@@ -8,7 +8,7 @@ const ymlFilePath = YML_FILE;
 
 let isUpdating = false;
 
-async function updateCategoriesFromYml(url) {
+async function autoFetchCategories(url) {
   if (isUpdating) {
     console.log("Update already in progress, skipping...");
     return;
@@ -79,7 +79,7 @@ async function updateCategoriesFromYml(url) {
 }
 
 setInterval(async () => {
-  await updateCategoriesFromYml(ymlFilePath);
+  await autoFetchCategories(ymlFilePath);
 }, 600000);
 
-module.exports = updateCategoriesFromYml;
+module.exports = { autoFetchCategories };

@@ -1,25 +1,24 @@
 const express = require("express");
-const router = express.Router();
+const productsRouter = express.Router();
 
 const {
   getProducts,
   findProductsByCategory,
-  updateDatabase,
   addProduct,
 } = require("../../controller");
+
 const {
   checkNewProductData,
 } = require("../../middlewares/checkNewProductData");
 const { addProductSchema, validateBody } = require("../../schemas");
 
-router.get("/", getProducts);
-router.get("/:categoryId", findProductsByCategory);
-router.post("/update-database", updateDatabase);
-router.post(
+productsRouter.get("/", getProducts);
+productsRouter.get("/:categoryId", findProductsByCategory);
+productsRouter.post(
   "/add-product",
   checkNewProductData,
   validateBody(addProductSchema),
   addProduct
 );
 
-module.exports = router;
+module.exports = { productsRouter };

@@ -1,7 +1,6 @@
-const Order = require("../../models/orders");
-// const HttpError = require("../../helpers");
+const Order = require("../../models");
 
-const { ctrlWrapper } = require("../../utils");
+const { ctrlWrapper } = require("../../helpers");
 
 const addOrder = async (req, res) => {
   const webhookData = req.body;

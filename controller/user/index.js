@@ -1,11 +1,11 @@
-const { ctrlWrapper } = require("../../utils");
+const { ctrlWrapper } = require("../../helpers");
 
-const current = require("./current");
-const login = require("./login");
-const logout = require("./logout");
-const register = require("./register");
-const googleAuth = require("./googleAuth");
-const refreshToken = require('./refreshToken')
+const { current } = require("./current");
+const { login } = require("./login");
+const { logout } = require("./logout");
+const { register } = require("./register");
+const { googleAuth } = require("./googleAuth");
+const { refreshToken } = require("./refreshToken");
 
 module.exports = {
   register: ctrlWrapper(register),

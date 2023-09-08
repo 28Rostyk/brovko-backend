@@ -72,7 +72,7 @@ async function updateProduct(offerData) {
 
 let initialProductCount = 0; // Початкова кількість продуктів
 
-async function updateDatabaseWithYmlFile(url) {
+async function autoFetchProducts(url) {
   try {
     const response = await axios.get(url);
     const xml = response.data;
@@ -147,7 +147,7 @@ async function updateDatabaseWithYmlFile(url) {
 
 // Оновлювати базу даних за вказаним URL
 async function updateDatabase() {
-  await updateDatabaseWithYmlFile(ymlFilePath);
+  await autoFetchProducts(ymlFilePath);
 }
 
 // Оновлювати базу даних за вказаним URL тільки якщо є зміни в XML
@@ -159,4 +159,4 @@ function removeHtmlTags(html) {
   return html.replace(/<\/?div>/g, "");
 }
 
-module.exports = updateDatabaseWithYmlFile;
+module.exports = { autoFetchProducts };

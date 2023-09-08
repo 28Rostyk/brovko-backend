@@ -8,4 +8,4 @@ const { authenticate } = require("../../middlewares");
 ratingRouter.post("/", authenticate, addRating);
 ratingRouter.get("/:productId", getRatings);
 
-module.exports = ratingRouter;
+module.exports = { ratingRouter };

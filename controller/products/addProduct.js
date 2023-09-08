@@ -1,4 +1,5 @@
-const { createProduct, ctrlWrapper } = require("../../utils");
+const { ctrlWrapper } = require("../../helpers");
+const { createProduct } = require("../../services");
 
 const addProduct = async (req, res) => {
   try {

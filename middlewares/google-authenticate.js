@@ -3,7 +3,7 @@ const { Strategy } = require("passport-google-oauth2");
 const bcrypt = require("bcryptjs");
 const { nanoid } = require("nanoid");
 
-const User = require("../models/user");
+const User = require("../models");
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
@@ -42,4 +42,4 @@ const googleStrategy = new Strategy(googleParams, googleCallback);
 
 passport.use("google", googleStrategy);
 
-module.exports = passport;
+module.exports = { passport };
