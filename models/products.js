@@ -33,9 +33,11 @@ const productSchema = new Schema(
     url: {
       type: String,
     },
-    picture: {
-      type: String,
-    },
+    picture: [
+      {
+        type: String,
+      },
+    ],
     vendor: {
       type: String,
     },

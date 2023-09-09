@@ -124,7 +124,7 @@ async function autoFetchProducts(url) {
           name: offerData.name[0],
           description: removeHtmlTags(description),
           url: offerData.url ? offerData.url[0] : "",
-          picture: offerData.picture ? offerData.picture[0] : "",
+          picture: offerData.picture || "",
           keywords: offerData.keywords ? offerData.keywords[0] : "",
           available: offerData.available === "true",
           inStock: offerData.in_stock === "true",
