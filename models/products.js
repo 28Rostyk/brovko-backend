@@ -50,11 +50,9 @@ const productSchema = new Schema(
     keywords: {
       type: String,
     },
-    // owner: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "user",
-    //   //   required: true,
-    // },
+    note: {
+      type: String,
+    },
   },
   { versionKey: false, timestamps: true }
 );

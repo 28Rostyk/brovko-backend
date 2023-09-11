@@ -28,6 +28,7 @@ async function updateProduct(offerData) {
       keywords: offerData.keywords || "",
       available: offerData.available || false,
       inStock: offerData.inStock || false,
+      note: offerData.note || "",
     });
 
     await newOffer.save();
@@ -48,6 +49,7 @@ async function updateProduct(offerData) {
       "keywords",
       "available",
       "inStock",
+      "note",
       // ... інші поля для порівняння
     ];
 
@@ -109,6 +111,8 @@ async function autoFetchProducts(url) {
 
         // Перевірити, чи продукт вже був оброблений
 
+        const note = offerData.note ? offerData.note[0] : "";
+
         const description = offerData.description
           ? offerData.description[0]
           : "";
@@ -128,6 +132,7 @@ async function autoFetchProducts(url) {
           keywords: offerData.keywords ? offerData.keywords[0] : "",
           available: offerData.available === "true",
           inStock: offerData.in_stock === "true",
+          note: removeHtmlTags(note),
         });
 
         // Ваша обробка продуктів тут
