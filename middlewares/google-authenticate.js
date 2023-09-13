@@ -3,7 +3,7 @@ const { Strategy } = require("passport-google-oauth2");
 const bcrypt = require("bcryptjs");
 const { nanoid } = require("nanoid");
 
-const User = require("../models");
+const { User } = require("../models");
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
@@ -26,6 +26,7 @@ const googleCallback = async (
   try {
     const { email } = profile;
     const user = await User.findOne({ email });
+    console.log("user", user);
 
     if (user) {
       return done(null, user);
