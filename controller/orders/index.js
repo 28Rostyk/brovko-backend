@@ -1,4 +1,4 @@
-const { addOrder } = require("./addOrder");
+const { fetchOrder } = require("./fetchOrder");
 const { getAllOrdersAuth } = require("./getAllOrdersAuth");
 
-module.exports = { addOrder, getAllOrdersAuth };
+module.exports = { fetchOrder, getAllOrdersAuth };

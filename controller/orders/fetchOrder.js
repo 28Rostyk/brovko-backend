@@ -2,7 +2,7 @@ const Order = require("../../models");
 
 const { ctrlWrapper } = require("../../helpers");
 
-const addOrder = async (req, res) => {
+const fetchOrder = async (req, res) => {
   const webhookData = req.body;
 
   try {
@@ -41,5 +41,5 @@ const addOrder = async (req, res) => {
 };
 
 module.exports = {
-  addOrder: ctrlWrapper(addOrder),
+  fetchOrder: ctrlWrapper(fetchOrder),
 };
