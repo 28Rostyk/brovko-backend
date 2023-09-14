@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const User = require("../../models");
+const { User } = require("../../models");
 
 const { HttpError } = require("../../helpers");
 
@@ -46,4 +46,4 @@ const login = async (req, res) => {
   });
 };
 
-module.exports = {login};
+module.exports = { login };

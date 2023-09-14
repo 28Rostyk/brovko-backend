@@ -1,10 +1,10 @@
 const { HttpError, ctrlWrapper } = require("../../helpers");
-const Orders = require("../../models/orders");
+const { Order } = require("../../models");
 
 const getAllOrdersAuth = async (req, res) => {
   const { email } = req.user;
 
-  const data = await Orders.find({ "contacts.email": email });
+  const data = await Order.find({ "contacts.email": email });
 
   const ordersWithMatchingEmail = data.filter((order) => {
     return order.data.contacts.some(

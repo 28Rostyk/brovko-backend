@@ -11,4 +11,4 @@ const idGenerator = (symbolsQuantity, firstLetter) => {
   return `${firstLetter}${generator()}`;
 };
 
-module.exports = idGenerator;
+module.exports = { idGenerator };

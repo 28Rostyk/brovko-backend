@@ -15,7 +15,6 @@ const productSchema = Joi.object({
 
   costPerItem: Joi.string()
     .required()
-    .default("00.00")
     .messages({ "string.empty": `Вкажіть ціну товару. Вона є обов'язковою'` }),
 
   sku: Joi.string().allow(""),
