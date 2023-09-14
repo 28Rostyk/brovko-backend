@@ -10,6 +10,7 @@ async function createProduct(body) {
     const { id, name } = body.product[0];
 
     const response = await axios.post(url, body, { headers });
+
     return {
       message: `Товар "${name}" з ID(${id}) успішно доданий до SalesDrive.`,
       data: response.data,
@@ -19,4 +20,4 @@ async function createProduct(body) {
   }
 }
 
-module.exports = {createProduct};
+module.exports = { createProduct };
