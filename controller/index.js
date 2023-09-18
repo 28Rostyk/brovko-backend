@@ -13,6 +13,10 @@ const { current, login, logout, register, refreshToken } = require("./user");
 // додати рейтинг товару, отримати рейтинги всіх товарів
 const { addRating, getRatings } = require("./rating");
 
+// додавання і отримування відгуків до товарів
+
+const { addReviews } = require("./reviews");
+
 const { updateDatabase } = require("./database");
 
 module.exports = {
@@ -29,6 +33,7 @@ module.exports = {
   getCategories,
   addRating,
   getRatings,
+  addReviews,
   addProduct,
   addCategory,
   updateDatabase,

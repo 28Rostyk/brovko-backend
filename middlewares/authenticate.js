@@ -6,9 +6,11 @@ const { ACCESS_SECRET_KEY } = process.env;
 
 const authenticate = async (req, res, next) => {
   const { authorization = "" } = req.headers;
+  console.log(authorization);
   const [bearer, token] = authorization.split(" ");
-
-  if (bearer !== "Bearer") {
+  console.log(token);
+  if (bearer !== "Bearer" || !token) {
+    console.log(bearer);
     next(HttpError(401));
   }
 
@@ -19,6 +21,7 @@ const authenticate = async (req, res, next) => {
       next(HttpError(401));
     }
     req.user = user;
+    console.log(user);
     // передаємо в req сам токен
     req.token = token;
     next();

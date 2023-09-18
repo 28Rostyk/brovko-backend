@@ -4,6 +4,7 @@ const { ordersRouter } = require("./orders");
 const { productsRouter } = require("./products");
 const { ratingRouter } = require("./rating");
 const { userRouter } = require("./user");
+const { reviewsRouter } = require("./reviews");
 
 module.exports = {
   databaseRouter,
@@ -12,4 +13,5 @@ module.exports = {
   productsRouter,
   ratingRouter,
   userRouter,
+  reviewsRouter,
 };

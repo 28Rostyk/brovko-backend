@@ -12,6 +12,7 @@ const {
   productsRouter,
   ratingRouter,
   userRouter,
+  reviewsRouter,
 } = require("./routes");
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/user", userRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/ratings", ratingRouter);
+app.use("/api/reviews", reviewsRouter);
 app.use("/api/update-database", databaseRouter);
 
 app.use((req, res) => {
