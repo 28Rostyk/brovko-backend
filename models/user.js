@@ -2,8 +2,27 @@ const { Schema, model } = require("mongoose");
 
 const { handleSchemaErrors } = require("../helpers");
 
+// const novaposhtaSchema = new Schema({
+//   area: String,
+//   region: String,
+//   city: String,
+//   wareHouseNumber: String,
+// });
+
 const userSchema = new Schema(
   {
+    firstName: {
+      type: String,
+      default: "",
+    },
+    lastName: {
+      type: String,
+      default: "",
+    },
+    middleName: {
+      type: String,
+      default: "",
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -24,6 +43,25 @@ const userSchema = new Schema(
     phone: {
       type: String,
       default: "",
+    },
+    street: {
+      type: String,
+      default: "",
+    },
+    buildingNumber: {
+      type: String,
+      default: "",
+    },
+    flat: {
+      type: String,
+      default: "",
+    },
+    novaPoshta: {
+      type: Schema.Types.Mixed,
+      area: String,
+      region: String,
+      city: String,
+      wareHouseNumber: String,
     },
     accessToken: {
       type: String,
