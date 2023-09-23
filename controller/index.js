@@ -15,7 +15,7 @@ const { addRating, getRatings } = require("./rating");
 
 // додавання і отримування відгуків до товарів
 
-const { addReviews } = require("./reviews");
+const { addReviews, getReviews } = require("./reviews");
 
 const { updateDatabase } = require("./database");
 
@@ -34,6 +34,7 @@ module.exports = {
   addRating,
   getRatings,
   addReviews,
+  getReviews,
   addProduct,
   addCategory,
   updateDatabase,
