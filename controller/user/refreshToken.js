@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { HttpError } = require("../../helpers");
-const {User} = require("../../models");
+const { User } = require("../../models");
 
 const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
@@ -17,7 +17,7 @@ const refreshToken = async (req, res, next) => {
     };
 
     const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-      expiresIn: "2m",
+      expiresIn: "2d",
     });
     const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
       expiresIn: "7d",
