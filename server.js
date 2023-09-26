@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("colors");
 
 const app = require("./app");
 require("dotenv").config();
@@ -11,7 +12,8 @@ mongoose
   .connect(DB_HOST, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(PORT);
-    console.log("Database connection successful");
+    console.log("Server is running on port:".brightBlue, `${PORT}`.yellow);
+    console.log("Database connection successful".brightGreen);
   })
   .catch((error) => {
     console.log(error.message);
