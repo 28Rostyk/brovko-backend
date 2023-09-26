@@ -2,9 +2,9 @@ const axios = require("axios");
 const xml2js = require("xml2js");
 const { Products } = require("../models/products");
 
-const { YML_FILE } = process.env;
+const { YML_FILE_TEST } = process.env;
 
-const ymlFilePath = YML_FILE;
+const ymlFilePath = YML_FILE_TEST;
 
 console.log(ymlFilePath);
 

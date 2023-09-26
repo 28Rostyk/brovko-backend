@@ -6,6 +6,14 @@ const addReviews = async (req, res) => {
   const productId = req.body.productId;
   const newText = req.body.text;
 
+  if (!productId || productId.trim() === "") {
+    return res.status(400).json({ message: "ProductId is required" });
+  }
+
+  if (!newText || newText.trim() === "") {
+    return res.status(400).json({ message: "Text is required" });
+  }
+
   try {
     let review = await Reviews.findOne({ productId });
 
@@ -49,7 +57,7 @@ const addReviews = async (req, res) => {
     return res.status(201).json({ message: "Comment added successfully" });
   } catch (error) {
     console.error("Error adding comment:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(error.status).json({ message: error.message });
   }
 };
 
