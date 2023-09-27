@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const Joi = require("joi");
+// const Joi = require("joi");
 
 const { handleSchemaErrors } = require("../helpers");
 
@@ -7,12 +7,21 @@ const reviewsSchema = new Schema(
   {
     comments: [
       {
-        text: [
-          {
-            type: String,
-            required: [true, "Text is required"],
-          },
-        ],
+        text: {
+          type: [
+            {
+              text: {
+                type: String,
+                required: [true, "Text is required"],
+              },
+              createdAt: {
+                type: Date,
+                default: Date.now,
+              },
+            },
+          ],
+          required: [true, "Text is required"],
+        },
         owner: {
           userId: { type: Schema.Types.ObjectId, ref: "User" },
           name: String,
@@ -34,18 +43,18 @@ reviewsSchema.post("save", function (error, doc, next) {
   handleSchemaErrors(error, doc, next);
 });
 
-const addSchema = Joi.object({
-  productId: Joi.string().required,
-  text: Joi.number().required,
-});
+// const addSchema = Joi.object({
+//   productId: Joi.string().required,
+//   text: Joi.number().required,
+// });
 
-const schemas = {
-  addSchema,
-};
+// const schemas = {
+//   addSchema,
+// };
 
 const Reviews = model("reviews", reviewsSchema);
 
 module.exports = {
   Reviews,
-  schemas,
+  // schemas,
 };

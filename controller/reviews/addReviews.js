@@ -21,38 +21,31 @@ const addReviews = async (req, res) => {
       // Якщо відгук для цього товару ще не існує, створіть новий
       review = new Reviews({
         productId: productId,
-        comments: [
-          {
-            text: [newText],
-            owner: {
-              userId: userId,
-              name: req.user.name,
-              email: req.user.email,
-            },
-          },
-        ],
+        comments: [],
       });
-    } else {
-      // Якщо відгук вже існує, знайдіть коментар цього користувача і додайте до нього новий текст
-      const userComment = review.comments.find(
-        (comment) => comment.owner.userId.toString() === userId
-      );
-
-      if (userComment) {
-        userComment.text.push(newText);
-      } else {
-        // Якщо користувач ще не залишав коментарів до цього товару, створіть новий коментар
-        review.comments.push({
-          text: [newText],
-          owner: {
-            userId: userId,
-            name: req.user.name,
-            email: req.user.email,
-          },
-        });
-      }
     }
 
+    // Знайдіть коментар цього користувача відповідно до userId
+    const userComment = review.comments.find(
+      (comment) => comment.owner.userId.toString() === userId
+    );
+
+    if (userComment) {
+      // Оновлення масиву об'єктів з текстом та датою створення
+      userComment.text.push({ text: newText, createdAt: new Date() });
+    } else {
+      // Якщо користувач ще не залишав коментарів до цього товару, створіть новий коментар
+      review.comments.push({
+        text: [{ text: newText, createdAt: new Date() }],
+        owner: {
+          userId: userId,
+          name: req.user.name,
+          email: req.user.email,
+        },
+      });
+    }
+
+    // Збережіть змінений відгук
     await review.save();
     return res.status(201).json({ message: "Comment added successfully" });
   } catch (error) {
