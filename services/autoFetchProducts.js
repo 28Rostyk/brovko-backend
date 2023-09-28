@@ -7,6 +7,7 @@ const { YML_FILE } = process.env;
 const ymlFilePath = YML_FILE;
 
 console.log(ymlFilePath);
+let isUpdating = false;
 
 async function updateProduct(offerData) {
   const existingOffer = await Products.findOne({ id: offerData.id });
@@ -157,7 +158,11 @@ async function updateDatabase() {
 
 // Оновлювати базу даних за вказаним URL тільки якщо є зміни в XML
 setInterval(async () => {
-  await updateDatabase();
+  if (!isUpdating) {
+    isUpdating = true; // Встановити прапорець в true перед початком оновлення
+    await updateDatabase();
+    isUpdating = false; // Позначити, що оновлення завершено
+  }
 }, 600000);
 
 function removeHtmlTags(html) {
