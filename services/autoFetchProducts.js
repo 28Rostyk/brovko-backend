@@ -66,14 +66,14 @@ async function updateProduct(offerData) {
     if (hasChanges) {
       const updatedOffer = new Products(existingOffer); // Створення нового об'єкту Mongoose Document
       await updatedOffer.save();
-      console.log("Updated:", updatedOffer.id);
+      console.log("Updated product:", updatedOffer.id);
     } else {
       console.log("No changes for:", existingOffer.id);
     }
   }
 }
 
-let initialProductCount = 0; // Початкова кількість продуктів
+const initialProductCount = 0; // Початкова кількість продуктів
 
 async function autoFetchProducts(url) {
   try {
@@ -105,7 +105,7 @@ async function autoFetchProducts(url) {
         console.log("Deleted:", productToDelete.id);
       }
 
-      initialProductCount = offers.length; // Зберегти початкову кількість продуктів
+      // initialProductCount = offers.length; // Зберегти початкову кількість продуктів
 
       for (const offerData of offers) {
         const productId = offerData.$.id;
@@ -140,12 +140,13 @@ async function autoFetchProducts(url) {
       }
     });
 
+    // ТУТ БУВ БАГ = базаданих оновлювалась по зацикленому колу. !!!!
     // Тут порівняння і оновлення бази даних
-    const currentProductCount = await Products.countDocuments(); // Поточна кількість продуктів в базі
+    // const currentProductCount = await Products.countDocuments(); // Поточна кількість продуктів в базі
 
-    if (currentProductCount > initialProductCount) {
-      await updateDatabase(); // Оновити базу даних
-    }
+    // if (currentProductCount > initialProductCount) {
+    //   await updateDatabase(); // Оновити базу даних
+    // }
   } catch (error) {
     console.error("Error:", error);
   }
@@ -153,6 +154,7 @@ async function autoFetchProducts(url) {
 
 // Оновлювати базу даних за вказаним URL
 async function updateDatabase() {
+  console.log("UPDATE DATABASE".magenta);
   await autoFetchProducts(ymlFilePath);
 }
 
