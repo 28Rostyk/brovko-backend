@@ -1,9 +1,12 @@
 const { ctrlWrapper } = require("../../helpers");
 const { createProduct } = require("../../services");
+const { updateDatabase } = require("../../controller/database/updateDatabase");
 
 const addProduct = async (req, res) => {
   try {
     const response = await createProduct(req.body);
+
+    await updateDatabase();
 
     res.status(201).json({
       status: response.data.status,
