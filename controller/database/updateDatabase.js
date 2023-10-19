@@ -6,14 +6,13 @@ const { YML_FILE } = process.env;
 
 const ymlFilePath = YML_FILE;
 
-const updateDatabase = async (req, res) => {
+const updateDatabase = async () => {
   try {
     await autoFetchCategories(ymlFilePath);
     await autoFetchProducts(ymlFilePath);
-    res.status(200).json({ message: "Database updated successfully" });
+    console.log("Database updated successfully");
   } catch (error) {
     console.error("Error updating database:", error);
-    res.status(500).json({ message: "Error updating database" });
   }
 };
 
