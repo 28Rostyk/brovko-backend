@@ -9,7 +9,16 @@ const {
   getProducts,
 } = require("./products");
 // реєстрація, логінізація, вихід з логіну, оновлення токена, поточний користувач
-const { current, login, logout, register, refreshToken } = require("./user");
+const {
+  current,
+  login,
+  logout,
+  register,
+  refreshToken,
+  forgotPassword,
+  resetPassword,
+  resetPasswordVerify,
+} = require("./user");
 // додати рейтинг товару, отримати рейтинги всіх товарів
 const { addRating, getRatings } = require("./rating");
 
@@ -27,6 +36,9 @@ module.exports = {
   logout,
   register,
   refreshToken,
+  forgotPassword,
+  resetPassword,
+  resetPasswordVerify,
   fetchOrder,
   getAllOrdersAuth,
   addOrder,

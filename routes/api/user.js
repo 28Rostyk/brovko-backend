@@ -6,6 +6,8 @@ const { validateBody } = require("../../utils");
 const {
   userValidation,
   refreshValidation,
+  resetMailValidation,
+  resetPasswordValidation,
 } = require("../../schemas/userValidation");
 const {
   googleAuth,
@@ -14,6 +16,9 @@ const {
   login,
   current,
   logout,
+  forgotPassword,
+  resetPassword,
+  resetPasswordVerify,
 } = require("../../controller/user");
 const { authenticate, passport } = require("../../middlewares");
 
@@ -34,5 +39,8 @@ userRouter.post("/register", validateBody(userValidation), register);
 userRouter.post("/login", validateBody(userValidation), login);
 userRouter.get("/current", authenticate, current);
 userRouter.post("/logout", authenticate, logout);
+userRouter.post("/forgot-password", validateBody(resetMailValidation), forgotPassword);
+userRouter.get("/reset-password/:token", resetPasswordVerify);
+userRouter.post("/reset-password/:token", validateBody(resetPasswordValidation), resetPassword);
 
 module.exports = { userRouter };
