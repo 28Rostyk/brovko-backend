@@ -71,6 +71,14 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    resetToken: {
+      type: String,
+      default: null,
+    },
+    resetTokenExpiry: {
+      type: Date,
+      default: null,
+    },
     favoriteOrders: {
       type: Array,
       default: [],
