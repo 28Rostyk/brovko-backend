@@ -26,7 +26,13 @@ const { addRating, getRatings } = require("./rating");
 
 const { addReviews, getReviews } = require("./reviews");
 
+// Прмусове оновлення БД
+
 const { updateDatabase } = require("./database");
+
+// Генерація Ключа
+
+const { generateSignature } = require("./generateSignature");
 
 module.exports = {
   getProducts,
@@ -50,4 +56,5 @@ module.exports = {
   addProduct,
   addCategory,
   updateDatabase,
+  generateSignature,
 };

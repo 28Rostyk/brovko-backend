@@ -6,6 +6,7 @@ const {
   ratingRouter,
   userRouter,
   reviewsRouter,
+  generateSignatureRouter,
 } = require("./api");
 
 module.exports = {
@@ -16,4 +17,5 @@ module.exports = {
   ratingRouter,
   userRouter,
   reviewsRouter,
+  generateSignatureRouter,
 };

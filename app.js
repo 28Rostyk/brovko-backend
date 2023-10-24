@@ -13,6 +13,7 @@ const {
   ratingRouter,
   userRouter,
   reviewsRouter,
+  generateSignatureRouter,
 } = require("./routes");
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/api/categories", categoriesRouter);
 app.use("/api/ratings", ratingRouter);
 app.use("/api/reviews", reviewsRouter);
 app.use("/api/update-database", databaseRouter);
+app.use("/api/generate-signature", generateSignatureRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

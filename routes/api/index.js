@@ -5,6 +5,7 @@ const { productsRouter } = require("./products");
 const { ratingRouter } = require("./rating");
 const { userRouter } = require("./user");
 const { reviewsRouter } = require("./reviews");
+const { generateSignatureRouter } = require("./generateSignature");
 
 module.exports = {
   databaseRouter,
@@ -14,4 +15,5 @@ module.exports = {
   ratingRouter,
   userRouter,
   reviewsRouter,
+  generateSignatureRouter,
 };
