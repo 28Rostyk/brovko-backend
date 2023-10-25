@@ -33,11 +33,11 @@ const novaPoshtaSchema = Joi.object({
   cityNameFormat: Joi.string()
     .valid("full", "short", "settlement ")
     .default("full"),
-  WarehouseNumber: Joi.string().regex(digitsRegex),
-  Street: Joi.string().required().messages({
+  WarehouseNumber: Joi.string(),
+  Street: Joi.string().messages({
     "string.empty": "Вкажіть вулицю.",
   }),
-  BuildingNumber: Joi.string().regex(digitsRegex).required().messages({
+  BuildingNumber: Joi.string().regex(digitsRegex).messages({
     "string.empty": "Вкажіть номер будинку.",
   }),
   Flat: Joi.string().regex(digitsRegex).allow(""),
@@ -70,7 +70,7 @@ const addOrderSchema = Joi.object({
   comment: Joi.string().allow(""),
   payment_method: Joi.string().required(),
   shipping_method: Joi.string().required(),
-  shipping_address: Joi.string().required(),
+  shipping_address: Joi.string(),
   sajt: Joi.string().allow(""),
 
   lName: Joi.string().required(),
