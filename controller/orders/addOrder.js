@@ -6,7 +6,7 @@ const addOrder = async (req, res) => {
     const response = await createOrder(req.body);
 
     res.status(201).json({
-      status: response.data.status,
+      data: response.data,
       message: response.message,
     });
   } catch (error) {

@@ -2,8 +2,6 @@ const Joi = require("joi");
 const { FORM_KEY } = process.env;
 const { phoneRegex, digitsRegex } = require("../utils");
 
-console.log("FROM_KEY IN SCHEMA:", FORM_KEY);
-
 const productSchema = Joi.object({
   id: Joi.string()
     .required()
@@ -72,7 +70,7 @@ const addOrderSchema = Joi.object({
   comment: Joi.string().allow(""),
   payment_method: Joi.string().required(),
   shipping_method: Joi.string().required(),
-  shipping_address: Joi.string().required(),
+  shipping_address: Joi.string(),
   sajt: Joi.string().allow(""),
 
   lName: Joi.string().required(),
