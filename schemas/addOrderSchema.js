@@ -2,6 +2,8 @@ const Joi = require("joi");
 const { FORM_KEY } = process.env;
 const { phoneRegex, digitsRegex } = require("../utils");
 
+console.log("FROM_KEY IN SCHEMA:", FORM_KEY);
+
 const productSchema = Joi.object({
   id: Joi.string()
     .required()
@@ -33,11 +35,11 @@ const novaPoshtaSchema = Joi.object({
   cityNameFormat: Joi.string()
     .valid("full", "short", "settlement ")
     .default("full"),
-  WarehouseNumber: Joi.string().regex(digitsRegex),
-  Street: Joi.string().required().messages({
+  WarehouseNumber: Joi.string(),
+  Street: Joi.string().messages({
     "string.empty": "Вкажіть вулицю.",
   }),
-  BuildingNumber: Joi.string().regex(digitsRegex).required().messages({
+  BuildingNumber: Joi.string().regex(digitsRegex).messages({
     "string.empty": "Вкажіть номер будинку.",
   }),
   Flat: Joi.string().regex(digitsRegex).allow(""),
