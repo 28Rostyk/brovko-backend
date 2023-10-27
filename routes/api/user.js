@@ -19,6 +19,7 @@ const {
   forgotPassword,
   resetPassword,
   resetPasswordVerify,
+  userUpdate,
 } = require("../../controller/user");
 const { authenticate, passport } = require("../../middlewares");
 
@@ -37,10 +38,19 @@ userRouter.post("/refresh", validateBody(refreshValidation), refreshToken);
 
 userRouter.post("/register", validateBody(userValidation), register);
 userRouter.post("/login", validateBody(userValidation), login);
-userRouter.get("/current", authenticate, current);
+userRouter.get("/current", validateBody(userValidation), authenticate, current);
+userRouter.put("/update/:id", authenticate, userUpdate);
 userRouter.post("/logout", authenticate, logout);
-userRouter.post("/forgot-password", validateBody(resetMailValidation), forgotPassword);
+userRouter.post(
+  "/forgot-password",
+  validateBody(resetMailValidation),
+  forgotPassword
+);
 userRouter.get("/reset-password/:token", resetPasswordVerify);
-userRouter.post("/reset-password/:token", validateBody(resetPasswordValidation), resetPassword);
+userRouter.post(
+  "/reset-password/:token",
+  validateBody(resetPasswordValidation),
+  resetPassword
+);
 
 module.exports = { userRouter };

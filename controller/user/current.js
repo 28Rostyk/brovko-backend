@@ -1,5 +1,6 @@
 const current = async (req, res) => {
-  const { _id, email, name, birthday, phone, favoriteOrders } = req.user;
+  const { _id, email, firstName, lastName, birthday, phone, favoriteOrders } =
+    req.user;
   const accessToken = req.token;
 
   res.status(200).json({
@@ -7,7 +8,8 @@ const current = async (req, res) => {
     user: {
       _id,
       email,
-      name,
+      firstName,
+      lastName,
       birthday,
       phone,
       favoriteOrders,

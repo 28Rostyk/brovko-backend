@@ -6,9 +6,10 @@ const { logout } = require("./logout");
 const { register } = require("./register");
 const { googleAuth } = require("./googleAuth");
 const { refreshToken } = require("./refreshToken");
-const {forgotPassword} = require('./forgotPassword');
-const {resetPassword} = require('./resetPassword');
-const {resetPasswordVerify} = require('./resetPasswordVerify');
+const { forgotPassword } = require("./forgotPassword");
+const { resetPassword } = require("./resetPassword");
+const { resetPasswordVerify } = require("./resetPasswordVerify");
+const { userUpdate } = require("./userUpdate");
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -20,4 +21,5 @@ module.exports = {
   forgotPassword: ctrlWrapper(forgotPassword),
   resetPassword: ctrlWrapper(resetPassword),
   resetPasswordVerify: ctrlWrapper(resetPasswordVerify),
+  userUpdate: ctrlWrapper(userUpdate),
 };
