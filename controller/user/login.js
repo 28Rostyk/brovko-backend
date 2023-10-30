@@ -36,15 +36,21 @@ const login = async (req, res) => {
   res.status(201).json({
     accessToken,
     refreshToken,
-    user: {
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      _id: user._id,
-      birthday: user.birthday,
-      phone: user.phone,
-      favoriteOrders: user.favoriteOrders,
-    },
+    user,
+    // user: {
+    //   _id: user._id,
+    //   firstName: user.firstName,
+    //   middleName: user.middleName,
+    //   lastName: user.lastName,
+    //   birthday: user.birthday,
+    //   email: user.email,
+    //   phone: user.phone,
+    //   city: user.city,
+    //   street: user.street,
+    //   buildingNumber: user.buildingNumber,
+    //   flat: user.flat,
+    //   favoriteOrders: user.favoriteOrders,
+    // },
   });
 };
 

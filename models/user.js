@@ -2,12 +2,50 @@ const { Schema, model } = require("mongoose");
 
 const { handleSchemaErrors } = require("../helpers");
 
-// const novaposhtaSchema = new Schema({
-//   area: String,
-//   region: String,
-//   city: String,
-//   wareHouseNumber: String,
-// });
+// видалити зайве пізніше
+const citySchema = new Schema({
+  Present: { type: String, default: "" },
+  // Warehouses: { type: Number, default: 0 },
+  MainDescription: { type: String, default: "" },
+  Area: { type: String, default: "" },
+  Region: { type: String, default: "" },
+  SettlementTypeCode: { type: String, default: "" },
+  Ref: { type: String, default: "" },
+  DeliveryCity: { type: String, default: "" },
+  // AddressDeliveryAllowed: { type: Boolean, default: false },
+  // StreetsAvailability: { type: Boolean, default: false },
+  ParentRegionTypes: { type: String, default: "" },
+  ParentRegionCode: { type: String, default: "" },
+  RegionTypes: { type: String, default: "" },
+  RegionTypesCode: { type: String, default: "" },
+});
+
+const streetSchema = new Schema({
+  SettlementRef: { type: String, default: "" },
+  SettlementStreetRef: { type: String, default: "" },
+  SettlementStreetDescription: { type: String, default: "" },
+  Present: { type: String, default: "" },
+  StreetsType: { type: String, default: "" },
+  StreetsTypeDescription: { type: String, default: "" },
+  SettlementStreetDescriptionRu: { type: String, default: "" },
+  // Location: { type: Object, default: {} },
+});
+
+const warehouseSchema = new Schema({
+  SiteKey: { type: String, default: "" },
+  Description: { type: String, default: "" },
+  ShortAddress: { type: String, default: "" },
+  Phone: { type: String, default: "" },
+  TypeOfWarehouse: { type: String, default: "" },
+  Number: { type: String, default: "" },
+  Ref: { type: String, default: "" },
+});
+
+const novaPoshtaSchema = new Schema({
+  city: { type: citySchema, default: {} },
+  street: { type: streetSchema, default: {} },
+  warehouse: { type: warehouseSchema, default: {} },
+});
 
 const userSchema = new Schema(
   {
@@ -44,6 +82,10 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    city: {
+      type: String,
+      default: "",
+    },
     street: {
       type: String,
       default: "",
@@ -57,11 +99,8 @@ const userSchema = new Schema(
       default: "",
     },
     novaPoshta: {
-      type: Schema.Types.Mixed,
-      area: String,
-      region: String,
-      city: String,
-      wareHouseNumber: String,
+      type: novaPoshtaSchema,
+      default: {},
     },
     accessToken: {
       type: String,
