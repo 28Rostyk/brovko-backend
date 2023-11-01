@@ -11,7 +11,7 @@ const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
   callbackURL: "https://brovko-backend.onrender.com/api/user/google/callback",
-  // callbackURL: "http://localhost:5000/api/user/google/callback",
+  // callbackURL: "http://localhost:5005/api/user/google/callback",
   scope: ["profile"],
   passReqToCallback: true,
 };

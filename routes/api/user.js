@@ -38,9 +38,9 @@ userRouter.post("/refresh", validateBody(refreshValidation), refreshToken);
 
 userRouter.post("/register", validateBody(userValidation), register);
 userRouter.post("/login", validateBody(userValidation), login);
-userRouter.get("/current", validateBody(userValidation), authenticate, current);
 // userRouter.put("/update/:id", authenticate, userUpdate);
 userRouter.patch("/update", authenticate, userUpdate);
+userRouter.get("/current", authenticate, current);
 userRouter.post("/logout", authenticate, logout);
 userRouter.post(
   "/forgot-password",
