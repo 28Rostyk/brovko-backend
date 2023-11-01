@@ -3,52 +3,21 @@ const { User } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const userUpdate = async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    middleName,
-    birthday,
-    phone,
-    email,
-    street,
-    buildingNumber,
-    flat,
-  } = req.body;
-  console.log("req.body", req.body);
-  const userId = req.params.id;
-
-  const user = await User.findById(userId);
-  console.log("user", user);
+  const user = await User.findById(req.body.id);
 
   if (!user) {
     throw HttpError(401, "User is not found");
   }
 
-  await User.findByIdAndUpdate(user._id, {
-    firstName,
-    lastName,
-    middleName,
-    birthday,
-    phone,
-    email,
-    street,
-    buildingNumber,
-    flat,
-  });
+  const updatedUser = await User.findByIdAndUpdate(
+    user._id,
+    { ...req.body },
+    { new: true }
+  );
 
-  res.status(201).json({
-    user: {
-      firstName,
-      lastName,
-      middleName,
-      birthday,
-      phone,
-      email,
-      street,
-      buildingNumber,
-      flat,
-    },
-  });
+  // console.log("updatedUser :>> ", updatedUser);
+
+  res.status(201).json(updatedUser);
 };
 
 module.exports = { userUpdate };
