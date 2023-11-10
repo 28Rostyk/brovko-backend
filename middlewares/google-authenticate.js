@@ -5,13 +5,12 @@ const { nanoid } = require("nanoid");
 
 const { User } = require("../models");
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, CALLBACK_URL } = process.env;
 
 const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "https://brovko-backend.onrender.com/api/user/google/callback",
-  // callbackURL: "http://localhost:5005/api/user/google/callback",
+  callbackURL: CALLBACK_URL,
   scope: ["profile"],
   passReqToCallback: true,
 };

@@ -5,7 +5,6 @@ const { ADD_PRODUCT_PATH } = process.env;
 async function createProduct(body) {
   try {
     const url = ADD_PRODUCT_PATH;
-    // const url = "https://brovko.salesdrive.me/product-handler/";
     const headers = { "Content-Type": "application/json" };
     const { id, name } = body.product[0];
 
