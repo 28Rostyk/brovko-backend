@@ -15,5 +15,5 @@ const updateDatabase = async () => {
     console.error("Error updating database:", error);
   }
 };
-
+// updateDatabase();
 module.exports = { updateDatabase: ctrlWrapper(updateDatabase) };
