@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const { User } = require("../../models");
 
-const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY, FRONTEND_URL } = process.env;
 
 const googleAuth = async (req, res) => {
   const { _id: id } = req.user;
@@ -17,7 +17,7 @@ const googleAuth = async (req, res) => {
   });
   await User.findByIdAndUpdate(id, { accessToken, refreshToken });
   res.redirect(
-    `http://localhost:3000/auth/temp?accessToken=${accessToken}&refreshToken=${refreshToken}`
+    `${FRONTEND_URL}/auth/temp?accessToken=${accessToken}&refreshToken=${refreshToken}`
   );
 };
 
