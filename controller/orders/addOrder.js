@@ -1,8 +1,14 @@
 const { ctrlWrapper } = require("../../helpers");
 const { createOrder } = require("../../services");
+const { User } = require("../../models");
 
 const addOrder = async (req, res) => {
   try {
+    const { email, products } = req.body;
+    const user = await User.findOne({ email });
+    await User.findByIdAndUpdate(user._id, {
+      favoriteOrders: [...user.favoriteOrders, ...products],
+    });
     const response = await createOrder(req.body);
 
     res.status(201).json({
