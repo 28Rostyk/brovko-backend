@@ -4,7 +4,7 @@ const { User } = require("../../models");
 
 const getAllOrdersAuth = async (req, res) => {
   const { email } = req.user;
-  const { favoriteOrders } = await User.findOne({ email });
+  const { userOrders } = await User.findOne({ email });
 
   // const data = await Order.find({ "contacts.email": email });
 
@@ -14,11 +14,11 @@ const getAllOrdersAuth = async (req, res) => {
   //   );
   // });
 
-  if (favoriteOrders.length === 0) {
+  if (userOrders.length === 0) {
     throw HttpError(404, "You do not have any orders");
   }
 
-  res.status(200).json(favoriteOrders);
+  res.status(200).json(userOrders);
 };
 
 module.exports = {

@@ -118,6 +118,10 @@ const userSchema = new Schema(
       type: Date,
       default: null,
     },
+    userOrders: {
+      type: Array,
+      default: [],
+    },
     favoriteOrders: {
       type: Array,
       default: [],
