@@ -7,7 +7,7 @@ const addOrder = async (req, res) => {
     const { email, products } = req.body;
     const user = await User.findOne({ email });
     await User.findByIdAndUpdate(user._id, {
-      favoriteOrders: [...user.favoriteOrders, ...products],
+      userOrders: [...user.userOrders, ...products],
     });
     const response = await createOrder(req.body);
 
