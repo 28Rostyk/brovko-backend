@@ -20,8 +20,9 @@ const {
   resetPassword,
   resetPasswordVerify,
   userUpdate,
+  updateAvatars,
 } = require("../../controller/user");
-const { authenticate, passport } = require("../../middlewares");
+const { authenticate, passport, upload } = require("../../middlewares");
 
 userRouter.get(
   "/google",
@@ -52,6 +53,13 @@ userRouter.post(
   "/reset-password/:token",
   validateBody(resetPasswordValidation),
   resetPassword
+);
+
+userRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  updateAvatars
 );
 
 module.exports = { userRouter };
