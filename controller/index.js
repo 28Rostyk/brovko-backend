@@ -19,6 +19,7 @@ const {
   resetPassword,
   resetPasswordVerify,
   userUpdate,
+  updateAvatars,
 } = require("./user");
 // додати рейтинг товару, отримати рейтинги всіх товарів
 const { addRating, getRatings } = require("./rating");
@@ -59,4 +60,5 @@ module.exports = {
   updateDatabase,
   generateSignature,
   userUpdate,
+  updateAvatars,
 };
