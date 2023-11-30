@@ -20,6 +20,7 @@ const productSchema = Joi.object({
   discount: Joi.string().allow(""),
   sku: Joi.string().allow(""),
   commission: Joi.string().allow(""),
+  picture: Joi.array(),
 });
 
 const novaPoshtaSchema = Joi.object({
