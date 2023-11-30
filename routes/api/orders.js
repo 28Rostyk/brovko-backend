@@ -7,6 +7,7 @@ const { validateBody, addOrderSchema } = require("../../schemas");
 
 ordersRouter.post("/", fetchOrder);
 ordersRouter.post("/add-order", validateBody(addOrderSchema), addOrder);
+// ordersRouter.post("/add-order", addOrder);
 ordersRouter.get("/auth", authenticate, getAllOrdersAuth);
 
 module.exports = { ordersRouter };
