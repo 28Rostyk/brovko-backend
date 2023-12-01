@@ -70,6 +70,11 @@ const userSchema = new Schema(
       required: [true, "Email is required"],
       unique: true,
     },
+    status: {
+      type: String,
+      enum: ["customer", "manager", "superadmin"],
+      default: "customer",
+    },
     name: {
       type: String,
       default: "",
@@ -85,9 +90,6 @@ const userSchema = new Schema(
     phone: {
       type: String,
       default: "",
-    },
-    avatarURL: {
-      type: String,
     },
     city: {
       type: String,

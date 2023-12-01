@@ -21,6 +21,7 @@ const {
   resetPasswordVerify,
   userUpdate,
   updateAvatars,
+  getUserByEmail,
 } = require("../../controller/user");
 const { authenticate, passport, upload } = require("../../middlewares");
 
@@ -41,6 +42,7 @@ userRouter.post("/register", validateBody(userValidation), register);
 userRouter.post("/login", validateBody(userValidation), login);
 // userRouter.put("/update/:id", authenticate, userUpdate);
 userRouter.patch("/update", authenticate, userUpdate);
+userRouter.get("/get-user", getUserByEmail);
 userRouter.get("/current", authenticate, current);
 userRouter.post("/logout", authenticate, logout);
 userRouter.post(
