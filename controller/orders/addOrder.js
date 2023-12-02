@@ -6,9 +6,10 @@ const addOrder = async (req, res) => {
   try {
     const { email, products } = req.body;
     const user = await User.findOne({ email });
-    await User.findByIdAndUpdate(user._id, {
-      userOrders: [...user.userOrders, ...products],
-    });
+    user &&
+      (await User.findByIdAndUpdate(user._id, {
+        userOrders: [...user.userOrders, ...products],
+      }));
     const response = await createOrder(req.body);
 
     res.status(201).json({
