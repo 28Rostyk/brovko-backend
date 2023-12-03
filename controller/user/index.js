@@ -12,6 +12,7 @@ const { resetPasswordVerify } = require("./resetPasswordVerify");
 const { userUpdate } = require("./userUpdate");
 const { updateAvatars } = require("./updateAvatar");
 const { getUserByEmail } = require("./getUserByEmail");
+const { updateUserStatus } = require("./updateUserStatus");
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -26,4 +27,5 @@ module.exports = {
   userUpdate: ctrlWrapper(userUpdate),
   updateAvatars: ctrlWrapper(updateAvatars),
   getUserByEmail: ctrlWrapper(getUserByEmail),
+  updateUserStatus: ctrlWrapper(updateUserStatus),
 };
