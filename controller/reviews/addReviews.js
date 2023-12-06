@@ -1,6 +1,6 @@
-const { Reviews } = require("../../models");
+const { Reviews, User } = require("../../models");
 const { ctrlWrapper } = require("../../helpers");
-
+const { HttpError } = require("../../helpers");
 const cloudinary = require("cloudinary").v2;
 
 const { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET_KEY } = process.env;
@@ -13,6 +13,7 @@ cloudinary.config({
 
 const addReviews = async (req, res) => {
   const userId = req.user.id;
+  console.log("userId", userId);
   const productId = req.body.productId;
   const newText = req.body.text;
   const { path: tempUpload, filename } = req.file;
@@ -37,6 +38,12 @@ const addReviews = async (req, res) => {
     height: 250,
     crop: "fill",
   });
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw HttpError(404, "user not find");
+  }
 
   const reviewURL = cloudinaryResponse.secure_url;
 
@@ -71,6 +78,7 @@ const addReviews = async (req, res) => {
           userId: userId,
           name: req.user.name,
           email: req.user.email,
+          avatarURL: user.avatarURL,
         },
       });
     }

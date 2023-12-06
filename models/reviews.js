@@ -30,6 +30,7 @@ const reviewsSchema = new Schema(
           userId: { type: Schema.Types.ObjectId, ref: "User" },
           name: String,
           email: String,
+          avatarURL: String,
         },
       },
     ],
