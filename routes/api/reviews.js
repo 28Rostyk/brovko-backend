@@ -3,9 +3,9 @@ const reviewsRouter = express.Router();
 
 const { addReviews, getReviews } = require("../../controller");
 
-const { authenticate } = require("../../middlewares");
+const { authenticate, upload } = require("../../middlewares");
 
-reviewsRouter.post("/", authenticate, addReviews);
+reviewsRouter.post("/", authenticate, upload.single("review"), addReviews);
 reviewsRouter.get("/", getReviews);
 
 module.exports = { reviewsRouter };
