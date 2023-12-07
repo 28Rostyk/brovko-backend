@@ -5,6 +5,7 @@ const {
   getProducts,
   findProductsByCategory,
   addProduct,
+  removeProducts,
 } = require("../../controller");
 
 const {
@@ -20,5 +21,6 @@ productsRouter.post(
   validateBody(addProductSchema),
   addProduct
 );
+productsRouter.post("/remove-product", removeProducts);
 
 module.exports = { productsRouter };
