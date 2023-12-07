@@ -1,5 +1,7 @@
 const axios = require("axios");
 const xml2js = require("xml2js");
+const he = require("he");
+
 const { Products } = require("../models/products");
 
 const { YML_FILE } = process.env;
@@ -23,13 +25,13 @@ async function updateProduct(offerData) {
       barcode: offerData.barcode || "",
       price: offerData.price,
       name: offerData.name,
-      description: offerData.description,
+      description: sanitizeAndEncode(offerData.description) || "",
       url: offerData.url || "",
       picture: offerData.picture || "",
       keywords: offerData.keywords || "",
       available: offerData.available || false,
       inStock: offerData.inStock || false,
-      note: offerData.note || "",
+      note: sanitizeAndEncode(offerData.note) || "",
     });
 
     await newOffer.save();
@@ -127,13 +129,13 @@ async function autoFetchProducts(url) {
           barcode: offerData.barcode ? offerData.barcode[0] : "",
           price: parseFloat(offerData.price[0]),
           name: offerData.name[0],
-          description: removeHtmlTags(description),
+          description: sanitizeAndEncode(description),
           url: offerData.url ? offerData.url[0] : "",
           picture: offerData.picture || "",
           keywords: offerData.keywords ? offerData.keywords[0] : "",
           available: offerData.available === "true",
           inStock: offerData.in_stock === "true",
-          note: removeHtmlTags(note),
+          note: sanitizeAndEncode(note),
         });
 
         // Ваша обробка продуктів тут
@@ -168,7 +170,13 @@ setInterval(async () => {
 }, 600000);
 
 function removeHtmlTags(html) {
-  return html.replace(/<\/?div>/g, "");
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
+function sanitizeAndEncode(text) {
+  const withoutHtmlTags = removeHtmlTags(text);
+  const decodedText = he.decode(withoutHtmlTags);
+  return decodedText;
 }
 
 module.exports = { autoFetchProducts };
