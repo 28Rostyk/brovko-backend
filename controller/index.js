@@ -7,6 +7,7 @@ const {
   addProduct,
   findProductsByCategory,
   getProducts,
+  removeProducts,
 } = require("./products");
 // реєстрація, логінізація, вихід з логіну, оновлення токена, поточний користувач
 const {
@@ -56,6 +57,7 @@ module.exports = {
   addReviews,
   getReviews,
   addProduct,
+  removeProducts,
   addCategory,
   updateDatabase,
   generateSignature,
