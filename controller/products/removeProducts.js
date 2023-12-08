@@ -1,11 +1,14 @@
 const { ctrlWrapper } = require("../../helpers");
 const { deleteProducts } = require("../../services");
+const { updateDatabase } = require("../database");
 require("colors");
 
 const removeProducts = async (req, res) => {
+  const productsId = req.body.product.map((product) => product.id);
+
   const response = await deleteProducts(req.body);
 
-  const productsId = req.body.product.map((product) => product.id);
+  await updateDatabase();
 
   res.status(200).json({
     status: response.status,
