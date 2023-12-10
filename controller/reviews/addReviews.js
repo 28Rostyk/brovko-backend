@@ -13,15 +13,9 @@ cloudinary.config({
 
 const addReviews = async (req, res) => {
   const userId = req.user.id;
-  console.log("userId", userId);
   const productId = req.body.productId;
   const newText = req.body.text;
-  const { path: tempUpload, filename } = req.file;
-  const reviewName = `${userId}${filename}`;
-
-  if (!req.file) {
-    return res.status(400).json({ message: "File is required" });
-  }
+  const reviewName = userId;
 
   if (!productId || productId.trim() === "") {
     return res.status(400).json({ message: "ProductId is required" });
@@ -31,21 +25,24 @@ const addReviews = async (req, res) => {
     return res.status(400).json({ message: "Text is required" });
   }
 
-  const cloudinaryResponse = await cloudinary.uploader.upload(tempUpload, {
-    folder: "reviews",
-    public_id: reviewName,
-    width: 250,
-    height: 250,
-    crop: "fill",
-  });
+  let reviewURL;
+  if (req.file) {
+    const { path: tempUpload, filename } = req.file;
+    const cloudinaryResponse = await cloudinary.uploader.upload(tempUpload, {
+      folder: "reviews",
+      public_id: `${reviewName}${filename}`,
+      width: 250,
+      height: 250,
+      crop: "fill",
+    });
+    reviewURL = cloudinaryResponse.secure_url;
+  }
 
   const user = await User.findById(userId);
 
   if (!user) {
-    throw HttpError(404, "user not find");
+    throw HttpError(404, "User not found");
   }
-
-  const reviewURL = cloudinaryResponse.secure_url;
 
   try {
     let review = await Reviews.findOne({ productId });
