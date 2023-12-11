@@ -7,6 +7,11 @@ async function deleteProducts(body) {
 
   const response = await axios.post(url, body, { headers });
 
+  // console.log(
+  //   `${"RESPONSE DATA IN DELETE >> :"}`.blue,
+  //   JSON.parse(response.config.data)
+  // );
+
   return response.data;
 }
 

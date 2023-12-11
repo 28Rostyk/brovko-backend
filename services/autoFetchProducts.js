@@ -75,7 +75,7 @@ async function updateProduct(offerData) {
   }
 }
 
-const initialProductCount = 0; // Початкова кількість продуктів
+// const initialProductCount = 0; // Початкова кількість продуктів
 
 async function autoFetchProducts(url) {
   try {
