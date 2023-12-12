@@ -6,7 +6,6 @@ const { getCategories, addCategory } = require("./category");
 const {
   addProduct,
   findProductsByCategory,
-  findProductById,
   getProducts,
   removeProducts,
 } = require("./products");
@@ -41,7 +40,6 @@ const { generateSignature } = require("./generateSignature");
 module.exports = {
   getProducts,
   findProductsByCategory,
-  findProductById,
   current,
   login,
   logout,
