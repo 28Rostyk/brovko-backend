@@ -7,6 +7,7 @@ const {
   findProductById,
   addProduct,
   removeProducts,
+  getProductsByKeywords,
 } = require("../../controller");
 
 const {
@@ -24,5 +25,6 @@ productsRouter.post(
   addProduct
 );
 productsRouter.post("/remove-product", removeProducts);
+productsRouter.get("/search", getProductsByKeywords);
 
 module.exports = { productsRouter };
