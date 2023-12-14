@@ -10,9 +10,7 @@ const {
   getProductsByKeywords,
 } = require("../../controller");
 
-const {
-  checkNewProductData,
-} = require("../../middlewares/checkNewProductData");
+const { checkNewProductData, upload } = require("../../middlewares");
 const { addProductSchema, validateBody } = require("../../schemas");
 
 productsRouter.get("/", getProducts);
@@ -22,6 +20,7 @@ productsRouter.post(
   "/add-product",
   checkNewProductData,
   validateBody(addProductSchema),
+  upload.single("fullsize"),
   addProduct
 );
 productsRouter.post("/remove-product", removeProducts);
