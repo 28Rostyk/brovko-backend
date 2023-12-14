@@ -64,13 +64,15 @@ const addReviews = async (req, res) => {
       // Оновлення масиву об'єктів з текстом та датою створення
       userComment.text.push({
         text: newText,
-        reviewURL: reviewURL,
+        reviewURL: [reviewURL, ...userComment.text[0].reviewURL],
         createdAt: new Date(),
       });
     } else {
       // Якщо користувач ще не залишав коментарів до цього товару, створіть новий коментар
       review.comments.push({
-        text: [{ text: newText, reviewURL: reviewURL, createdAt: new Date() }],
+        text: [
+          { text: newText, reviewURL: [reviewURL], createdAt: new Date() },
+        ],
         owner: {
           userId: userId,
           name: req.user.name,

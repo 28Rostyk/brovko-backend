@@ -5,6 +5,7 @@ const { createCategory } = require("./createCategory");
 const { createProduct } = require("./createProduct");
 const { deleteProducts } = require("./deleteProducts");
 const { createOrder } = require("./createOrder");
+const { changeImage } = require("./changeImage");
 
 module.exports = {
   // updateDatabase,
@@ -14,4 +15,5 @@ module.exports = {
   createProduct,
   createOrder,
   deleteProducts,
+  changeImage,
 };

@@ -15,8 +15,8 @@ const reviewsSchema = new Schema(
                 required: [true, "Text is required"],
               },
               reviewURL: {
-                type: String,
-                default: "",
+                type: [String],
+                default: [],
               },
               createdAt: {
                 type: Date,
