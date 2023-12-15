@@ -32,6 +32,7 @@ async function autoFetchCategories(url) {
       const newYmlCategories = categories.map((categoryData) => ({
         id: categoryData.$.id,
         name: categoryData._,
+        parentId: categoryData.$.parentId,
       }));
 
       for (const newYmlCategory of newYmlCategories) {
@@ -45,15 +46,23 @@ async function autoFetchCategories(url) {
           });
         }
 
+        if (!existingCategory) {
+          existingCategory = await Category.findOne({
+            parentId: newYmlCategory.parentId,
+          });
+        }
+
         if (existingCategory) {
           existingCategory.id = newYmlCategory.id;
           existingCategory.name = newYmlCategory.name;
+          existingCategory.parentId = newYmlCategory.parentId;
           await existingCategory.save();
           console.log("Updated category:", newYmlCategory.id);
         } else {
           const category = new Category({
             id: newYmlCategory.id,
             name: newYmlCategory.name,
+            parentId: newYmlCategory.parentId,
           });
           await category.save();
           console.log("Added category:", newYmlCategory.id);

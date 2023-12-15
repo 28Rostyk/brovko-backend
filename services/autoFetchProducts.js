@@ -24,6 +24,8 @@ async function updateProduct(offerData) {
       vendorCode: offerData.vendorCode || "",
       barcode: offerData.barcode || "",
       price: offerData.price,
+      vendorprice: offerData.vendorprice || "",
+      oldprice: offerData.oldprice || "",
       name: offerData.name,
       description: sanitizeAndEncode(offerData.description) || "",
       url: offerData.url || "",
@@ -53,6 +55,8 @@ async function updateProduct(offerData) {
       "available",
       "inStock",
       "note",
+      "oldprice",
+      "vendorprice",
       // ... інші поля для порівняння
     ];
 
@@ -128,6 +132,8 @@ async function autoFetchProducts(url) {
           vendorCode: offerData.vendorCode ? offerData.vendorCode[0] : "",
           barcode: offerData.barcode ? offerData.barcode[0] : "",
           price: parseFloat(offerData.price[0]),
+          vendorprice: parseFloat(offerData.vendorprice[0]) || "",
+          oldprice: parseFloat(offerData.oldprice) || "",
           name: offerData.name[0],
           description: sanitizeAndEncode(description),
           url: offerData.url ? offerData.url[0] : "",

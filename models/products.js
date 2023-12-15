@@ -44,6 +44,12 @@ const productSchema = new Schema(
     vendorCode: {
       type: String,
     },
+    vendorprice: {
+      type: String,
+    },
+    oldprice: {
+      type: String,
+    },
     barcode: {
       type: String,
     },
