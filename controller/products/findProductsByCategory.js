@@ -4,7 +4,12 @@ const { Products } = require("../../models");
 
 const findProductsByCategory = async (req, res) => {
   const { categoryId } = req.params;
-  const { page = 1, perPage = 10 } = req.query;
+  const {
+    page = 1,
+    perPage = 10,
+    sortBy = "createdAt",
+    sortOrder = "asc",
+  } = req.query;
 
   try {
     const skip = (page - 1) * perPage;
@@ -12,7 +17,18 @@ const findProductsByCategory = async (req, res) => {
       categoryId: categoryId,
     });
     const totalPages = Math.ceil(totalCount / perPage);
-    const productsInCategory = await Products.find({ categoryId: categoryId })
+
+    // Визначте, чи користувач сортує за ціною
+    const isSortingByPrice = sortBy === "price";
+    const sortField = isSortingByPrice ? "price" : sortBy;
+    const sortDirection = sortOrder === "desc" ? -1 : 1;
+    const sortOptions = { [sortField]: sortDirection };
+
+    const productsInCategory = await Products.find(
+      { categoryId: categoryId },
+      "-createdAt -updatedAt"
+    )
+      .sort(sortOptions)
       .skip(skip)
       .limit(perPage);
 
