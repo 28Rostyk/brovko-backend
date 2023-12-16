@@ -6,6 +6,7 @@ const { createProduct } = require("./createProduct");
 const { deleteProducts } = require("./deleteProducts");
 const { createOrder } = require("./createOrder");
 const { changeImage } = require("./changeImage");
+const { sendInCloudinary } = require("./sendInCloudinary");
 
 module.exports = {
   // updateDatabase,
@@ -16,4 +17,5 @@ module.exports = {
   createOrder,
   deleteProducts,
   changeImage,
+  sendInCloudinary,
 };
