@@ -1,21 +1,12 @@
 const { Reviews, User } = require("../../models");
 const { ctrlWrapper } = require("../../helpers");
 const { HttpError } = require("../../helpers");
-const cloudinary = require("cloudinary").v2;
-
-const { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET_KEY } = process.env;
-
-cloudinary.config({
-  cloud_name: CLOUD_NAME,
-  api_key: CLOUD_API_KEY,
-  api_secret: CLOUD_API_SECRET_KEY,
-});
+const { sendInCloudinary } = require("../../services");
 
 const addReviews = async (req, res) => {
   const userId = req.user.id;
   const productId = req.body.productId;
   const newText = req.body.text;
-  const reviewName = userId;
 
   if (!productId || productId.trim() === "") {
     return res.status(400).json({ message: "ProductId is required" });
@@ -28,13 +19,8 @@ const addReviews = async (req, res) => {
   let reviewURL;
   if (req.file) {
     const { path: tempUpload, filename } = req.file;
-    const cloudinaryResponse = await cloudinary.uploader.upload(tempUpload, {
-      folder: "reviews",
-      public_id: `${reviewName}${filename}`,
-      width: 250,
-      height: 250,
-      crop: "fill",
-    });
+    const reviewName = `${userId}${filename}`;
+    const cloudinaryResponse = await sendInCloudinary(tempUpload, reviewName);
     reviewURL = cloudinaryResponse.secure_url;
   }
 
@@ -71,7 +57,11 @@ const addReviews = async (req, res) => {
       // Якщо користувач ще не залишав коментарів до цього товару, створіть новий коментар
       review.comments.push({
         text: [
-          { text: newText, reviewURL: [reviewURL], createdAt: new Date() },
+          {
+            text: newText,
+            reviewURL: reviewURL ? [reviewURL] : [],
+            createdAt: new Date(),
+          },
         ],
         owner: {
           userId: userId,
