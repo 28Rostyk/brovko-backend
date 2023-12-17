@@ -23,6 +23,7 @@ const {
   updateAvatars,
   getUserByEmail,
   updateUserStatus,
+  getUsersByStatus,
 } = require("../../controller/user");
 const { authenticate, passport, upload } = require("../../middlewares");
 
@@ -45,6 +46,7 @@ userRouter.post("/login", validateBody(userValidation), login);
 userRouter.patch("/update", authenticate, userUpdate);
 userRouter.get("/get-user", authenticate, getUserByEmail);
 userRouter.patch("/update-status", authenticate, updateUserStatus);
+userRouter.get("/get-by-status", authenticate, getUsersByStatus);
 userRouter.get("/current", authenticate, current);
 userRouter.post("/logout", authenticate, logout);
 userRouter.post(
