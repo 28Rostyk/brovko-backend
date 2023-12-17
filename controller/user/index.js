@@ -13,6 +13,7 @@ const { userUpdate } = require("./userUpdate");
 const { updateAvatars } = require("./updateAvatar");
 const { getUserByEmail } = require("./getUserByEmail");
 const { updateUserStatus } = require("./updateUserStatus");
+const { getUsersByStatus } = require("./getUsersByStatus");
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -28,4 +29,5 @@ module.exports = {
   updateAvatars: ctrlWrapper(updateAvatars),
   getUserByEmail: ctrlWrapper(getUserByEmail),
   updateUserStatus: ctrlWrapper(updateUserStatus),
+  getUsersByStatus: ctrlWrapper(getUsersByStatus),
 };
