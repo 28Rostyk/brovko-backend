@@ -161,19 +161,19 @@ async function autoFetchProducts(url) {
 }
 
 // Оновлювати базу даних за вказаним URL
-async function updateDatabase() {
-  console.log("UPDATE DATABASE".magenta);
-  await autoFetchProducts(ymlFilePath);
-}
+// async function updateDatabase() {
+//   console.log("UPDATE DATABASE".magenta);
+//   await autoFetchProducts(ymlFilePath);
+// }
 
 // Оновлювати базу даних за вказаним URL тільки якщо є зміни в XML
-setInterval(async () => {
-  if (!isUpdating) {
-    isUpdating = true; // Встановити прапорець в true перед початком оновлення
-    await updateDatabase();
-    isUpdating = false; // Позначити, що оновлення завершено
-  }
-}, 600000);
+// setInterval(async () => {
+//   if (!isUpdating) {
+//     isUpdating = true; // Встановити прапорець в true перед початком оновлення
+//     await updateDatabase();
+//     isUpdating = false; // Позначити, що оновлення завершено
+//   }
+// }, 600000);
 
 function removeHtmlTags(html) {
   return html.replace(/<\/?[^>]+(>|$)/g, "");

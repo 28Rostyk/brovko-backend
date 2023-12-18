@@ -8,7 +8,7 @@ const ymlFilePath = YML_FILE;
 
 let isUpdating = false;
 
-async function autoFetchCategories(url) {
+async function autoFetchCategories(url, updateProducts) {
   if (isUpdating) {
     console.log("Update already in progress, skipping...");
     return;
@@ -32,7 +32,7 @@ async function autoFetchCategories(url) {
       const newYmlCategories = categories.map((categoryData) => ({
         id: categoryData.$.id,
         name: categoryData._,
-        parentId: categoryData.$.parentId,
+        parentId: categoryData.$.parentId || "",
       }));
 
       for (const newYmlCategory of newYmlCategories) {
@@ -46,11 +46,11 @@ async function autoFetchCategories(url) {
           });
         }
 
-        if (!existingCategory) {
-          existingCategory = await Category.findOne({
-            parentId: newYmlCategory.parentId,
-          });
-        }
+        // if (!existingCategory) {
+        //   existingCategory = await Category.findOne({
+        //     parentId: newYmlCategory.parentId,
+        //   });
+        // }
 
         if (existingCategory) {
           existingCategory.id = newYmlCategory.id;
@@ -75,11 +75,16 @@ async function autoFetchCategories(url) {
       });
 
       for (const removedCategory of removedCategories) {
-        await Category.deleteOne({ _id: removedCategory._id }); // Видалення категорії за _id
+        await Category.deleteOne({ _id: removedCategory._id });
         console.log("Deleted category:", removedCategory.id);
       }
 
       isUpdating = false;
+
+      // Викликаємо функцію для оновлення продуктів
+      if (updateProducts && typeof updateProducts === "function") {
+        updateProducts();
+      }
     });
   } catch (error) {
     console.error("Error:", error);
@@ -87,8 +92,8 @@ async function autoFetchCategories(url) {
   }
 }
 
-setInterval(async () => {
-  await autoFetchCategories(ymlFilePath);
-}, 600000);
+// setInterval(async () => {
+//   await autoFetchCategories(ymlFilePath);
+// }, 600000);
 
 module.exports = { autoFetchCategories };
