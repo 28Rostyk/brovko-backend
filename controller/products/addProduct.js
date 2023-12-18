@@ -6,9 +6,11 @@ const { updateDatabase } = require("../../controller/database/updateDatabase");
 const addProduct = async (req, res) => {
   // const body = await changeImage(req.body);
 
+  const update = req.query.update;
+
   try {
     const response = await createProduct(req.body);
-    await updateDatabase();
+    await updateDatabase(update);
     res.status(201).json({
       status: response.data.status,
       message: response.message,
