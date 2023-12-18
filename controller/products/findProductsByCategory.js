@@ -18,11 +18,15 @@ const findProductsByCategory = async (req, res) => {
     });
     const totalPages = Math.ceil(totalCount / perPage);
 
+    let sortOptions = {};
+
     // Визначте, чи користувач сортує за ціною
-    const isSortingByPrice = sortBy === "price";
-    const sortField = isSortingByPrice ? "price" : sortBy;
-    const sortDirection = sortOrder === "desc" ? -1 : 1;
-    const sortOptions = { [sortField]: sortDirection };
+    if (sortBy === "price") {
+      sortOptions = { price: sortOrder === "asc" ? 1 : -1 };
+    } else {
+      // Інші випадки сортування
+      sortOptions[sortBy] = sortOrder === "asc" ? 1 : -1;
+    }
 
     const productsInCategory = await Products.find(
       { categoryId: categoryId },

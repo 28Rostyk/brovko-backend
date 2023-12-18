@@ -14,9 +14,15 @@ const getProducts = async (req, res) => {
     const totalCount = await Products.countDocuments();
     const totalPages = Math.ceil(totalCount / perPage);
 
-    const sortField = sortBy === "price" ? "price" : sortBy;
-    const sortDirection = sortOrder === "desc" ? -1 : 1;
-    const sortOptions = { [sortField]: sortDirection };
+    let sortOptions = {};
+
+    // Визначте, чи користувач сортує за ціною
+    if (sortBy === "price") {
+      sortOptions = { price: sortOrder === "asc" ? 1 : -1 };
+    } else {
+      // Інші випадки сортування
+      sortOptions[sortBy] = sortOrder === "asc" ? 1 : -1;
+    }
 
     const products = await Products.find({}, "-createdAt -updatedAt")
       .sort(sortOptions)
