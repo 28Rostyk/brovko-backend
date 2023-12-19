@@ -3,9 +3,9 @@ const { ctrlWrapper } = require("../../helpers");
 
 const getCategories = async (req, res) => {
   try {
-    const caregory = await Category.find({}, "-createdAt -updatedAt");
+    const categories = await Category.find({}, "-createdAt -updatedAt");
     res.json({
-      caregory: caregory,
+      categories: categories,
     });
   } catch (error) {
     console.error("Error fetching categories:", error);
