@@ -1,7 +1,8 @@
-const { ctrlWrapper } = require("../../helpers");
-require("colors");
+// const { ctrlWrapper } = require("../../helpers");
+// require("colors");
 
 const { autoFetchProducts, autoFetchCategories } = require("../../services");
+
 const { YML_FILE } = process.env;
 
 const ymlFilePath = YML_FILE;
@@ -53,14 +54,32 @@ const ymlFilePath = YML_FILE;
 // //   updateDatabase();
 // // }, 600000);
 
-const updateDatabase = async (update) => {
+const updateDatabase = async (update, fetch) => {
+  // console.log("FETCH IN UPDATE-DATABASE".bgBlue.yellow, fetch);
+  // console.log("UPDATE IN UPDATE-DATABASE".bgBlue.yellow, update);
   try {
     console.log("UPDATE DATABASE".magenta);
 
     switch (update) {
       case "category":
-        await autoFetchCategories(ymlFilePath);
-        break;
+        if (fetch) {
+          console.log("== #case 1# category updating with response ==".bgBlue);
+          const updatedCategories = await autoFetchCategories(
+            ymlFilePath,
+            null,
+            {
+              response: true,
+            }
+          );
+
+          return updatedCategories;
+        } else {
+          console.log(
+            "== #case 2# category updating with no response ==".bgBlue
+          );
+          await autoFetchCategories(ymlFilePath);
+          break;
+        }
 
       case "product":
         await autoFetchProducts(ymlFilePath);
@@ -82,4 +101,4 @@ setInterval(async () => {
   updateDatabase();
 }, 600000);
 
-module.exports = { updateDatabase: ctrlWrapper(updateDatabase) };
+module.exports = { updateDatabase };

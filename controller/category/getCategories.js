@@ -3,7 +3,7 @@ const { ctrlWrapper } = require("../../helpers");
 
 const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find({}, "-createdAt -updatedAt");
+    const categories = await Category.find({}, "-createdAt -updatedAt -_id");
     res.json({
       categories: categories,
     });
