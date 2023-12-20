@@ -43,6 +43,7 @@ const productSchema = Joi.object({
       .allow("")
       .default("Без категорії")
       .empty("Без категорії"),
+    parentId: Joi.string().allow(""),
   }),
 
   description: Joi.string().allow(""),
