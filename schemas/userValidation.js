@@ -19,7 +19,18 @@ const userValidation = Joi.object({
     .min(6)
     .max(16),
 
-  email: Joi.string().email().required(),
+  email: Joi.string()
+    .email()
+    .required()
+    .custom((value, helpers) => {
+      const lowercaseEmail = value.toLowerCase();
+
+      if (value !== lowercaseEmail) {
+        return helpers.message("Email must be in lowercase");
+      }
+
+      return lowercaseEmail;
+    }),
 });
 
 const refreshValidation = Joi.object({
