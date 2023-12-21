@@ -13,8 +13,8 @@ const updateAvatars = async (req, res) => {
     const avatarURL = cloudinaryResponse.secure_url;
     await User.findByIdAndUpdate(_id, { avatarURL });
 
-    // await clearTemp(tempUpload);
-    await clearTemp();
+    await clearTemp(tempUpload);
+    // await clearTemp();
 
     res.json({
       avatarURL,
