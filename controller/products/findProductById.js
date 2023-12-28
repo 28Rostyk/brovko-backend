@@ -1,5 +1,5 @@
 const { ctrlWrapper } = require("../../helpers");
-const { updateDatabase } = require("../database");
+const { updateDatabase } = require("../../services");
 const { Products } = require("../../models");
 require("colors");
 

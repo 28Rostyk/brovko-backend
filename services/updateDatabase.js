@@ -1,4 +1,5 @@
-const { autoFetchProducts, autoFetchCategories } = require("../../services");
+const { autoFetchProducts } = require("./autoFetchProducts");
+const { autoFetchCategories } = require("./autoFetchCategories");
 
 const { YML_FILE } = process.env;
 

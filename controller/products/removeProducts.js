@@ -1,6 +1,6 @@
 const { ctrlWrapper } = require("../../helpers");
 const { deleteProducts } = require("../../services");
-const { updateDatabase } = require("../database");
+const { updateDatabase } = require("../../services");
 require("colors");
 
 const removeProducts = async (req, res) => {

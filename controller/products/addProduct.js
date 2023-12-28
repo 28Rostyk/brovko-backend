@@ -1,6 +1,6 @@
 const { ctrlWrapper } = require("../../helpers");
 const { createProduct } = require("../../services");
-const { updateDatabase } = require("../../controller/database/updateDatabase");
+const { updateDatabase } = require("../../services/updateDatabase");
 // const { changeImage } = require("../../services");
 
 const addProduct = async (req, res) => {

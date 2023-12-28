@@ -1,4 +1,5 @@
 // const { updateDatabase } = require("../controller/database/updateDatabase");
+const { updateDatabase } = require("./updateDatabase");
 const { autoFetchCategories } = require("./autoFetchCategories");
 const { autoFetchProducts } = require("./autoFetchProducts");
 const { createCategory } = require("./createCategory");
@@ -10,7 +11,7 @@ const { sendInCloudinary } = require("./sendInCloudinary");
 const { clearTemp } = require("./clearTemp");
 
 module.exports = {
-  // updateDatabase,
+  updateDatabase,
   autoFetchCategories,
   autoFetchProducts,
   createCategory,
