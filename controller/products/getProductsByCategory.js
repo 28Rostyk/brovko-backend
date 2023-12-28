@@ -2,7 +2,7 @@ const { ctrlWrapper } = require("../../helpers");
 
 const { Products } = require("../../models");
 
-const findProductsByCategory = async (req, res) => {
+const getProductsByCategory = async (req, res) => {
   const { categoryId } = req.params;
   const {
     page = 1,
@@ -10,6 +10,9 @@ const findProductsByCategory = async (req, res) => {
     sortBy = "createdAt",
     sortOrder = "asc",
   } = req.query;
+
+  // console.log("products by category req.params :>> ".bgBlue, req.params);
+  // console.log("products by category req.query :>> ".bgMagenta, req.query);
 
   try {
     const skip = (page - 1) * perPage;
@@ -43,7 +46,7 @@ const findProductsByCategory = async (req, res) => {
     }
 
     res.json({
-      totalPage: totalPages,
+      totalPages: totalPages,
       totalItems: totalCount,
       perPage: perPage,
       currentPage: page,
@@ -56,5 +59,5 @@ const findProductsByCategory = async (req, res) => {
 };
 
 module.exports = {
-  findProductsByCategory: ctrlWrapper(findProductsByCategory),
+  getProductsByCategory: ctrlWrapper(getProductsByCategory),
 };

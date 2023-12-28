@@ -5,9 +5,9 @@ const { getCategories, addCategory } = require("./category");
 // додавання товару, отримання всіх товарів, пошук товару за категорією
 const {
   addProduct,
-  findProductsByCategory,
+  getProductsByCategory,
   findProductById,
-  getProducts,
+  getAllProducts,
   removeProducts,
   getProductsByKeywords,
 } = require("./products");
@@ -31,17 +31,13 @@ const { addRating, getRatings } = require("./rating");
 
 const { addReviews, getReviews } = require("./reviews");
 
-// Прмусове оновлення БД
-
-const { updateDatabase } = require("./database");
-
 // Генерація Ключа
 
 const { generateSignature } = require("./generateSignature");
 
 module.exports = {
-  getProducts,
-  findProductsByCategory,
+  getAllProducts,
+  getProductsByCategory,
   findProductById,
   current,
   login,
@@ -62,7 +58,6 @@ module.exports = {
   addProduct,
   removeProducts,
   addCategory,
-  updateDatabase,
   generateSignature,
   userUpdate,
   updateAvatars,

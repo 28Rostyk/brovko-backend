@@ -1,6 +1,6 @@
 const { createCategory } = require("../../services");
 const { ctrlWrapper } = require("../../helpers");
-const { updateDatabase } = require("../database");
+const { updateDatabase } = require("../../services");
 
 const addCategory = async (req, res) => {
   const update = req?.query?.update ? req.query.update : null;

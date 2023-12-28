@@ -9,18 +9,15 @@ const { Category } = require("../models"); // Шлях до моделі Categor
 // const initialOption = { response: false };
 let isUpdating = false;
 
-async function autoFetchCategories(
-  url,
-  updateProducts,
-  options = { response: false }
-) {
+async function autoFetchCategories(url, options = { response: false }) {
   if (isUpdating) {
-    console.log("Update already in progress, skipping...");
+    console.log("Update already in progress, skipping...".red);
     return;
   }
 
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
+    console.log("== categories updating".magenta);
     try {
       isUpdating = true;
       let updatedCategories;
@@ -65,7 +62,7 @@ async function autoFetchCategories(
             existingCategory.name = newYmlCategory.name;
             existingCategory.parentId = newYmlCategory.parentId;
             await existingCategory.save();
-            console.log("Updated category:", newYmlCategory.id);
+            console.log("Updated category:", `${newYmlCategory.id}`.yellow);
           } else {
             const category = new Category({
               id: newYmlCategory.id,
@@ -73,7 +70,7 @@ async function autoFetchCategories(
               parentId: newYmlCategory.parentId,
             });
             await category.save();
-            console.log("Added category:", newYmlCategory.id);
+            console.log("Added category:", `${newYmlCategory.id}`.green);
           }
         }
 
@@ -84,12 +81,7 @@ async function autoFetchCategories(
 
         for (const removedCategory of removedCategories) {
           await Category.deleteOne({ _id: removedCategory._id });
-          console.log("Deleted category:", removedCategory.id);
-        }
-
-        // Викликаємо функцію для оновлення продуктів
-        if (updateProducts && typeof updateProducts === "function") {
-          updateProducts();
+          console.log("Deleted category:", `${removedCategory.id}`.red);
         }
 
         if (options && options.response === true) {
@@ -102,7 +94,7 @@ async function autoFetchCategories(
         isUpdating = false;
       });
     } catch (error) {
-      console.log("Error:", error);
+      console.log("Error:".red, error);
       reject(error);
       isUpdating = false;
     }
