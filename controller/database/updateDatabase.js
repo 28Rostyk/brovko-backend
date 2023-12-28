@@ -83,15 +83,19 @@ const updateDatabase = async (update, fetch) => {
 
       case "product":
         await autoFetchProducts(ymlFilePath);
+        console.log("AUTO FETCH PRODUCT".bgMagenta);
         break;
 
       default:
+        console.log("=== CASE 3 ===".bgMagenta);
         // Оновлюємо категорії та передаємо функцію для оновлення продуктів
         await autoFetchCategories(ymlFilePath, () => {
           autoFetchProducts(ymlFilePath);
         });
         break;
     }
+
+    console.log("DATABASE IS UPDATED".bgGreen);
   } catch (error) {
     console.error(`Error updating database:`, error);
   }

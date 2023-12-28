@@ -89,7 +89,7 @@ async function autoFetchCategories(
 
         // Викликаємо функцію для оновлення продуктів
         if (updateProducts && typeof updateProducts === "function") {
-          updateProducts();
+          await updateProducts();
         }
 
         if (options && options.response === true) {

@@ -9,7 +9,7 @@ const { YML_FILE } = process.env;
 const ymlFilePath = YML_FILE;
 
 console.log(ymlFilePath);
-let isUpdating = false;
+// let isUpdating = false;
 
 async function updateProduct(offerData) {
   const existingOffer = await Products.findOne({ id: offerData.id });
@@ -87,33 +87,38 @@ async function autoFetchProducts(url) {
     const xml = response.data;
 
     const parser = new xml2js.Parser();
-    parser.parseString(xml, async (err, result) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+    const parseResult = await new Promise((resolve, reject) => {
+      parser.parseString(xml, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
 
-      const offers = result.yml_catalog.shop[0].offers[0].offer;
-      // Отримати ідентифікатори товарів з YML-файлу
-      const ymlProductIds = offers.map((offer) => offer.$.id);
+    const offers = parseResult.yml_catalog.shop[0].offers[0].offer;
+    // Отримати ідентифікатори товарів з YML-файлу
+    const ymlProductIds = offers.map((offer) => offer.$.id);
 
-      // Отримати ідентифікатори товарів з бази даних
-      const dbProductIds = await Products.find({}, "id");
+    // Отримати ідентифікатори товарів з бази даних
+    const dbProductIds = await Products.find({}, "id");
 
-      // Визначити ідентифікатори для видалення
-      const productsToDelete = dbProductIds.filter(
-        (dbProduct) => !ymlProductIds.includes(dbProduct.id)
-      );
+    // Визначити ідентифікатори для видалення
+    const productsToDelete = dbProductIds.filter(
+      (dbProduct) => !ymlProductIds.includes(dbProduct.id)
+    );
 
-      // Видалити відповідні товари з бази даних
-      for (const productToDelete of productsToDelete) {
-        await Products.findOneAndDelete({ id: productToDelete.id });
-        console.log("Deleted:", productToDelete.id);
-      }
+    // Видалити відповідні товари з бази даних
+    for (const productToDelete of productsToDelete) {
+      await Products.findOneAndDelete({ id: productToDelete.id });
+      console.log("Deleted:", productToDelete.id);
+    }
 
-      // initialProductCount = offers.length; // Зберегти початкову кількість продуктів
+    // initialProductCount = offers.length; // Зберегти початкову кількість продуктів
 
-      for (const offerData of offers) {
+    await Promise.all(
+      offers.map(async (offerData) => {
         const productId = offerData.$.id;
 
         // Перевірити, чи продукт вже був оброблений
@@ -143,18 +148,10 @@ async function autoFetchProducts(url) {
           inStock: offerData.in_stock === "true",
           note: sanitizeAndEncode(note),
         });
+      })
+    );
 
-        // Ваша обробка продуктів тут
-      }
-    });
-
-    // ТУТ БУВ БАГ = базаданих оновлювалась по зацикленому колу. !!!!
-    // Тут порівняння і оновлення бази даних
-    // const currentProductCount = await Products.countDocuments(); // Поточна кількість продуктів в базі
-
-    // if (currentProductCount > initialProductCount) {
-    //   await updateDatabase(); // Оновити базу даних
-    // }
+    // Ваша обробка продуктів тут
   } catch (error) {
     console.error("Error:", error);
   }

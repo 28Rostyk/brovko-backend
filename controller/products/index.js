@@ -1,15 +1,15 @@
 const { addProduct } = require("./addProduct");
-const { findProductsByCategory } = require("./findProductsByCategory");
+const { getProductsByCategory } = require("./getProductsByCategory");
 const { findProductById } = require("./findProductById");
-const { getProducts } = require("./getProducts");
+const { getAllProducts } = require("./getAllProducts");
 const { removeProducts } = require("./removeProducts");
 const { getProductsByKeywords } = require("./getProductsByKeywords");
 
 module.exports = {
   addProduct,
-  findProductsByCategory,
+  getProductsByCategory,
   findProductById,
-  getProducts,
+  getAllProducts,
   removeProducts,
   getProductsByKeywords,
 };

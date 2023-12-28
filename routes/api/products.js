@@ -2,8 +2,8 @@ const express = require("express");
 const productsRouter = express.Router();
 
 const {
-  getProducts,
-  findProductsByCategory,
+  getAllProducts,
+  getProductsByCategory,
   findProductById,
   addProduct,
   removeProducts,
@@ -13,8 +13,8 @@ const {
 const { checkNewProductData, upload } = require("../../middlewares");
 const { addProductSchema, validateBody } = require("../../schemas");
 
-productsRouter.get("/", getProducts);
-productsRouter.get("/category/:categoryId", findProductsByCategory);
+productsRouter.get("/", getAllProducts);
+productsRouter.get("/category/:categoryId", getProductsByCategory);
 productsRouter.get("/product/:productId", findProductById);
 productsRouter.post(
   "/add-product",

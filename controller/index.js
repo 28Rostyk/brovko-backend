@@ -5,9 +5,9 @@ const { getCategories, addCategory } = require("./category");
 // додавання товару, отримання всіх товарів, пошук товару за категорією
 const {
   addProduct,
-  findProductsByCategory,
+  getProductsByCategory,
   findProductById,
-  getProducts,
+  getAllProducts,
   removeProducts,
   getProductsByKeywords,
 } = require("./products");
@@ -40,8 +40,8 @@ const { updateDatabase } = require("./database");
 const { generateSignature } = require("./generateSignature");
 
 module.exports = {
-  getProducts,
-  findProductsByCategory,
+  getAllProducts,
+  getProductsByCategory,
   findProductById,
   current,
   login,

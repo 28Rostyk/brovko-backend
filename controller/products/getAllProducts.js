@@ -1,13 +1,16 @@
 const { ctrlWrapper } = require("../../helpers");
 const { Products } = require("../../models");
 
-const getProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
   const {
     page = 1,
     perPage = 10,
     sortBy = "createdAt",
     sortOrder = "asc",
   } = req.query;
+
+  console.log("all products req.params :>> ".bgBlue, req.params);
+  console.log("all products req.query :>> ".bgMagenta, req.query);
 
   try {
     const skip = (page - 1) * perPage;
@@ -30,7 +33,7 @@ const getProducts = async (req, res) => {
       .limit(perPage);
 
     res.json({
-      totalPage: totalPages,
+      totalPages: totalPages,
       totalItems: totalCount,
       perPage: perPage,
       currentPage: page,
@@ -43,5 +46,5 @@ const getProducts = async (req, res) => {
 };
 
 module.exports = {
-  getProducts: ctrlWrapper(getProducts),
+  getAllProducts: ctrlWrapper(getAllProducts),
 };
