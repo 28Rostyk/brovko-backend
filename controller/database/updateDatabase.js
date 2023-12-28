@@ -89,9 +89,8 @@ const updateDatabase = async (update, fetch) => {
       default:
         console.log("=== CASE 3 ===".bgMagenta);
         // Оновлюємо категорії та передаємо функцію для оновлення продуктів
-        await autoFetchCategories(ymlFilePath, () => {
-          autoFetchProducts(ymlFilePath);
-        });
+        await autoFetchCategories(ymlFilePath);
+        await autoFetchProducts(ymlFilePath);
         break;
     }
 

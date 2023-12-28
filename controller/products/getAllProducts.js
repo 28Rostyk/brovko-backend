@@ -9,8 +9,8 @@ const getAllProducts = async (req, res) => {
     sortOrder = "asc",
   } = req.query;
 
-  console.log("all products req.params :>> ".bgBlue, req.params);
-  console.log("all products req.query :>> ".bgMagenta, req.query);
+  // console.log("all products req.params :>> ".bgBlue, req.params);
+  // console.log("all products req.query :>> ".bgMagenta, req.query);
 
   try {
     const skip = (page - 1) * perPage;

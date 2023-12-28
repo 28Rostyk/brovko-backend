@@ -11,8 +11,8 @@ const getProductsByCategory = async (req, res) => {
     sortOrder = "asc",
   } = req.query;
 
-  console.log("products by category req.params :>> ".bgBlue, req.params);
-  console.log("products by category req.query :>> ".bgMagenta, req.query);
+  // console.log("products by category req.params :>> ".bgBlue, req.params);
+  // console.log("products by category req.query :>> ".bgMagenta, req.query);
 
   try {
     const skip = (page - 1) * perPage;

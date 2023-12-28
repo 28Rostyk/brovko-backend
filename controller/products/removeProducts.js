@@ -9,8 +9,8 @@ const removeProducts = async (req, res) => {
 
     const response = await deleteProducts(req.body);
 
-    await updateDatabase("product");
-    // await updateDatabase();
+    // await updateDatabase("product");
+    await updateDatabase();
 
     res.status(200).json({
       status: response.status,
