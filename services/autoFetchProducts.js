@@ -83,21 +83,22 @@ async function updateProduct(offerData) {
 
 async function autoFetchProducts(url) {
   if (isUpdating) {
-    console.log("Update already in progress, skipping...");
+    console.log("Update already in progress, skipping...".red);
     return;
   }
 
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
+    console.log("== products updating".magenta);
     try {
       const response = await axios.get(url);
       const xml = response.data;
 
       const parser = new xml2js.Parser();
       const parseResult = await new Promise((resolve, reject) => {
-        parser.parseString(xml, (err, result) => {
-          if (err) {
-            reject(err);
+        parser.parseString(xml, (error, result) => {
+          if (error) {
+            reject(error);
           } else {
             resolve(result);
           }

@@ -9,18 +9,15 @@ const { Category } = require("../models"); // Шлях до моделі Categor
 // const initialOption = { response: false };
 let isUpdating = false;
 
-async function autoFetchCategories(
-  url,
-  updateProducts,
-  options = { response: false }
-) {
+async function autoFetchCategories(url, options = { response: false }) {
   if (isUpdating) {
-    console.log("Update already in progress, skipping...");
+    console.log("Update already in progress, skipping...".red);
     return;
   }
 
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
+    console.log("== categories updating".magenta);
     try {
       isUpdating = true;
       let updatedCategories;
@@ -85,13 +82,6 @@ async function autoFetchCategories(
         for (const removedCategory of removedCategories) {
           await Category.deleteOne({ _id: removedCategory._id });
           console.log("Deleted category:", removedCategory.id);
-        }
-
-        // Викликаємо функцію для оновлення продуктів
-        if (updateProducts && typeof updateProducts === "function") {
-          (async () => {
-            await updateProducts(url);
-          })();
         }
 
         if (options && options.response === true) {
