@@ -37,7 +37,7 @@ async function updateProduct(offerData) {
     });
 
     await newOffer.save();
-    console.log("Added:", newOffer.id);
+    console.log("Added product:", `${newOffer.id}`.green);
   } else {
     // Порівняти змінені поля і оновити тільки якщо є зміни
     const fieldsToCompare = [
@@ -72,7 +72,7 @@ async function updateProduct(offerData) {
     if (hasChanges) {
       const updatedOffer = new Products(existingOffer); // Створення нового об'єкту Mongoose Document
       await updatedOffer.save();
-      console.log("Updated product:", updatedOffer.id);
+      console.log("Updated product:", `${updatedOffer.id}`.yellow);
     } else {
       console.log("No changes for:", existingOffer.id);
     }
@@ -121,7 +121,7 @@ async function autoFetchProducts(url) {
       await Promise.all(
         productsToDelete.map(async (productToDelete) => {
           await Products.findOneAndDelete({ id: productToDelete.id });
-          console.log("Deleted:", productToDelete.id);
+          console.log("Deleted product:", `${productToDelete.id}`.red);
         })
       );
 

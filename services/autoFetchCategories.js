@@ -62,7 +62,7 @@ async function autoFetchCategories(url, options = { response: false }) {
             existingCategory.name = newYmlCategory.name;
             existingCategory.parentId = newYmlCategory.parentId;
             await existingCategory.save();
-            console.log("Updated category:", newYmlCategory.id);
+            console.log("Updated category:", `${newYmlCategory.id}`.yellow);
           } else {
             const category = new Category({
               id: newYmlCategory.id,
@@ -70,7 +70,7 @@ async function autoFetchCategories(url, options = { response: false }) {
               parentId: newYmlCategory.parentId,
             });
             await category.save();
-            console.log("Added category:", newYmlCategory.id);
+            console.log("Added category:", `${newYmlCategory.id}`.green);
           }
         }
 
@@ -81,7 +81,7 @@ async function autoFetchCategories(url, options = { response: false }) {
 
         for (const removedCategory of removedCategories) {
           await Category.deleteOne({ _id: removedCategory._id });
-          console.log("Deleted category:", removedCategory.id);
+          console.log("Deleted category:", `${removedCategory.id}`.red);
         }
 
         if (options && options.response === true) {
@@ -94,7 +94,7 @@ async function autoFetchCategories(url, options = { response: false }) {
         isUpdating = false;
       });
     } catch (error) {
-      console.log("Error:", error);
+      console.log("Error:".red, error);
       reject(error);
       isUpdating = false;
     }
