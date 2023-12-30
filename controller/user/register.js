@@ -13,7 +13,8 @@ const {
 
 const register = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const lowercaseEmail = email.toLowerCase();
+  const user = await User.findOne({ lowercaseEmail });
 
   if (user) {
     console.log("error");
