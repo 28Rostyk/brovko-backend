@@ -2,7 +2,12 @@ const jwt = require("jsonwebtoken");
 const { HttpError } = require("../../helpers");
 const { User } = require("../../models");
 
-const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
+const {
+  ACCESS_SECRET_KEY,
+  REFRESH_SECRET_KEY,
+  ACCESS_TOKEN_LIFE,
+  REFRESH_TOKEN_LIFE,
+} = process.env;
 
 const refreshToken = async (req, res, next) => {
   const { refreshToken: token } = req.body;
@@ -16,15 +21,20 @@ const refreshToken = async (req, res, next) => {
       id,
     };
 
-    const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-      expiresIn: "2d",
+    const newAccessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
+      expiresIn: ACCESS_TOKEN_LIFE,
     });
-    const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-      expiresIn: "7d",
+    const newRefreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
+      expiresIn: REFRESH_TOKEN_LIFE,
     });
+
+    isExist.refreshToken = newRefreshToken;
+    isExist.accessToken = newAccessToken;
+    await isExist.save();
+
     res.status(201).json({
-      accessToken,
-      refreshToken,
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
     });
   } catch {
     next(HttpError(403, "refreshToken invalid"));

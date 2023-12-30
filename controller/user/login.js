@@ -5,7 +5,12 @@ const { User } = require("../../models");
 
 const { HttpError } = require("../../helpers");
 
-const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
+const {
+  ACCESS_SECRET_KEY,
+  REFRESH_SECRET_KEY,
+  ACCESS_TOKEN_LIFE,
+  REFRESH_TOKEN_LIFE,
+} = process.env;
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -26,9 +31,11 @@ const login = async (req, res) => {
     id: user._id,
   };
 
-  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: "2d" });
+  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
+    expiresIn: ACCESS_TOKEN_LIFE,
+  });
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-    expiresIn: "7d",
+    expiresIn: REFRESH_TOKEN_LIFE,
   });
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
 
