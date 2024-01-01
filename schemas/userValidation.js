@@ -25,9 +25,9 @@ const userValidation = Joi.object({
     .custom((value, helpers) => {
       const lowercaseEmail = value.toLowerCase();
 
-      if (value !== lowercaseEmail) {
-        return helpers.message("Email must be in lowercase");
-      }
+      // if (value !== lowercaseEmail) {
+      //   return helpers.message("Email must be in lowercase");
+      // }
 
       return lowercaseEmail;
     }),
