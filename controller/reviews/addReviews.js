@@ -16,12 +16,15 @@ const addReviews = async (req, res) => {
     return res.status(400).json({ message: "Text is required" });
   }
 
-  let reviewURL;
-  if (req.file) {
-    const { path: tempUpload, filename } = req.file;
-    const reviewName = `${userId}${filename}`;
-    const cloudinaryResponse = await sendInCloudinary(tempUpload, reviewName);
-    reviewURL = cloudinaryResponse.secure_url;
+  const reviewURLs = [];
+
+  if (req.files && req.files.length > 0) {
+    for (const file of req.files) {
+      const { path: tempUpload, filename } = file;
+      const reviewName = `${userId}${filename}`;
+      const cloudinaryResponse = await sendInCloudinary(tempUpload, reviewName);
+      reviewURLs.push(cloudinaryResponse.secure_url);
+    }
   }
 
   const user = await User.findById(userId);
@@ -50,7 +53,7 @@ const addReviews = async (req, res) => {
       // Оновлення масиву об'єктів з текстом та датою створення
       userComment.text.push({
         text: newText,
-        reviewURL: [reviewURL, ...userComment.text[0].reviewURL],
+        reviewURL: [...reviewURLs, ...userComment.text[0].reviewURL],
         createdAt: new Date(),
       });
     } else {
@@ -59,7 +62,7 @@ const addReviews = async (req, res) => {
         text: [
           {
             text: newText,
-            reviewURL: reviewURL ? [reviewURL] : [],
+            reviewURL: reviewURLs,
             createdAt: new Date(),
           },
         ],
