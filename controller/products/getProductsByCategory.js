@@ -11,9 +11,6 @@ const getProductsByCategory = async (req, res) => {
     sortOrder = "asc",
   } = req.query;
 
-  // console.log("products by category req.params :>> ".bgBlue, req.params);
-  // console.log("products by category req.query :>> ".bgMagenta, req.query);
-
   try {
     const skip = (page - 1) * perPage;
     const totalCount = await Products.countDocuments({
@@ -21,15 +18,7 @@ const getProductsByCategory = async (req, res) => {
     });
     const totalPages = Math.ceil(totalCount / perPage);
 
-    let sortOptions = {};
-
-    // Визначте, чи користувач сортує за ціною
-    if (sortBy === "price") {
-      sortOptions = { price: sortOrder === "asc" ? 1 : -1 };
-    } else {
-      // Інші випадки сортування
-      sortOptions[sortBy] = sortOrder === "asc" ? 1 : -1;
-    }
+    const sortOptions = { [sortBy]: sortOrder };
 
     const productsInCategory = await Products.find(
       { categoryId: categoryId },
