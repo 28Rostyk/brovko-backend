@@ -2,6 +2,7 @@ const { Reviews, User } = require("../../models");
 const { ctrlWrapper } = require("../../helpers");
 const { HttpError } = require("../../helpers");
 const { sendInCloudinary } = require("../../services");
+const { clearTemp } = require("../../services");
 
 const addReviews = async (req, res) => {
   const userId = req.user.id;
@@ -77,6 +78,7 @@ const addReviews = async (req, res) => {
 
     // Збережіть змінений відгук
     await review.save();
+    await clearTemp();
     return res.status(201).json({ message: "Comment added successfully" });
   } catch (error) {
     console.error("Error adding comment:", error);
