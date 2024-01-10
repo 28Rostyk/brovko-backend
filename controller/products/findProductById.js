@@ -1,5 +1,5 @@
 const { ctrlWrapper } = require("../../helpers");
-const { updateDatabase } = require("../../services");
+// const { updateDatabase } = require("../../services");
 const { Products } = require("../../models");
 require("colors");
 
@@ -12,7 +12,7 @@ const findProductById = async (req, res) => {
     if (!product) {
       return res.status(404).json({ error: "product not found" });
     }
-    await updateDatabase();
+    // await updateDatabase();
     return res.status(200).json(product);
   } catch (error) {
     console.log(error.red);
