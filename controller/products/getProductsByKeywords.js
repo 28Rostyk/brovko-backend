@@ -2,28 +2,37 @@ const { ctrlWrapper } = require("../../helpers");
 const { Products } = require("../../models");
 
 const getProductsByKeywords = async (req, res) => {
-  const { page = 1, perPage = 10, ...query } = req.query;
-  const skip = (page - 1) * perPage;
+  const {
+    search = "",
+    page = 1,
+    perPage = 10,
+    sortBy = "createdAt",
+    sortOrder = "desc",
+  } = req.query;
+
   try {
+    const skip = (page - 1) * perPage;
+    const sortOptions = { [sortBy]: sortOrder };
+
     const filteredData = await Products.find(
       {
-        name: { $regex: query.search, $options: "i" },
+        name: { $regex: search, $options: "i" },
       },
-      "-createdAt -updatedAt",
-      {
-        skip,
-        perPage,
-      }
+      "-createdAt -updatedAt"
     )
-      .sort({ date: -1 })
-      .exec();
+      .skip(skip)
+      .sort(sortOptions)
+      .limit(perPage);
+
     const totalItems = await Products.countDocuments({
-      name: { $regex: query.search, $options: "i" },
+      name: { $regex: search, $options: "i" },
     });
-    const totalPage = Math.ceil(totalItems / perPage);
+
+    const totalPages = Math.ceil(totalItems / perPage);
+
     res.json({
       totalItems,
-      totalPage,
+      totalPages,
       perPage: perPage,
       currentPage: page,
       products: filteredData,

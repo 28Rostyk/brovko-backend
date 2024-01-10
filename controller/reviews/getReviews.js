@@ -7,11 +7,11 @@ const getReviews = async (req, res) => {
   try {
     const reviews = await Reviews.find();
 
-    // if (!reviews) {
-    //   return res
-    //     .status(404)
-    //     .json({ message: "Reviews not found for this product" });
-    // }
+    if (!reviews) {
+      return res
+        .status(404)
+        .json({ message: "Reviews not found for this product" });
+    }
 
     return res.status(200).json({ reviews });
   } catch (error) {
