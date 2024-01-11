@@ -10,16 +10,17 @@ const {
   getProductsByKeywords,
 } = require("../../controller");
 
-const { checkNewProductData, upload } = require("../../middlewares");
-const { addProductSchema, validateBody } = require("../../schemas");
+const { upload } = require("../../middlewares");
+// const { checkNewProductData, upload } = require("../../middlewares");
+// const { addProductSchema, validateBody } = require("../../schemas");
 
 productsRouter.get("/", getAllProducts);
 productsRouter.get("/category/:categoryId", getProductsByCategory);
 productsRouter.get("/product/:productId", findProductById);
 productsRouter.post(
   "/add-product",
-  checkNewProductData,
-  validateBody(addProductSchema),
+  // checkNewProductData,
+  // validateBody(addProductSchema),
   upload.single("fullsize"),
   addProduct
 );

@@ -9,7 +9,8 @@ const addProduct = async (req, res) => {
   const update = req.query.update;
 
   try {
-    const response = await createProduct(req.body);
+    const response = await createProduct(JSON.parse(req.body.requestBody));
+
     await updateDatabase(update);
     res.status(201).json({
       status: response.data.status,
