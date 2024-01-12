@@ -1,7 +1,7 @@
 // додавання і отримання замовлення
 const { fetchOrder, getAllOrdersAuth, addOrder } = require("./orders");
 // додавання і отримання категорій
-const { getCategories, addCategory } = require("./category");
+const { getCategories, addCategory, getCategoryById } = require("./category");
 // додавання товару, отримання всіх товарів, пошук товару за категорією
 const {
   addProduct,
@@ -50,14 +50,15 @@ module.exports = {
   fetchOrder,
   getAllOrdersAuth,
   addOrder,
+  addCategory,
   getCategories,
+  getCategoryById,
   addRating,
   getRatings,
   addReviews,
   getReviews,
   addProduct,
   removeProducts,
-  addCategory,
   generateSignature,
   userUpdate,
   updateAvatars,
