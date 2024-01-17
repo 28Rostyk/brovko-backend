@@ -24,7 +24,7 @@ const getReviewsByProductId = async (req, res) => {
       { $sort: { createdAt: sortOrder === "asc" ? 1 : -1 } }, // Якщо потрібно сортування по даті від новіших до старіших для самого відгуку
     ]);
 
-    if (!reviews || reviews.length === 0) {
+    if (!reviews) {
       return res
         .status(404)
         .json({ error: "Reviews not found for the specified productId" });
