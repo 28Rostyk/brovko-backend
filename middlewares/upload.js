@@ -26,4 +26,16 @@ const upload = multer({
   // fileFilter: imageFileFilter,
 });
 
-module.exports = { upload };
+const fileOrUrlHandler = (req, res, next) => {
+  if (req.file) {
+    req.body.file = req.file;
+    console.log('file', req.file)
+  } else if (req.body.url) {
+    req.body.file = req.body.url;
+    console.log(url, req.body.url)
+  }
+
+  next();
+};
+
+module.exports = { upload, fileOrUrlHandler };

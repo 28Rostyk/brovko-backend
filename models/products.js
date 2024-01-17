@@ -1,7 +1,9 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 const Joi = require("joi");
 
 const { handleSchemaErrors } = require("../helpers");
+
+const { Mixed } = Schema.Types;
 
 const productSchema = new Schema(
   {
@@ -14,7 +16,6 @@ const productSchema = new Schema(
     inStock: {
       type: Boolean,
     },
-
     price: {
       type: Number,
     },
@@ -33,11 +34,10 @@ const productSchema = new Schema(
     url: {
       type: String,
     },
-    picture: [
-      {
-        type: String,
-      },
-    ],
+    picture: {
+      type: [String],
+      default: [],
+    },
     vendor: {
       type: String,
     },

@@ -7,7 +7,7 @@ const addProduct = async (req, res) => {
   // const body = await changeImage(req.body);
 
   const update = req.query.update;
-
+console.log(req)
   try {
     const response = await createProduct(JSON.parse(req.body.requestBody));
 
