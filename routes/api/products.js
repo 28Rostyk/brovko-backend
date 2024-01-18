@@ -21,7 +21,7 @@ productsRouter.post(
   "/add-product",
   // checkNewProductData,
   // validateBody(addProductSchema),
-  upload.single("fullsize"),
+  upload.array("picture", 5),
   addProduct
 );
 productsRouter.post("/remove-product", removeProducts);
