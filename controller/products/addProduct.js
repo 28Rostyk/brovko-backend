@@ -7,6 +7,7 @@ const { clearTemp } = require("../../services");
 const addProduct = async (req, res) => {
   try {
     const requestBodyObject = JSON.parse(req.body.requestBody);
+    const { images } = requestBodyObject.product[0];
     const productURLs = [];
 
     if (req.files && req.files.length > 0) {
@@ -19,9 +20,14 @@ const addProduct = async (req, res) => {
           );
           productURLs.push(cloudinaryResponse.secure_url);
         } else if ("url" in item) {
-          console.log("item.url", item.url);
           productURLs.push(item.url);
         }
+      }
+    }
+
+    if (images && images.length > 0) {
+      for (const item of images) {
+        productURLs.push(item);
       }
     }
 
