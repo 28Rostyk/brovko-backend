@@ -22,6 +22,24 @@ const reviewsSchema = new Schema(
                 type: Date,
                 default: Date.now,
               },
+              status: {
+                approved: {
+                  type: Boolean,
+                  default: false,
+                },
+                approvedBy: {
+                  userId: {
+                    type: String,
+                    ref: "User",
+                    default: "",
+                  },
+                },
+                approvedAt: {
+                  type: Date,
+                  default: "",
+                  required: false,
+                },
+              },
             },
           ],
           required: [true, "Text is required"],
@@ -31,24 +49,6 @@ const reviewsSchema = new Schema(
           name: String,
           email: String,
           avatarURL: String,
-        },
-        status: {
-          approved: {
-            type: Boolean,
-            default: false,
-          },
-          approvedBy: {
-            userId: {
-              type: String,
-              ref: "User",
-              default: "",
-            },
-          },
-          approvedAt: {
-            type: Date,
-            default: "",
-            required: false,
-          },
         },
       },
     ],
