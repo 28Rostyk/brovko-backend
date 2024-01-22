@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("colors");
 
-// const { addDataToDBCollection } = require("./utils");
+const { addDataToDBCollection } = require("./utils");
 
 const app = require("./app");
 require("dotenv").config();
@@ -22,4 +22,4 @@ mongoose
     process.exit(1);
   });
 
-// addDataToDBCollection();
+addDataToDBCollection();

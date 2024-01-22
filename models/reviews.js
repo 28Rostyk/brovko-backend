@@ -33,6 +33,16 @@ const reviewsSchema = new Schema(
                     ref: "User",
                     default: "",
                   },
+                  userName: {
+                    type: String,
+                    ref: "User",
+                    default: "",
+                  },
+                  userEmail: {
+                    type: String,
+                    ref: "User",
+                    default: "",
+                  },
                 },
                 approvedAt: {
                   type: Date,

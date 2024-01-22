@@ -5,8 +5,6 @@ const { sendInCloudinary } = require("../../services");
 const { clearTemp } = require("../../services");
 
 const addReviews = async (req, res) => {
-  console.log("req :>> ", `${req.user.id}`.red);
-
   const userId = req.user.id;
   const productId = req.body.productId;
   const newText = req.body.text;
@@ -58,7 +56,15 @@ const addReviews = async (req, res) => {
       userComment.text.push({
         text: newText,
         reviewURL: [...reviewURLs, ...userComment.text[0].reviewURL],
-        status: {},
+        status: {
+          approved: false,
+          approvedBy: {
+            userId: "",
+            userName: "",
+            userEmail: "",
+          },
+          approvedAt: "",
+        },
         createdAt: new Date(),
       });
     } else {
@@ -68,6 +74,15 @@ const addReviews = async (req, res) => {
           {
             text: newText,
             reviewURL: reviewURLs,
+            status: {
+              approved: false,
+              approvedBy: {
+                userId: "",
+                userName: "",
+                userEmail: "",
+              },
+              approvedAt: "",
+            },
             createdAt: new Date(),
           },
         ],
