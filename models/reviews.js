@@ -32,11 +32,25 @@ const reviewsSchema = new Schema(
           email: String,
           avatarURL: String,
         },
+        status: {
+          approved: {
+            type: Boolean,
+            default: false,
+          },
+          approvedBy: {
+            userId: { type: String, ref: "User", default: "" },
+          },
+          approvedAt: {
+            type: Date,
+            default: "",
+            required: false,
+          },
+        },
       },
     ],
     productId: {
       type: String,
-      ref: "Product",
+      ref: "Products",
       required: [true, "ProductId is required"],
     },
   },
