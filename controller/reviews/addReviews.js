@@ -29,6 +29,7 @@ const addReviews = async (req, res) => {
   }
 
   const user = await User.findById(userId);
+  console.log(`${user}`.green);
 
   if (!user) {
     throw HttpError(404, "User not found");
@@ -55,6 +56,15 @@ const addReviews = async (req, res) => {
       userComment.text.push({
         text: newText,
         reviewURL: [...reviewURLs, ...userComment.text[0].reviewURL],
+        status: {
+          approved: false,
+          approvedBy: {
+            userId: "",
+            userName: "",
+            userEmail: "",
+          },
+          approvedAt: "",
+        },
         createdAt: new Date(),
       });
     } else {
@@ -64,6 +74,15 @@ const addReviews = async (req, res) => {
           {
             text: newText,
             reviewURL: reviewURLs,
+            status: {
+              approved: false,
+              approvedBy: {
+                userId: "",
+                userName: "",
+                userEmail: "",
+              },
+              approvedAt: "",
+            },
             createdAt: new Date(),
           },
         ],

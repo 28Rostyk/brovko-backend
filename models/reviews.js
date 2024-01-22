@@ -22,6 +22,34 @@ const reviewsSchema = new Schema(
                 type: Date,
                 default: Date.now,
               },
+              status: {
+                approved: {
+                  type: Boolean,
+                  default: false,
+                },
+                approvedBy: {
+                  userId: {
+                    type: String,
+                    ref: "User",
+                    default: "",
+                  },
+                  userName: {
+                    type: String,
+                    ref: "User",
+                    default: "",
+                  },
+                  userEmail: {
+                    type: String,
+                    ref: "User",
+                    default: "",
+                  },
+                },
+                approvedAt: {
+                  type: Date,
+                  default: "",
+                  required: false,
+                },
+              },
             },
           ],
           required: [true, "Text is required"],
@@ -36,7 +64,7 @@ const reviewsSchema = new Schema(
     ],
     productId: {
       type: String,
-      ref: "Product",
+      ref: "Products",
       required: [true, "ProductId is required"],
     },
   },
