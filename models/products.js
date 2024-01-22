@@ -59,6 +59,10 @@ const productSchema = new Schema(
     note: {
       type: String,
     },
+    params: {
+      type: Array,
+      default: [],
+    },
   },
   { versionKey: false, timestamps: true }
 );
