@@ -14,7 +14,7 @@ const getCategoryById = async (req, res) => {
       return res.status(404).json({ error: "category not found" });
     }
 
-    console.log("category :>> ".bgMagenta, category);
+    // console.log("category :>> ".bgMagenta, category);
 
     return res.status(200).json(category);
   } catch (error) {

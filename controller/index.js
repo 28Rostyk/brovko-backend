@@ -29,7 +29,12 @@ const { addRating, getRatings } = require("./rating");
 
 // додавання і отримування відгуків до товарів
 
-const { addReviews, getReviews, getReviewsByProductId } = require("./reviews");
+const {
+  addReviews,
+  getReviews,
+  getReviewsByProductId,
+  controlReview,
+} = require("./reviews");
 
 // Генерація Ключа
 
@@ -55,13 +60,14 @@ module.exports = {
   getCategoryById,
   addRating,
   getRatings,
-  addReviews,
   getReviews,
+  getReviewsByProductId,
+  addReviews,
+  controlReview,
   addProduct,
   removeProducts,
   generateSignature,
   userUpdate,
   updateAvatars,
   getProductsByKeywords,
-  getReviewsByProductId,
 };
