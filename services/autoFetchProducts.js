@@ -34,7 +34,7 @@ async function updateProduct(offerData) {
       available: offerData.available || false,
       inStock: offerData.inStock || false,
       note: sanitizeAndEncode(offerData.note) || "",
-      params: extractParamNames(offerData.param) || [], // Дод
+      params: extractParams(offerData.param) || [], // Дод
     });
 
     await newOffer.save();
@@ -72,7 +72,7 @@ async function updateProduct(offerData) {
     }
 
     if (offerData.param) {
-      const paramNames = extractParamNames(offerData.param);
+      const paramNames = extractParams(offerData.param);
       existingOffer.params = paramNames || [];
     }
 
@@ -86,14 +86,24 @@ async function updateProduct(offerData) {
   }
 }
 
-function extractParamNames(params) {
+function extractParams(params) {
   if (!params) {
     return null;
   }
 
-  return params
-    .filter((param) => param.$.name !== "Артикул")
-    .map((param) => param.$.name);
+  const extractedParams = {};
+
+  params.forEach((param) => {
+    const paramName = param.$.name;
+    const paramValue = param._; // Важливо використовувати _ для отримання значення
+
+    // Ігнорувати "Артикул" та інші умови, якщо потрібно
+    if (paramName !== "Артикул") {
+      extractedParams[paramName] = paramValue;
+    }
+  });
+
+  return extractedParams;
 }
 
 // const initialProductCount = 0; // Початкова кількість продуктів
@@ -183,7 +193,7 @@ async function autoFetchProducts(url) {
             available: offerData.available === "true",
             inStock: offerData.in_stock === "true",
             note: sanitizeAndEncode(note),
-            params: extractParamNames(offerData.param) || [],
+            params: extractParams(offerData.param) || [],
           });
         })
       );
