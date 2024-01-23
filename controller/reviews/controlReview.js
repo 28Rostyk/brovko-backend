@@ -3,10 +3,11 @@ const { Reviews } = require("../../models");
 
 const controlReview = async (req, res) => {
   try {
-    const { firstName, middleName, lastName, email } = req.user;
+    const { id, firstName, middleName, lastName, email } = req.user;
     const { reviewByProductId, commentId, textId } = req.body;
 
     console.log("USER :>> ".bgMagenta, {
+      id,
       firstName,
       middleName,
       lastName,
@@ -54,8 +55,15 @@ const controlReview = async (req, res) => {
       reviewByProductId,
       {
         $set: {
-          [`comments.${commentIndex}.text.${textIndex}.status`]:
-            "NEW GODNESS STATUS",
+          [`comments.${commentIndex}.text.${textIndex}.status`]: {
+            approved: false,
+            approvedBy: {
+              userId: id,
+              userName: firstName + " " + lastName,
+              userEmail: email,
+            },
+            approvedAt: new Date(),
+          },
         },
       },
       {
