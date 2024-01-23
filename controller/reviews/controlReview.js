@@ -4,8 +4,9 @@ const { Reviews } = require("../../models");
 const controlReview = async (req, res) => {
   try {
     const { id, firstName, middleName, lastName, email } = req.user;
-    const { reviewByProductId, commentId, textId } = req.body;
+    const { productId, commentId, textId, approved } = req.body;
 
+    // перевіряємо вхідні дані з запиту
     console.log("USER :>> ".bgMagenta, {
       id,
       firstName,
@@ -14,49 +15,31 @@ const controlReview = async (req, res) => {
       email,
     });
     console.log("REVIEW-ID's :>>".bgBlue, {
-      reviewByProductId,
+      productId,
       commentId,
       textId,
     });
 
-    // шукаємо усі коментарі від продукту одного юзера
-    const { comments } = await Reviews.findOne(
-      {
-        _id: reviewByProductId,
-        "comments._id": commentId,
-      },
-      {
-        "comments.$": 1,
-      }
-    );
-
-    console.log("userComments :>> ".yellow, `${comments}`.yellow);
-
-    console.log("discovery :>> ".bgGreen, `${comments[0].text}`.brightGreen);
-    console.log("typeof comments[0].text :>> ", typeof comments[0].text);
-
-    const response = comments[0].text.find(
-      (el) => el._id.toString() === textId
-    );
-
-    console.log("response :>> ".bgBlue, `${response}`.brightBlue);
-
     // Знаходження індексу коментаря та тексту в масиві
-    const review = await Reviews.findById(reviewByProductId);
+    const review = await Reviews.findOne({ productId });
+    console.log("review :>> ".bgBrightBlue, review);
+
     const commentIndex = review.comments.findIndex(
       (comment) => comment._id.toString() === commentId
     );
+    console.log("commentIndex :>> ".bgBrightBlue, commentIndex);
+
     const textIndex = review.comments[commentIndex].text.findIndex(
       (text) => text._id.toString() === textId
     );
 
     // Оновлення статусу
-    const updatedDocument = await Reviews.findByIdAndUpdate(
-      reviewByProductId,
+    const updatedDocument = await Reviews.findOneAndUpdate(
+      { productId },
       {
         $set: {
           [`comments.${commentIndex}.text.${textIndex}.status`]: {
-            approved: false,
+            approved: approved,
             approvedBy: {
               userId: id,
               userName: firstName + " " + lastName,
