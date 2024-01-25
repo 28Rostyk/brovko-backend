@@ -12,7 +12,7 @@ const resetPassword = async (req, res) => {
   });
 
   if (!user) {
-    throw HttpError(400, "The link is invalid or has expired!");
+    throw HttpError(401, "The link is invalid or has expired!");
   }
 
   const hashPassword = await bcrypt.hash(password, 1);
