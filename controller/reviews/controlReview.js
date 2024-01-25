@@ -57,6 +57,8 @@ const controlReview = async (req, res) => {
     if (updatedDocument) {
       const response = updatedDocument.comments[commentIndex].text[textIndex];
       console.log("Status updated successfully", `${response}`.magenta);
+
+      res.status(200).json(response);
     } else {
       console.log("No document was modified");
     }
