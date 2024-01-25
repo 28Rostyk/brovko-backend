@@ -7,7 +7,7 @@ const resetPasswordVerify = async (req, res) => {
     resetTokenExpiry: { $gt: Date.now() },
   });
   if (!user) {
-    throw HttpError(400, "The link is invalid or has expired!");
+    throw HttpError(401, "The link is invalid or has expired!");
   }
   res.status(201).json({
     message: "Введіть новий пароль.",

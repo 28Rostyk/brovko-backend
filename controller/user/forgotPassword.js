@@ -3,7 +3,7 @@ const { User } = require("../../models");
 
 const { HttpError, sendEmail } = require("../../helpers");
 
-const { RESET_SECRET_KEY, BASE_URL } = process.env;
+const { RESET_SECRET_KEY, FRONTEND_URL } = process.env;
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -11,7 +11,7 @@ const forgotPassword = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw HttpError(401, "Email is wrong");
+    throw HttpError(404, "Email is wrong");
   }
 
   const resetToken = jwt.sign({ email }, RESET_SECRET_KEY, { expiresIn: "1h" });
@@ -22,12 +22,17 @@ const forgotPassword = async (req, res) => {
   const resetEmail = {
     to: email,
     subject: "Відновлення паролю",
-    text:
-      "Ви отримали цього листа, тому що Ви відправили запит на відновлення пароля для вашого облікового запису.\n\n" +
-      "Будь ласка, перейдіть за посиланням, щоб завершити процес відновлення пароля:\n\n" +
-      `<a href="${BASE_URL}/api/user/reset-password/token=${resetToken}"></a>` +
-      "\n\n" +
-      "Якщо Ви не потребуєте відновлення паролю, проігноруйте цього листа, ваш пароль не буде змінено.\n",
+    html:
+      `<p>Вітаємо, друже Бровка!.</p>` +
+      `<p>Ви отримали цього листа, тому що Ви відправили запит на відновлення пароля для вашого облікового запису.</p>` +
+      `<p>Будь ласка, <a href="${FRONTEND_URL}auth/reset-password/${resetToken}">перейдіть за цим посиланням</a>, щоб завершити процес відновлення пароля.</p>` +
+      `<p>Якщо Ви не потребуєте відновлення паролю, проігноруйте цього листа, ваш пароль не буде змінено.</p>`,
+    // text:
+    //   "Ви отримали цього листа, тому що Ви відправили запит на відновлення пароля для вашого облікового запису.\n\n" +
+    //   "Будь ласка, перейдіть за посиланням, щоб завершити процес відновлення пароля:\n\n" +
+    //   `<a href="${BASE_URL}/api/user/reset-password/token=${resetToken}">${BASE_URL}/api/user/reset-password/token=${resetToken}</a>` +
+    //   "\n\n" +
+    //   "Якщо Ви не потребуєте відновлення паролю, проігноруйте цього листа, ваш пароль не буде змінено.\n",
   };
 
   sendEmail(resetEmail);
