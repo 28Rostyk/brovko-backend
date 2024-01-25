@@ -34,6 +34,7 @@ const {
   getReviews,
   getReviewsByProductId,
   controlReview,
+  getReviewsByStatus,
 } = require("./reviews");
 
 // Генерація Ключа
@@ -62,6 +63,7 @@ module.exports = {
   getRatings,
   getReviews,
   getReviewsByProductId,
+  getReviewsByStatus,
   addReviews,
   controlReview,
   addProduct,
