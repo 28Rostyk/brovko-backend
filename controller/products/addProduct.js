@@ -3,6 +3,7 @@ const { createProduct } = require("../../services");
 const { updateDatabase } = require("../../services/updateDatabase");
 const { sendInCloudinary } = require("../../services");
 const { clearTemp } = require("../../services");
+const { makeCopyProductFoto } = require("../../services");
 
 const addProduct = async (req, res) => {
   try {
@@ -18,7 +19,11 @@ const addProduct = async (req, res) => {
             tempUpload,
             filename
           );
-          productURLs.push(cloudinaryResponse.secure_url);
+          const thumbnail = await makeCopyProductFoto(tempUpload, filename);
+          productURLs.push({
+            full: cloudinaryResponse.secure_url,
+            copy: thumbnail,
+          });
         } else if ("url" in item) {
           productURLs.push(item.url);
         }
@@ -26,15 +31,15 @@ const addProduct = async (req, res) => {
     }
 
     if (images && images.length > 0) {
-      for (const item of images) {
-        productURLs.push(item);
+      for (const full of images) {
+        productURLs.push({ full });
       }
     }
 
     if (productURLs.length) {
-      const imagesWithFullsize = productURLs.map((url, index) => ({
-        fullsize: url,
-        thumbnail: index,
+      const imagesWithFullsize = productURLs.map(({ full, copy }) => ({
+        fullsize: full,
+        thumbnail: copy,
       }));
       requestBodyObject.product[0].images = imagesWithFullsize;
     }
