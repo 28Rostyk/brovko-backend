@@ -55,7 +55,9 @@ const addReviews = async (req, res) => {
       // Оновлення масиву об'єктів з текстом та датою створення
       userComment.text.push({
         text: newText,
-        reviewURL: [...reviewURLs, ...userComment.text[0].reviewURL],
+        reviewURL: [...reviewURLs
+          // , ...userComment.text[0].reviewURL
+        ],
         status: {
           approved: false,
           approvedBy: {
