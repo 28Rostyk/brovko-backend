@@ -131,7 +131,7 @@ const userSchema = new Schema(
       type: Array,
       default: [],
     },
-    favoriteOrders: {
+    favouriteProducts: {
       type: Array,
       default: [],
     },
