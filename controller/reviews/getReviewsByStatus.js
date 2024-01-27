@@ -40,6 +40,7 @@ const getReviewsByStatus = async (req, res) => {
           status: "$comments.text.status",
           owner: "$comments.owner",
           text: "$comments.text.text",
+          createdAt: "$comments.text.createdAt",
           reviewURL: "$comments.text.reviewURL",
         },
       },
