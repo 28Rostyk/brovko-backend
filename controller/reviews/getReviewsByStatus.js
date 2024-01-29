@@ -32,8 +32,25 @@ const getReviewsByStatus = async (req, res) => {
     const reviews = await Reviews.aggregate([
       { $unwind: "$comments" }, // Розгортає масив коментарів
       { $unwind: "$comments.text" },
+
+      {
+        $lookup: {
+          from: "products",
+          let: { productId: "$productId" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: [{ $toString: "$_id" }, "$$productId"] },
+              },
+            },
+            { $project: { name: 1 } },
+          ],
+          as: "productInfo",
+        },
+      },
       {
         $project: {
+          // інші поля
           _id: 0,
           commentId: "$comments._id",
           textId: "$comments.text._id",
@@ -43,6 +60,7 @@ const getReviewsByStatus = async (req, res) => {
           text: "$comments.text.text",
           createdAt: "$comments.text.createdAt",
           reviewURL: "$comments.text.reviewURL",
+          productName: { $arrayElemAt: ["$productInfo.name", 0] },
         },
       },
       {
