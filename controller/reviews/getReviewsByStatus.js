@@ -35,7 +35,8 @@ const getReviewsByStatus = async (req, res) => {
       {
         $project: {
           _id: 0,
-          commentId: "$comments.text._id",
+          commentId: "$comments._id",
+          textId: "$comments.text._id",
           productId: "$productId",
           status: "$comments.text.status",
           owner: "$comments.owner",
