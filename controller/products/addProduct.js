@@ -9,9 +9,11 @@ const addProduct = async (req, res) => {
   try {
     const requestBodyObject = JSON.parse(req.body.requestBody);
     const { images } = requestBodyObject.product[0];
-    const productURLs = [];
+    const productNewURLs = [];
+console.log('images',requestBodyObject.product[0])
+    const { picture = [""] } = req.body;
 
-    if (req.files && req.files.length > 0) {
+       if (req.files && req.files.length > 0) {
       for (const item of req.files) {
         if (item instanceof Object) {
           const { path: tempUpload, filename } = item;
@@ -20,24 +22,35 @@ const addProduct = async (req, res) => {
             filename
           );
           const thumbnail = await makeCopyProductFoto(tempUpload, filename);
-          productURLs.push({
+          productNewURLs.push({
             full: cloudinaryResponse.secure_url,
             copy: thumbnail,
           });
         } else if ("url" in item) {
-          productURLs.push(item.url);
+          productNewURLs.push(item.url);
         }
       }
     }
+    const parsedPictures = picture.map((item) => JSON.parse(item));
 
-    if (images && images.length > 0) {
-      for (const full of images) {
-        productURLs.push({ full });
+    const pictureURLs = parsedPictures.map((item) => {
+      if (item.url !== "") {
+        return {full: item.url};
+      } else if (productNewURLs.length > 0) {
+        return productNewURLs.shift();
+      } else {
+        return 
       }
-    }
+    });
 
-    if (productURLs.length) {
-      const imagesWithFullsize = productURLs.map(({ full, copy }) => ({
+    // if (images && images.length > 0) {
+    //   for (const full of images) {
+    //     productURLs.push({ full });
+    //   }
+    // }
+
+    if (pictureURLs.length) {
+      const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
         fullsize: full,
         thumbnail: copy,
       }));
