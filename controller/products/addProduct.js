@@ -8,12 +8,16 @@ const { makeCopyProductFoto } = require("../../services");
 const addProduct = async (req, res) => {
   try {
     const requestBodyObject = JSON.parse(req.body.requestBody);
-    const { images } = requestBodyObject.product[0];
-    const productNewURLs = [];
-console.log('images',requestBodyObject.product[0])
-    const { picture = [""] } = req.body;
+    // const { images } = requestBodyObject.product[0];
 
-       if (req.files && req.files.length > 0) {
+    const productNewURLs = [];
+    console.log("request BODY".yellow, requestBodyObject.product[0]);
+    const { picture } = req.body;
+
+    // console.log("picture :>> ", picture);
+    // console.log("req.files :>> ", req.files);
+
+    if (req.files && req.files.length > 0) {
       for (const item of req.files) {
         if (item instanceof Object) {
           const { path: tempUpload, filename } = item;
@@ -31,30 +35,36 @@ console.log('images',requestBodyObject.product[0])
         }
       }
     }
-    const parsedPictures = picture.map((item) => JSON.parse(item));
 
-    const pictureURLs = parsedPictures.map((item) => {
-      if (item.url !== "") {
-        return {full: item.url};
-      } else if (productNewURLs.length > 0) {
-        return productNewURLs.shift();
-      } else {
-        return 
+    if (picture) {
+      console.log("picture :>> ".green, picture);
+      const parsedPictures = picture.map((item) => {
+        return JSON.parse(item);
+      });
+
+      const pictureURLs = parsedPictures.map((item) => {
+        if (item.url !== "") {
+          return { full: item.url };
+        } else if (productNewURLs.length > 0) {
+          return productNewURLs.shift();
+        } else {
+          return "test";
+        }
+      });
+
+      // if (images && images.length > 0) {
+      //   for (const full of images) {
+      //     productURLs.push({ full });
+      //   }
+      // }
+
+      if (pictureURLs.length) {
+        const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
+          fullsize: full,
+          thumbnail: copy,
+        }));
+        requestBodyObject.product[0].images = imagesWithFullsize;
       }
-    });
-
-    // if (images && images.length > 0) {
-    //   for (const full of images) {
-    //     productURLs.push({ full });
-    //   }
-    // }
-
-    if (pictureURLs.length) {
-      const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
-        fullsize: full,
-        thumbnail: copy,
-      }));
-      requestBodyObject.product[0].images = imagesWithFullsize;
     }
 
     const update = req.query.update;
