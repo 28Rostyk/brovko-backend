@@ -91,7 +91,11 @@ function extractParams(params) {
     return null;
   }
 
-  const extractedParams = {};
+  // console.log("params :>> ".bgMagenta, params);
+
+  // const extractedParams = [];
+  const titleParam = {};
+  const otherParams = [];
 
   params.forEach((param) => {
     const paramName = param.$.name;
@@ -99,11 +103,24 @@ function extractParams(params) {
 
     // Ігнорувати "Артикул" та інші умови, якщо потрібно
     if (paramName !== "Артикул") {
-      extractedParams[paramName] = paramValue;
+      // extractedParams[paramName] = paramValue;
+
+      if (paramName === "Заголовок :") {
+        // titleParam.push({ key: paramName, value: paramValue });
+        titleParam.name = paramName;
+        titleParam.value = paramValue;
+      } else {
+        otherParams.push({ key: paramName, value: paramValue });
+      }
     }
   });
 
-  return extractedParams;
+  console.log("extractedParams :>> ".bgRed, {
+    title: titleParam,
+    params: [...otherParams],
+  });
+
+  return { title: titleParam, params: [...otherParams] };
 }
 
 // const initialProductCount = 0; // Початкова кількість продуктів
