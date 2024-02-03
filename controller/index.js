@@ -41,6 +41,13 @@ const {
 
 const { generateSignature } = require("./generateSignature");
 
+const {
+  addLocations,
+  getAllLocations,
+  removeLocation,
+  updateLocation,
+} = require("./location");
+
 module.exports = {
   getAllProducts,
   getProductsByCategory,
@@ -72,4 +79,8 @@ module.exports = {
   userUpdate,
   updateAvatars,
   getProductsByKeywords,
+  addLocations,
+  getAllLocations,
+  removeLocation,
+  updateLocation,
 };

@@ -7,6 +7,7 @@ const {
   userRouter,
   reviewsRouter,
   generateSignatureRouter,
+  locationRouter,
 } = require("./api");
 
 module.exports = {
@@ -18,4 +19,5 @@ module.exports = {
   userRouter,
   reviewsRouter,
   generateSignatureRouter,
+  locationRouter,
 };
