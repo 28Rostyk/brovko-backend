@@ -91,10 +91,8 @@ function extractParams(params) {
     return null;
   }
 
-  // console.log("params :>> ".bgMagenta, params);
-
-  // const extractedParams = [];
-  const titleParam = {};
+  // сортуємо характеристики так, щоб об'єкт із заголовком завжди був першим елементом масиву
+  const titleParam = [];
   const otherParams = [];
 
   params.forEach((param) => {
@@ -106,21 +104,20 @@ function extractParams(params) {
       // extractedParams[paramName] = paramValue;
 
       if (paramName === "Заголовок :") {
-        // titleParam.push({ key: paramName, value: paramValue });
-        titleParam.name = paramName;
-        titleParam.value = paramValue;
+        titleParam.push({ key: paramName, value: paramValue });
+        // titleParam.key = paramName;
+        // titleParam.value = paramValue;
       } else {
         otherParams.push({ key: paramName, value: paramValue });
       }
     }
   });
 
-  console.log("extractedParams :>> ".bgRed, {
-    title: titleParam,
-    params: [...otherParams],
-  });
+  const sortedParams = [...titleParam, ...otherParams];
 
-  return { title: titleParam, params: [...otherParams] };
+  console.log("sortedParams :>> ".bgBlue, sortedParams);
+
+  return sortedParams;
 }
 
 // const initialProductCount = 0; // Початкова кількість продуктів
