@@ -4,6 +4,7 @@ const { findProductById } = require("./findProductById");
 const { getAllProducts } = require("./getAllProducts");
 const { removeProducts } = require("./removeProducts");
 const { getProductsByKeywords } = require("./getProductsByKeywords");
+const { getProducts } = require("./getProducts");
 
 module.exports = {
   addProduct,
@@ -12,4 +13,5 @@ module.exports = {
   getAllProducts,
   removeProducts,
   getProductsByKeywords,
+  getProducts,
 };

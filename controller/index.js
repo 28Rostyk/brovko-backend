@@ -10,6 +10,7 @@ const {
   getAllProducts,
   removeProducts,
   getProductsByKeywords,
+  getProducts,
 } = require("./products");
 // реєстрація, логінізація, вихід з логіну, оновлення токена, поточний користувач
 const {
@@ -75,6 +76,7 @@ module.exports = {
   controlReview,
   addProduct,
   removeProducts,
+  getProducts,
   generateSignature,
   userUpdate,
   updateAvatars,

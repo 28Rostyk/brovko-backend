@@ -10,9 +10,12 @@ const getProductsByCategory = async (req, res) => {
     sortOrder = "asc",
     priceMin = 0,
     priceMax = 0,
+    category = "all",
   } = req.query;
 
   const query = { categoryId: categoryId };
+  console.log(category);
+  console.log(categoryId);
 
   if (priceMin && priceMax) {
     query.price = { $gte: parseFloat(priceMin), $lte: parseFloat(priceMax) };
