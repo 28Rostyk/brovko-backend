@@ -7,6 +7,7 @@ const { userRouter } = require("./user");
 const { reviewsRouter } = require("./reviews");
 const { generateSignatureRouter } = require("./generateSignature");
 const { locationRouter } = require("./locations");
+const { feedbackRouter } = require("./feedback");
 
 module.exports = {
   databaseRouter,
@@ -18,4 +19,5 @@ module.exports = {
   reviewsRouter,
   generateSignatureRouter,
   locationRouter,
+  feedbackRouter,
 };
