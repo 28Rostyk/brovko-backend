@@ -34,13 +34,7 @@ feedbackSchema.post("save", function (error, doc, next) {
 const addSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
-  phone: Joi.string()
-    .pattern(/^\d{3}-\d{3}-\d{2}-\d{2}$/)
-    .required()
-    .messages({
-      "string.pattern.base":
-        "Номер телефону повинен складатися з 10 цифр, повинен мати формат xxx-xxx-xx-xx",
-    }),
+  phone: Joi.string().required(),
   text: Joi.string().min(10).max(2500).required().messages({
     "string.min":
       "Мінімальна довжина тексту повинна бути не менше {#limit} символів",
