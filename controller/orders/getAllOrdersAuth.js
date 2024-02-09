@@ -15,7 +15,7 @@ const getAllOrdersAuth = async (req, res) => {
   // });
 
   if (userOrders.length === 0) {
-    throw HttpError(404, "You do not have any orders");
+    res.status(200).json("Ваш пес досі просить паляничку");
   }
 
   res.status(200).json(userOrders);
