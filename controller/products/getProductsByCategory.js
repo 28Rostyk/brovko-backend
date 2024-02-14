@@ -40,11 +40,11 @@ const getProductsByCategory = async (req, res) => {
       .skip(skip)
       .limit(perPage);
 
-    if (!productsInCategory || productsInCategory.length === 0) {
-      return res.status(404).json({
-        error: "No products found for the given category and price range",
-      });
-    }
+    // if (!productsInCategory || productsInCategory.length === 0) {
+    //   return res.status(404).json({
+    //     error: "No products found for the given category and price range",
+    //   });
+    // }
 
     // const minPrice = await Products.findOne(query, "price").sort({ price: 1 });
     // const maxPrice = await Products.findOne(query, "price").sort({ price: -1 });
