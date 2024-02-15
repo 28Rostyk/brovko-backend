@@ -15,6 +15,10 @@ const productSchema = new Schema(
       type: Boolean,
     },
 
+    quantityInStock: {
+      type: Number,
+    },
+
     price: {
       type: Number,
     },
@@ -71,30 +75,31 @@ productSchema.post("save", function (error, doc, next) {
   handleSchemaErrors(error, doc, next);
 });
 
-const addSchema = Joi.object({
-  id: Joi.string(),
-  name: Joi.string(),
-  available: Joi.boolean(),
-  inStock: Joi.boolean(),
-  price: Joi.number(),
-  currencyId: Joi.string(),
-  categoryId: Joi.string(),
-  description: Joi.string(),
-  vendor: Joi.string(),
-  vendorCode: Joi.string(),
-  barcode: Joi.string(),
-  url: Joi.string(),
-  picture: Joi.string(),
-  keywords: Joi.string(),
-});
+// const addSchema = Joi.object({
+//   id: Joi.string(),
+//   name: Joi.string(),
+//   available: Joi.boolean(),
+//   inStock: Joi.boolean(),
+//   quantityInStock: Joi.number(),
+//   price: Joi.number(),
+//   currencyId: Joi.string(),
+//   categoryId: Joi.string(),
+//   description: Joi.string(),
+//   vendor: Joi.string(),
+//   vendorCode: Joi.string(),
+//   barcode: Joi.string(),
+//   url: Joi.string(),
+//   picture: Joi.string(),
+//   keywords: Joi.string(),
+// });
 
-const schemas = {
-  addSchema,
-};
+// const schemas = {
+//   addSchema,
+// };
 
 const Products = model("products", productSchema);
 
 module.exports = {
   Products,
-  schemas,
+  // schemas,
 };

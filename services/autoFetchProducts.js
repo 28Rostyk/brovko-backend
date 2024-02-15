@@ -33,6 +33,7 @@ async function updateProduct(offerData) {
       keywords: offerData.keywords || "",
       available: offerData.available || false,
       inStock: offerData.inStock || false,
+      quantityInStock: offerData?.quantity_in_stock,
       note: sanitizeAndEncode(offerData.note) || "",
       params: extractParams(offerData.param) || [], // Дод
     });
@@ -59,6 +60,7 @@ async function updateProduct(offerData) {
       "oldprice",
       "vendorprice",
       "params",
+      "quantityInStock",
       // ... інші поля для порівняння
     ];
 
@@ -206,6 +208,7 @@ async function autoFetchProducts(url) {
             keywords: offerData.keywords ? offerData.keywords[0] : "",
             available: offerData.available === "true",
             inStock: offerData.in_stock === "true",
+            quantityInStock: parseFloat(offerData.quantity_in_stock[0]),
             note: sanitizeAndEncode(note),
             params: extractParams(offerData.param) || [],
           });
