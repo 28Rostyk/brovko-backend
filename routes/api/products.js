@@ -8,13 +8,14 @@ const {
   addProduct,
   removeProducts,
   getProductsByKeywords,
-  getProducts,
+  // getProducts,
 } = require("../../controller");
 
 const { upload } = require("../../middlewares");
 // const { checkNewProductData, upload } = require("../../middlewares");
 // const { addProductSchema, validateBody } = require("../../schemas");
-productsRouter.get("/:categoryId?", getProducts);
+
+// productsRouter.get("/:categoryId?", getProducts);
 productsRouter.get("/", getAllProducts);
 productsRouter.get("/category/:categoryId", getProductsByCategory);
 productsRouter.get("/product/:productId", findProductById);
