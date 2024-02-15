@@ -23,14 +23,14 @@ const googleCallback = async (
   done
 ) => {
   try {
-    const { email } = profile;
+    const { email, given_name: firstName, family_name: lastName } = profile;
     const user = await User.findOne({ email });
 
     if (user) {
       return done(null, user);
     }
     const password = await bcrypt.hash(nanoid(), 10);
-    const newUser = await User.create({ email, password });
+    const newUser = await User.create({ email, password, firstName, lastName });
     done(null, newUser);
   } catch (error) {
     done(error, false);
