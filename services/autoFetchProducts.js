@@ -115,7 +115,7 @@ function extractParams(params) {
 
   const sortedParams = [...titleParam, ...otherParams];
 
-  console.log("sortedParams :>> ".bgBlue, sortedParams);
+  // console.log("sortedParams :>> ".bgBlue, sortedParams);
 
   return sortedParams;
 }
