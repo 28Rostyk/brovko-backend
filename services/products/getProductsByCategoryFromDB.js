@@ -7,7 +7,7 @@ const getProductsByCategoryFromDB = async (data) => {
   const {
     categoryId = "all", // (!) Подумати. Якщо categoryId === 'all' до цієї функції код взаналі не повинен дійти
     page = 1,
-    perPage = 10,
+    perPage = 12,
     sortBy = "createdAt",
     sortOrder = "desc",
     priceMin = 0,

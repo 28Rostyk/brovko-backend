@@ -4,7 +4,7 @@ const getProductsByKeywordFromDB = async (data) => {
   const {
     search = "",
     page = 1,
-    perPage = 10,
+    perPage = 12,
     sortBy = "createdAt",
     sortOrder = "desc",
     priceMin = 0,

@@ -6,7 +6,7 @@ const getAllProductsFromDB = async (data) => {
 
   const {
     page = 1,
-    perPage = 10,
+    perPage = 12,
     sortBy = "createdAt",
     sortOrder = "asc",
     priceMin = 0,
