@@ -3,10 +3,14 @@ const ordersRouter = express.Router();
 
 const { fetchOrder, getAllOrdersAuth, addOrder } = require("../../controller");
 const { authenticate } = require("../../middlewares");
-const { validateBody, addOrderSchema } = require("../../schemas");
+// const { validateBody, addOrderSchema } = require("../../schemas");
 
 ordersRouter.post("/", fetchOrder);
-ordersRouter.post("/add-order", validateBody(addOrderSchema), addOrder);
+ordersRouter.post(
+  "/add-order",
+  // validateBody(addOrderSchema),
+  addOrder
+);
 // ordersRouter.post("/add-order", addOrder);
 ordersRouter.get("/auth", authenticate, getAllOrdersAuth);
 

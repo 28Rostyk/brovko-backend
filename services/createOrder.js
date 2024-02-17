@@ -9,6 +9,8 @@ async function createOrder(body) {
 
     const response = await axios.post(url, body, { headers });
 
+    console.log("response.data :>> ", response.data);
+
     return {
       message: "Замовлення успішно надіслано продавцю.",
       data: response.data,

@@ -2,22 +2,22 @@ const express = require("express");
 const productsRouter = express.Router();
 
 const {
-  getAllProducts,
-  getProductsByCategory,
+  // getAllProducts,
+  // getProductsByCategory,
   findProductById,
   addProduct,
   removeProducts,
-  getProductsByKeywords,
-  // getProducts,
+  // getProductsByKeywords,
+  getProducts,
 } = require("../../controller");
 
 const { upload } = require("../../middlewares");
 // const { checkNewProductData, upload } = require("../../middlewares");
 // const { addProductSchema, validateBody } = require("../../schemas");
 
-// productsRouter.get("/:categoryId?", getProducts);
-productsRouter.get("/", getAllProducts);
-productsRouter.get("/category/:categoryId", getProductsByCategory);
+productsRouter.get("/", getProducts);
+// productsRouter.get("/", getAllProducts);
+// productsRouter.get("/category/:categoryId", getProductsByCategory);
 productsRouter.get("/product/:productId", findProductById);
 productsRouter.post(
   "/add-product",
@@ -27,6 +27,6 @@ productsRouter.post(
   addProduct
 );
 productsRouter.post("/remove-product", removeProducts);
-productsRouter.get("/search", getProductsByKeywords);
+// productsRouter.get("/search", getProductsByKeywords);
 
 module.exports = { productsRouter };
