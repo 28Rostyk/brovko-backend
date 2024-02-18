@@ -135,6 +135,10 @@ const userSchema = new Schema(
       type: Array,
       default: [],
     },
+    productInBasket: {
+      type: Array,
+      default: [],
+    },
   },
   { versionKey: false, timestamps: true }
 );
