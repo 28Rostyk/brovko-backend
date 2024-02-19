@@ -9,9 +9,12 @@ const userUpdate = async (req, res) => {
     throw HttpError(401, "User is not found");
   }
 
+  const body = req.body;
+  body.name = body.firstName + " " + body.lastName;
+
   const updatedUser = await User.findByIdAndUpdate(
     user._id,
-    { ...req.body },
+    { ...body },
     { new: true }
   );
 
