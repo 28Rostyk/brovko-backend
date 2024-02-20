@@ -6,6 +6,6 @@ const { addFeedback, getFeedback } = require("../../controller");
 // const { authenticate } = require("../../middlewares");
 
 feedbackRouter.get("/:sort", getFeedback);
-feedbackRouter.post("/add-feedbacks", addFeedback);
+feedbackRouter.post("/add-feedback", addFeedback);
 
 module.exports = { feedbackRouter };

@@ -8,7 +8,7 @@ const getUserByEmail = async (req, res) => {
 
     if (!data) {
       return res
-        .status(404)
+        .status(200)
         .json({ message: "Not found user with this email" });
     }
 
