@@ -13,7 +13,7 @@ const getFeedback = async (req, res) => {
   const sortOption = sort === "all" ? {} : { status: sort };
 
   try {
-    const feedback = await Feedback.find(sortOption);
+    const feedback = await Feedback.find(sortOption).sort({ updatedAt: -1 });
     res.status(200).json(feedback);
   } catch (error) {
     console.error("Помилка у контролері: ", error.message);

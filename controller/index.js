@@ -49,7 +49,11 @@ const {
   updateLocation,
 } = require("./location");
 
-const { addFeedback, getFeedback } = require("./feedback");
+const {
+  addFeedback,
+  getFeedback,
+  updateFeedbackStatus,
+} = require("./feedback");
 
 module.exports = {
   getAllProducts,
@@ -89,4 +93,5 @@ module.exports = {
   updateLocation,
   addFeedback,
   getFeedback,
+  updateFeedbackStatus,
 };
