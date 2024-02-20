@@ -20,7 +20,7 @@ const controlReview = async (req, res) => {
       textId,
     });
 
-    // Знаходження індексу коментаря та тексту в масиві
+    // Пошук індексу коментаря та тексту в масиві
     const review = await Reviews.findOne({ productId });
     console.log("review :>> ".bgBrightBlue, review);
 
