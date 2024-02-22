@@ -59,6 +59,7 @@ const addProduct = async (req, res) => {
             return "test";
           }
         });
+
         if (pictureURLs.length) {
           const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
             fullsize: full,
@@ -69,24 +70,32 @@ const addProduct = async (req, res) => {
       } else {
         parsedPictures = JSON.parse(picture);
         const parsedPicture = [parsedPictures];
+        // console.log("picture :>> ".red, pictureURLs);
+
         const pictureURLs = parsedPicture.map((item) => {
           if (item.url !== "") {
-            return { fullsize: item.url, fullsize: item.url };
+            return { fullsize: item.url, thumbnail: item.url };
           } else if (productNewURLs.length > 0) {
             return productNewURLs.shift();
           } else {
             return "test2";
           }
         });
-        console.log("picture :>> ".red, pictureURLs.full);
-        const { full, copy } = pictureURLs;
-        console.log(full, copy);
-        const imagesWithFullsize = {
-          fullsize: full,
-          thumbnail: copy,
-        };
-        console.log(imagesWithFullsize);
-        requestBodyObject.product[0].images = [imagesWithFullsize];
+        console.log("pictureURLs :>> ".red, pictureURLs);
+        if (pictureURLs.length) {
+          const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
+            fullsize: full,
+            thumbnail: copy,
+          }));
+          console.log(imagesWithFullsize);
+          requestBodyObject.product[0].images = pictureURLs
+        }
+        // const { full, copy } = pictureURLs;
+        // console.log(full, copy);
+        // const imagesWithFullsize = {
+        //   fullsize: full,
+        //   thumbnail: copy,
+        // };
       }
     }
     // if (picture && Array.isArray(picture))
