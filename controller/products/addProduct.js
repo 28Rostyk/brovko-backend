@@ -11,12 +11,13 @@ const addProduct = async (req, res) => {
     // const { images } = requestBodyObject.product[0];
 
     const productNewURLs = [];
-    console.log("request BODY".yellow, requestBodyObject.product[0]);
+    // console.log("request BODY".yellow, requestBodyObject.product[0]);
     const { picture } = req.body;
 
     // console.log("picture :>> ", picture);
     // console.log("req.files :>> ", req.files);
-
+    // const test = JSON.parse(picture);
+    // console.log("test", test);
     if (req.files && req.files.length > 0) {
       for (const item of req.files) {
         if (item instanceof Object) {
@@ -36,36 +37,108 @@ const addProduct = async (req, res) => {
       }
     }
 
+    if (Array.isArray(picture)) {
+      console.log("Це масив.");
+    } else {
+      console.log("Це не масив.");
+    }
+
     if (picture) {
-      console.log("picture :>> ".green, picture);
-      const parsedPictures = picture.map((item) => {
-        return JSON.parse(item);
-      });
+      if (picture && Array.isArray(picture)) {
+        const parsedPictures = picture.map((item) => {
+          return JSON.parse(item);
+          console.log(parsedPictures);
+        });
 
-      const pictureURLs = parsedPictures.map((item) => {
-        if (item.url !== "") {
-          return { full: item.url };
-        } else if (productNewURLs.length > 0) {
-          return productNewURLs.shift();
-        } else {
-          return "test";
+        const pictureURLs = parsedPictures.map((item) => {
+          if (item.url !== "") {
+            return { full: item.url, copy: item.url };
+          } else if (productNewURLs.length > 0) {
+            return productNewURLs.shift();
+          } else {
+            return "test";
+          }
+        });
+        if (pictureURLs.length) {
+          const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
+            fullsize: full,
+            thumbnail: copy,
+          }));
+          requestBodyObject.product[0].images = imagesWithFullsize;
         }
-      });
-
-      // if (images && images.length > 0) {
-      //   for (const full of images) {
-      //     productURLs.push({ full });
-      //   }
-      // }
-
-      if (pictureURLs.length) {
-        const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
+      } else {
+        parsedPictures = JSON.parse(picture);
+        const parsedPicture = [parsedPictures];
+        const pictureURLs = parsedPicture.map((item) => {
+          if (item.url !== "") {
+            return { fullsize: item.url, fullsize: item.url };
+          } else if (productNewURLs.length > 0) {
+            return productNewURLs.shift();
+          } else {
+            return "test2";
+          }
+        });
+        console.log("picture :>> ".red, pictureURLs.full);
+        const { full, copy } = pictureURLs;
+        console.log(full, copy);
+        const imagesWithFullsize = {
           fullsize: full,
           thumbnail: copy,
-        }));
-        requestBodyObject.product[0].images = imagesWithFullsize;
+        };
+        console.log(imagesWithFullsize);
+        requestBodyObject.product[0].images = [imagesWithFullsize];
       }
     }
+    // if (picture && Array.isArray(picture))
+
+    // if (picture && Array.isArray(picture)) {
+    //   console.log("picture :>> ".green, picture);
+
+    //   const parsedPictures = picture.map((item) => {
+    //     return JSON.parse(item);
+    //   });
+
+    //   const pictureURLs = parsedPictures.map((item) => {
+    //     if (item.url !== "") {
+    //       return { full: item.url };
+    //     } else if (productNewURLs.length > 0) {
+    //       return productNewURLs.shift();
+    //     } else {
+    //       return "test";
+    //     }
+    //   });
+
+    //   // if (images && images.length > 0) {
+    //   //   for (const full of images) {
+    //   //     productURLs.push({ full });
+    //   //   }
+    //   // }
+
+    //   if (pictureURLs.length) {
+    //     const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
+    //       fullsize: full,
+    //       thumbnail: copy,
+    //     }));
+    //     requestBodyObject.product[0].images = imagesWithFullsize;
+    //   }
+    // } else {
+    //   console.log("picture :>> ".red, picture);
+    //   if (picture) {
+    //     parsedPicture = JSON.parse(picture);
+    //     console.log("picture :>> ".blue, parsedPicture);
+    //   }
+    //   if (picture && productNewURLs) {
+    //     console.log("picture :>> ".blue, productNewURLs);
+    //     const { full, copy } = productNewURLs;
+    //     console.log("copy, full", productNewURLs.copy, productNewURLs.full);
+    //     const imagesWithFullsiz = {
+    //       fullsize: productNewURLs.full,
+    //       thumbnail: productNewURLs.copy,
+    //     };
+    //     console.log("imagesWithFullsiz:>>", imagesWithFullsiz);
+    //     requestBodyObject.product[0].images = imagesWithFullsiz;
+    //   }
+    // }
 
     const update = req.query.update;
 
