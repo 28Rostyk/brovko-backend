@@ -5,6 +5,11 @@ const { sendInCloudinary } = require("../../services");
 const { clearTemp } = require("../../services");
 const { makeCopyProductFoto } = require("../../services");
 
+const addCopyToFilename = (url) => {
+  const filenameWithCopy = `${url}.copy.jpg`;
+  return filenameWithCopy;
+};
+
 const addProduct = async (req, res) => {
   try {
     const requestBodyObject = JSON.parse(req.body.requestBody);
@@ -14,7 +19,7 @@ const addProduct = async (req, res) => {
     // console.log("request BODY".yellow, requestBodyObject.product[0]);
     const { picture } = req.body;
 
-    // console.log("picture :>> ", picture);
+    console.log("picture :>> ", picture);
     // console.log("req.files :>> ", req.files);
     // const test = JSON.parse(picture);
     // console.log("test", test);
@@ -47,18 +52,19 @@ const addProduct = async (req, res) => {
       if (picture && Array.isArray(picture)) {
         const parsedPictures = picture.map((item) => {
           return JSON.parse(item);
-          console.log(parsedPictures);
+          console.log("parsedPictures array".violet, parsedPictures);
         });
 
         const pictureURLs = parsedPictures.map((item) => {
           if (item.url !== "") {
-            return { full: item.url, copy: item.url };
+            return { full: item.url, copy: addCopyToFilename(item.url) };
           } else if (productNewURLs.length > 0) {
             return productNewURLs.shift();
           } else {
             return "test";
           }
         });
+        console.log("pictureURLs".blue, pictureURLs);
 
         if (pictureURLs.length) {
           const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
@@ -68,27 +74,29 @@ const addProduct = async (req, res) => {
           requestBodyObject.product[0].images = imagesWithFullsize;
         }
       } else {
-        parsedPictures = JSON.parse(picture);
+        const parsedPictures = JSON.parse(picture);
         const parsedPicture = [parsedPictures];
-        // console.log("picture :>> ".red, pictureURLs);
+        console.log("parsedPicture object:>> ".red, parsedPicture);
+        console.log("productNewURLs object:>> ".red, productNewURLs);
+        if (parsedPicture.length) {
+          const pictureURLs = parsedPicture.map((item) => {
+            if (item.url !== "") {
+              return { full: item.url, copy: addCopyToFilename(item.url) };
+            } else if (productNewURLs.length > 0) {
+              return productNewURLs.shift();
+            } else {
+              return "test";
+            }
+          });
+          console.log("pictureURLs object :>> ".red, pictureURLs);
+          const pictureURL = [pictureURLs];
 
-        const pictureURLs = parsedPicture.map((item) => {
-          if (item.url !== "") {
-            return { fullsize: item.url, thumbnail: item.url };
-          } else if (productNewURLs.length > 0) {
-            return productNewURLs.shift();
-          } else {
-            return "test2";
-          }
-        });
-        console.log("pictureURLs :>> ".red, pictureURLs);
-        if (pictureURLs.length) {
           const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
             fullsize: full,
             thumbnail: copy,
           }));
-          console.log(imagesWithFullsize);
-          requestBodyObject.product[0].images = pictureURLs
+          console.log("imagesWithFullsize", imagesWithFullsize);
+          requestBodyObject.product[0].images = imagesWithFullsize;
         }
         // const { full, copy } = pictureURLs;
         // console.log(full, copy);
@@ -97,7 +105,15 @@ const addProduct = async (req, res) => {
         //   thumbnail: copy,
         // };
       }
+    } else {
+      const pictureURLs = [];
+      requestBodyObject.product[0].images = pictureURLs;
     }
+
+
+
+    // -----old 1------
+
     // if (picture && Array.isArray(picture))
 
     // if (picture && Array.isArray(picture)) {
