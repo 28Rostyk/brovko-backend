@@ -8,7 +8,7 @@ const { YML_FILE } = process.env;
 
 const ymlFilePath = YML_FILE;
 
-console.log(ymlFilePath);
+// console.log(ymlFilePath);
 let isUpdating = false;
 
 async function updateProduct(offerData) {
@@ -240,13 +240,9 @@ async function autoFetchProducts(url) {
 //   }
 // }, 600000);
 
-function removeHtmlTags(html) {
-  return html.replace(/<\/?[^>]+(>|$)/g, "");
-}
-
 function sanitizeAndEncode(text) {
-  const withoutHtmlTags = removeHtmlTags(text);
-  const decodedText = he.decode(withoutHtmlTags);
+  const decodedText = he.decode(text);
+
   return decodedText;
 }
 
