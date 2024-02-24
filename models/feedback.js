@@ -23,6 +23,11 @@ const feedbackSchema = new Schema(
         "Максимальна кількість символів повинна бути не більше 2500",
       ],
     },
+    status: {
+      type: String,
+      required: true,
+      default: "new",
+    },
   },
   { versionKey: false, timestamps: true }
 );

@@ -2,8 +2,18 @@ const { Feedback } = require("../../models");
 const { ctrlWrapper } = require("../../helpers");
 
 const getFeedback = async (req, res) => {
+  const sort = req.params.sort;
+
+  if (sort !== "new" && sort !== "archived" && sort !== "all") {
+    return res.status(400).json({
+      message: 'крамничка приймає лише значення "new" або "archived"',
+    });
+  }
+
+  const sortOption = sort === "all" ? {} : { status: sort };
+
   try {
-    const feedback = await Feedback.find();
+    const feedback = await Feedback.find(sortOption).sort({ updatedAt: -1 });
     res.status(200).json(feedback);
   } catch (error) {
     console.error("Помилка у контролері: ", error.message);

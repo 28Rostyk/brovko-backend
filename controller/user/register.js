@@ -39,20 +39,17 @@ const register = async (req, res) => {
     expiresIn: REFRESH_TOKEN_LIFE,
   });
 
-  const newUser = await User.findByIdAndUpdate(result._id, {
+  await User.findByIdAndUpdate(result._id, {
     accessToken,
     refreshToken,
   });
 
+  const updatedUser = await User.findById(result._id);
+
   res.status(201).json({
-    // user: {
-    //   email: result.email,
-    //   accessToken,
-    //   refreshToken,
-    // },
-    newUser,
     accessToken,
     refreshToken,
+    user: updatedUser,
   });
 };
 

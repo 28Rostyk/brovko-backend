@@ -37,26 +37,18 @@ const login = async (req, res) => {
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
     expiresIn: REFRESH_TOKEN_LIFE,
   });
-  await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
+
+  await User.findByIdAndUpdate(user._id, {
+    accessToken,
+    refreshToken,
+  });
+
+  const updatedUser = await User.findById(user._id);
 
   res.status(201).json({
     accessToken,
     refreshToken,
-    user,
-    // user: {
-    //   _id: user._id,
-    //   firstName: user.firstName,
-    //   middleName: user.middleName,
-    //   lastName: user.lastName,
-    //   birthday: user.birthday,
-    //   email: user.email,
-    //   phone: user.phone,
-    //   city: user.city,
-    //   street: user.street,
-    //   buildingNumber: user.buildingNumber,
-    //   flat: user.flat,
-    //   favoriteOrders: user.favoriteOrders,
-    // },
+    user: updatedUser,
   });
 };
 
