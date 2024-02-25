@@ -5,12 +5,32 @@ const { sendInCloudinary } = require("../../services");
 const { clearTemp } = require("../../services");
 const { makeCopyProductFoto } = require("../../services");
 
-const addCopyToFilename = (url) => {
-  const filenameWithCopy = `${url}.copy.jpg`;
+const addCopyNameToFilename = (url, addNameSize = ".copy.") => {
+  const parts = url.split(".");
+  const extension = parts.pop();
+  const filename = parts.join(".");
+  const filenameWithCopy = `${filename}${addNameSize}.${extension}`;
   return filenameWithCopy;
 };
 
 const addProduct = async (req, res) => {
+  const parsedPicturesToURLs = (parsedPictures, productNewURLs) => {
+    const pictureURLs = parsedPictures.map((item) => {
+      if (item.url !== "") {
+        return { full: item.url, copy: addCopyNameToFilename(item.url) };
+      } else if (productNewURLs.length > 0) {
+        return productNewURLs.shift();
+      } else {
+        return "test";
+      }
+    });
+
+    return pictureURLs.map(({ full, copy }) => ({
+      fullsize: full,
+      thumbnail: copy,
+    }));
+  };
+
   try {
     const requestBodyObject = JSON.parse(req.body.requestBody);
     // const { images } = requestBodyObject.product[0];
@@ -19,7 +39,7 @@ const addProduct = async (req, res) => {
     // console.log("request BODY".yellow, requestBodyObject.product[0]);
     const { picture } = req.body;
 
-    console.log("picture :>> ", picture);
+    // console.log("picture :>> ", picture);
     // console.log("req.files :>> ", req.files);
     // const test = JSON.parse(picture);
     // console.log("test", test);
@@ -42,75 +62,29 @@ const addProduct = async (req, res) => {
       }
     }
 
-    if (Array.isArray(picture)) {
-      console.log("Це масив.");
-    } else {
-      console.log("Це не масив.");
-    }
-
     if (picture) {
-      if (picture && Array.isArray(picture)) {
+      if (Array.isArray(picture)) {
         const parsedPictures = picture.map((item) => {
           return JSON.parse(item);
-          console.log("parsedPictures array".violet, parsedPictures);
         });
 
-        const pictureURLs = parsedPictures.map((item) => {
-          if (item.url !== "") {
-            return { full: item.url, copy: addCopyToFilename(item.url) };
-          } else if (productNewURLs.length > 0) {
-            return productNewURLs.shift();
-          } else {
-            return "test";
-          }
-        });
-        console.log("pictureURLs".blue, pictureURLs);
-
-        if (pictureURLs.length) {
-          const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
-            fullsize: full,
-            thumbnail: copy,
-          }));
-          requestBodyObject.product[0].images = imagesWithFullsize;
-        }
+        requestBodyObject.product[0].images = parsedPicturesToURLs(
+          parsedPictures,
+          productNewURLs
+        );
       } else {
         const parsedPictures = JSON.parse(picture);
         const parsedPicture = [parsedPictures];
-        console.log("parsedPicture object:>> ".red, parsedPicture);
-        console.log("productNewURLs object:>> ".red, productNewURLs);
-        if (parsedPicture.length) {
-          const pictureURLs = parsedPicture.map((item) => {
-            if (item.url !== "") {
-              return { full: item.url, copy: addCopyToFilename(item.url) };
-            } else if (productNewURLs.length > 0) {
-              return productNewURLs.shift();
-            } else {
-              return "test";
-            }
-          });
-          console.log("pictureURLs object :>> ".red, pictureURLs);
-          const pictureURL = [pictureURLs];
 
-          const imagesWithFullsize = pictureURLs.map(({ full, copy }) => ({
-            fullsize: full,
-            thumbnail: copy,
-          }));
-          console.log("imagesWithFullsize", imagesWithFullsize);
-          requestBodyObject.product[0].images = imagesWithFullsize;
-        }
-        // const { full, copy } = pictureURLs;
-        // console.log(full, copy);
-        // const imagesWithFullsize = {
-        //   fullsize: full,
-        //   thumbnail: copy,
-        // };
+        requestBodyObject.product[0].images = parsedPicturesToURLs(
+          parsedPicture,
+          productNewURLs
+        );
       }
     } else {
       const pictureURLs = [];
       requestBodyObject.product[0].images = pictureURLs;
     }
-
-
 
     // -----old 1------
 
