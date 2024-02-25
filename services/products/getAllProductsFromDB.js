@@ -7,7 +7,7 @@ const getAllProductsFromDB = async (data) => {
   const {
     page = 1,
     perPage = 12,
-    sortBy = "createdAt",
+    sortBy = "quantityInStock",
     sortOrder = "asc",
     priceMin = 0,
     priceMax = 0,
@@ -29,6 +29,11 @@ const getAllProductsFromDB = async (data) => {
     const totalPages = Math.ceil(totalCount / perPage);
 
     const sortOptions = { [sortBy]: sortOrder };
+
+    if (sortBy === "quantityInStock") {
+      // eslint-disable-next-line dot-notation
+      sortOptions["quantityInStock"] = -1; // Спочатку відображаємо ті, що на складі
+    }
 
     const products = await Products.find(query, "-createdAt -updatedAt")
       .sort(sortOptions)

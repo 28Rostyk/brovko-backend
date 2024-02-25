@@ -5,7 +5,7 @@ const getProductsByKeywordFromDB = async (data) => {
     search = "",
     page = 1,
     perPage = 12,
-    sortBy = "createdAt",
+    sortBy = "quantityInStock",
     sortOrder = "desc",
     priceMin = 0,
     priceMax = 0,
@@ -27,6 +27,11 @@ const getProductsByKeywordFromDB = async (data) => {
   try {
     const skip = (page - 1) * perPage;
     const sortOptions = { [sortBy]: sortOrder };
+
+    if (sortBy === "quantityInStock") {
+      // eslint-disable-next-line dot-notation
+      sortOptions["quantityInStock"] = -1; // Спочатку відображаємо ті, що на складі
+    }
 
     const filteredData = await Products.find(query, "-createdAt -updatedAt")
       .skip(skip)

@@ -8,7 +8,7 @@ const getProductsByCategoryFromDB = async (data) => {
     categoryId = "all", // (!) Подумати. Якщо categoryId === 'all' до цієї функції код взаналі не повинен дійти
     page = 1,
     perPage = 12,
-    sortBy = "createdAt",
+    sortBy = "quantityInStock",
     sortOrder = "desc",
     priceMin = 0,
     priceMax = 0,
@@ -37,6 +37,11 @@ const getProductsByCategoryFromDB = async (data) => {
     const totalPages = Math.ceil(totalCount / perPage);
 
     const sortOptions = { [sortBy]: sortOrder };
+
+    if (sortBy === "quantityInStock") {
+      // eslint-disable-next-line dot-notation
+      sortOptions["quantityInStock"] = -1; // Спочатку відображаємо ті, що на складі
+    }
 
     const productsInCategory = await Products.find(
       query,
