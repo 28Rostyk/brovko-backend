@@ -5,7 +5,7 @@ const { sendInCloudinary } = require("../../services");
 const { clearTemp } = require("../../services");
 const { makeCopyProductFoto } = require("../../services");
 
-const addCopyNameToFilename = (url, addNameSize = ".copy.") => {
+const addCopyNameToFilename = (url, addNameSize = ".copy") => {
   const parts = url.split(".");
   const extension = parts.pop();
   const filename = parts.join(".");
