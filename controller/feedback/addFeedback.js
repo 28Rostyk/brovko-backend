@@ -1,9 +1,19 @@
-const { Feedback } = require("../../models");
+const { Feedback, User } = require("../../models");
 const { schemas } = require("../../models/feedback");
 const { ctrlWrapper } = require("../../helpers");
 
 const createFeedback = async (feedbackData) => {
-  const newFeedback = new Feedback(feedbackData);
+  let isLogin = false;
+  const user = await User.findOne({ email: feedbackData.email });
+  if (user) {
+    isLogin = true;
+  }
+
+  const newFeedback = new Feedback({
+    ...feedbackData,
+    isLogin: isLogin,
+    user: user ? user.toObject() : null,
+  });
   await newFeedback.save();
 
   return { status: "success", message: "Зворотний зв'язок успішно додано" };

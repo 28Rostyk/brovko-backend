@@ -28,6 +28,10 @@ const feedbackSchema = new Schema(
       required: true,
       default: "new",
     },
+    isLogin: {
+      type: Boolean,
+    },
+    user: { type: Object, default: null },
   },
   { versionKey: false, timestamps: true }
 );

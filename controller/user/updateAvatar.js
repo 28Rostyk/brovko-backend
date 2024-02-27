@@ -1,4 +1,5 @@
 const { sendInCloudinary, clearTemp } = require("../../services");
+const { updateForUser } = require("../../helpers/updateForUser");
 
 const { User } = require("../../models");
 
@@ -11,10 +12,16 @@ const updateAvatars = async (req, res) => {
     const cloudinaryResponse = await sendInCloudinary(tempUpload, avatarName);
 
     const avatarURL = cloudinaryResponse.secure_url;
-    await User.findByIdAndUpdate(_id, { avatarURL });
+    // await User.findByIdAndUpdate(_id, { avatarURL });
+    const updatedUser = await User.findOneAndUpdate(
+      { _id },
+      { avatarURL },
+      { new: true }
+    );
 
     await clearTemp(tempUpload);
     // await clearTemp();
+    await updateForUser(_id, updatedUser);
 
     res.json({
       avatarURL,
