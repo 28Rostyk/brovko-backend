@@ -47,6 +47,7 @@ const {
   getAllLocations,
   removeLocation,
   updateLocation,
+  getLocationById,
 } = require("./location");
 
 const {
@@ -88,6 +89,7 @@ module.exports = {
   updateAvatars,
   getProductsByKeywords,
   addLocations,
+  getLocationById,
   getAllLocations,
   removeLocation,
   updateLocation,
