@@ -8,7 +8,7 @@ const getProductsByCategoryFromDB = async (data) => {
     categoryId = "all", // (!) Подумати. Якщо categoryId === 'all' до цієї функції код взаналі не повинен дійти
     page = 1,
     perPage = 12,
-    sortBy = "quantityInStock",
+    sortBy = "createdAt",
     sortOrder = "desc",
     priceMin = 0,
     priceMax = 0,
@@ -32,33 +32,20 @@ const getProductsByCategoryFromDB = async (data) => {
   }
 
   try {
-    const skip = (page - 1) * perPage;
     const totalCount = await Products.countDocuments(query);
     const totalPages = Math.ceil(totalCount / perPage);
 
     const sortOptions = { [sortBy]: sortOrder };
 
-    if (sortBy === "quantityInStock") {
-      // eslint-disable-next-line dot-notation
-      sortOptions["quantityInStock"] = -1; // Спочатку відображаємо ті, що на складі
-    }
+    const isInStock = await Products.find({
+      ...query,
+      quantityInStock: { $gt: 0 },
+    }).sort(sortOptions);
 
-    const productsInCategory = await Products.find(
-      query,
-      "-createdAt -updatedAt"
-    )
-      .sort(sortOptions)
-      .skip(skip)
-      .limit(perPage);
-
-    // if (!productsInCategory || productsInCategory.length === 0) {
-    //   return res.status(404).json({
-    //     error: "No products found for the given category and price range",
-    //   });
-    // }
-
-    // const minPrice = await Products.findOne(query, "price").sort({ price: 1 });
-    // const maxPrice = await Products.findOne(query, "price").sort({ price: -1 });
+    const isOutOfStock = await Products.find({
+      ...query,
+      quantityInStock: { $eq: 0 },
+    }).sort(sortOptions);
 
     const minPrice = await Products.findOne(
       { categoryId: categoryId },
@@ -69,6 +56,20 @@ const getProductsByCategoryFromDB = async (data) => {
       "price"
     ).sort({ price: -1 });
 
+    const allProducts = [...isInStock, ...isOutOfStock];
+
+    const min = priceMin || minPrice.price;
+    const max = priceMax || maxPrice.price;
+
+    const startIndex = Number(page) * Number(perPage) - Number(perPage);
+    const endIndex = startIndex + Number(perPage);
+
+    const filterProducts = allProducts.filter(
+      (product) => product.price >= min && product.price <= max
+    );
+
+    const products = filterProducts.slice(startIndex, endIndex);
+
     console.log("fetching products by category finished".green);
 
     return {
@@ -76,7 +77,7 @@ const getProductsByCategoryFromDB = async (data) => {
       totalItems: totalCount,
       perPage: perPage,
       currentPage: page,
-      products: productsInCategory,
+      products,
       minPrice: minPrice ? minPrice.price : 0,
       maxPrice: maxPrice ? maxPrice.price : 0,
     };

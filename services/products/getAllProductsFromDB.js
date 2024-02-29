@@ -1,4 +1,3 @@
-// const { ctrlWrapper } = require("../../helpers");
 const { Products } = require("../../models");
 
 const getAllProductsFromDB = async (data) => {
@@ -7,7 +6,7 @@ const getAllProductsFromDB = async (data) => {
   const {
     page = 1,
     perPage = 12,
-    sortBy = "quantityInStock",
+    sortBy = "createdAt",
     sortOrder = "asc",
     priceMin = 0,
     priceMax = 0,
@@ -24,26 +23,41 @@ const getAllProductsFromDB = async (data) => {
   }
 
   try {
-    const skip = (page - 1) * perPage;
     const totalCount = await Products.countDocuments(query);
     const totalPages = Math.ceil(totalCount / perPage);
 
     const sortOptions = { [sortBy]: sortOrder };
 
-    if (sortBy === "quantityInStock") {
-      // eslint-disable-next-line dot-notation
-      sortOptions["quantityInStock"] = -1; // Спочатку відображаємо ті, що на складі
-    }
+    const isInStock = await Products.find({
+      ...query,
+      quantityInStock: { $gt: 0 },
+    }).sort(sortOptions);
 
-    const products = await Products.find(query, "-createdAt -updatedAt")
-      .sort(sortOptions)
-      .skip(skip)
-      .limit(perPage);
+    const isOutOfStock = await Products.find({
+      ...query,
+      quantityInStock: { $eq: 0 },
+    }).sort(sortOptions);
 
     const minPrice = await Products.findOne({}, "price").sort({ price: 1 });
     const maxPrice = await Products.findOne({}, "price").sort({ price: -1 });
 
+    const allProducts = [...isInStock, ...isOutOfStock];
+
+    const min = priceMin || minPrice.price;
+    const max = priceMax || maxPrice.price;
+
+    // const startIndex = Number(page) * Number(perPage) - Number(perPage);
+    // const endIndex = startIndex + Number(perPage);
+
+    const startIndex = (page - 1) * perPage;
+    const endIndex = page * perPage;
+
+    const products = allProducts
+      .filter((product) => product.price >= min && product.price <= max)
+      .slice(startIndex, endIndex);
+
     console.log("fetching all products finished".green);
+
     return {
       totalPages: totalPages,
       totalItems: totalCount,

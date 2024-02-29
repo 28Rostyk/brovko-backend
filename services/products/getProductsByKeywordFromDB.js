@@ -5,7 +5,7 @@ const getProductsByKeywordFromDB = async (data) => {
     search = "",
     page = 1,
     perPage = 12,
-    sortBy = "quantityInStock",
+    sortBy = "createdAt",
     sortOrder = "desc",
     priceMin = 0,
     priceMax = 0,
@@ -15,7 +15,6 @@ const getProductsByKeywordFromDB = async (data) => {
     name: { $regex: search, $options: "i" },
   };
 
-  // Додайте умови для пошуку за ціною
   if (priceMin && priceMax) {
     query.price = { $gte: parseFloat(priceMin), $lte: parseFloat(priceMax) };
   } else if (priceMin) {
@@ -25,21 +24,20 @@ const getProductsByKeywordFromDB = async (data) => {
   }
 
   try {
-    const skip = (page - 1) * perPage;
-    const sortOptions = { [sortBy]: sortOrder };
-
-    if (sortBy === "quantityInStock") {
-      // eslint-disable-next-line dot-notation
-      sortOptions["quantityInStock"] = -1; // Спочатку відображаємо ті, що на складі
-    }
-
-    const filteredData = await Products.find(query, "-createdAt -updatedAt")
-      .skip(skip)
-      .sort(sortOptions)
-      .limit(perPage);
-
     const totalItems = await Products.countDocuments(query);
     const totalPages = Math.ceil(totalItems / perPage);
+
+    const sortOptions = { [sortBy]: sortOrder };
+
+    const isInStock = await Products.find({
+      ...query,
+      quantityInStock: { $gt: 0 },
+    }).sort(sortOptions);
+
+    const isOutOfStock = await Products.find({
+      ...query,
+      quantityInStock: { $eq: 0 },
+    }).sort(sortOptions);
 
     const minPrice = await Products.findOne(
       { name: { $regex: search, $options: "i" } },
@@ -50,15 +48,26 @@ const getProductsByKeywordFromDB = async (data) => {
       "price"
     ).sort({ price: -1 });
 
-    // console.log("minPrice :>> ".bgBrightBlue, `${minPrice}`.brightBlue);
-    // console.log("maxPrice :>> ".bgBrightBlue, `${maxPrice}`.brightBlue);
+    const allProducts = [...isInStock, ...isOutOfStock];
+
+    const min = priceMin || minPrice.price;
+    const max = priceMax || maxPrice.price;
+
+    const startIndex = Number(page) * Number(perPage) - Number(perPage);
+    const endIndex = startIndex + Number(perPage);
+
+    const filterProducts = allProducts.filter(
+      (product) => product.price >= min && product.price <= max
+    );
+
+    const products = filterProducts.slice(startIndex, endIndex);
 
     return {
       totalItems,
       totalPages,
       perPage,
       currentPage: page,
-      products: filteredData,
+      products,
       minPrice: minPrice ? minPrice.price : 0,
       maxPrice: maxPrice ? maxPrice.price : 0,
     };
