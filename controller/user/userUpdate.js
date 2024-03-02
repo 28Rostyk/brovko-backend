@@ -4,8 +4,8 @@ const { updateForUser } = require("../../helpers/updateForUser");
 
 const userUpdate = async (req, res) => {
   try {
-    console.log("req.body", req.body);
-    console.log("req.body.id", req.body.id);
+    // console.log("req.body", req.body);
+    // console.log("req.body.id", req.body.id);
 
     const user = await User.findById(req.body.id);
 

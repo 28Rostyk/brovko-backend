@@ -16,7 +16,7 @@ const register = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    console.log("error");
+    // console.log("error");
     throw HttpError(409, "Email in use");
   }
 

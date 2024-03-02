@@ -73,14 +73,14 @@ const getReviewsByStatus = async (req, res) => {
     ]);
 
     if (!reviews) {
-      console.log("REVIEWS NOT FOUND");
+      // console.log("REVIEWS NOT FOUND");
       return res.status(404).json({ error: "Reviews not found" });
     }
 
-    console.log(
-      "reviews :>> ".bgMagenta,
-      `${JSON.stringify(reviews, null, 2)}`.yellow
-    );
+    // console.log(
+    //   "reviews :>> ".bgMagenta,
+    //   `${JSON.stringify(reviews, null, 2)}`.yellow
+    // );
     return res.status(200).json(reviews);
   } catch (error) {
     console.log(error.red);

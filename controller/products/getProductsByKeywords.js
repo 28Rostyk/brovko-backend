@@ -46,8 +46,8 @@ const getProductsByKeywords = async (req, res) => {
       "price"
     ).sort({ price: -1 });
 
-    console.log("minPrice :>> ".bgBrightBlue, `${minPrice}`.brightBlue);
-    console.log("maxPrice :>> ".bgBrightBlue, `${maxPrice}`.brightBlue);
+    // console.log("minPrice :>> ".bgBrightBlue, `${minPrice}`.brightBlue);
+    // console.log("maxPrice :>> ".bgBrightBlue, `${maxPrice}`.brightBlue);
 
     res.json({
       totalItems,

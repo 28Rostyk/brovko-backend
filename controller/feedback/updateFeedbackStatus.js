@@ -5,9 +5,9 @@ const updateFeedbackStatus = async (req, res) => {
   const { status } = req.body;
   const { feedbackId } = req.params;
 
-  console.log("status :>> ".bgMagenta, status);
-  console.log("feedbackId :>> ".bgMagenta, feedbackId);
-  console.log("req.body :>> ".bgMagenta, req.body);
+  // console.log("status :>> ".bgMagenta, status);
+  // console.log("feedbackId :>> ".bgMagenta, feedbackId);
+  // console.log("req.body :>> ".bgMagenta, req.body);
 
   //   if (!status || !feedbackId) {
   //     return res.status(400).json({ message: "BAD REQUEST" });
@@ -20,7 +20,7 @@ const updateFeedbackStatus = async (req, res) => {
       { new: true }
     );
 
-    console.log("feedbacks :>> ", feedback);
+    // console.log("feedbacks :>> ", feedback);
 
     res.status(200).json({ feedback: feedback });
   } catch (error) {

@@ -2,7 +2,7 @@ const { Products } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const getProductsByCategoryFromDB = async (data) => {
-  console.log("fetching products by category started".brightBlue);
+  // console.log("fetching products by category started".brightBlue);
 
   const {
     categoryId = "all", // (!) Подумати. Якщо categoryId === 'all' до цієї функції код взаналі не повинен дійти
@@ -70,7 +70,7 @@ const getProductsByCategoryFromDB = async (data) => {
 
     const products = filterProducts.slice(startIndex, endIndex);
 
-    console.log("fetching products by category finished".green);
+    // console.log("fetching products by category finished".green);
 
     return {
       totalPages: totalPages,

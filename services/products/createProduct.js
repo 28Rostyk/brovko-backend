@@ -2,7 +2,7 @@ const axios = require("axios");
 const { PRODUCT_PATH } = process.env;
 
 async function createProduct(body) {
-  console.log("body into CreateProject :>> ".bgYellow, body.product[0]);
+  // console.log("body into CreateProject :>> ".bgYellow, body.product[0]);
   try {
     const url = PRODUCT_PATH;
     const headers = { "Content-Type": "application/json" };

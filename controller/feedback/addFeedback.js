@@ -22,7 +22,7 @@ const createFeedback = async (feedbackData) => {
 const addFeedback = async (req, res) => {
   const body = req.body;
 
-  console.log("BODY :>> ".bgMagenta, body);
+  // console.log("BODY :>> ".bgMagenta, body);
 
   try {
     // Перевірка валідації за допомогою Joi

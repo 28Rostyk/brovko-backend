@@ -11,7 +11,7 @@ const getAllOrdersAuth = async (req, res) => {
       (contact) => contact.email && contact.email.includes(email)
     );
   });
-  console.log("ordersWithMatchingEmail", ordersWithMatchingEmail);
+  // console.log("ordersWithMatchingEmail", ordersWithMatchingEmail);
 
   if (ordersWithMatchingEmail.length === 0) {
     res.status(200).json([]);

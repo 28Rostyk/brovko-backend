@@ -1,7 +1,7 @@
 const { Products } = require("../../models");
 
 const getAllProductsFromDB = async (data) => {
-  console.log("fetching all products started".brightBlue);
+  // console.log("fetching all products started".brightBlue);
 
   const {
     page = 1,
@@ -56,7 +56,7 @@ const getAllProductsFromDB = async (data) => {
       .filter((product) => product.price >= min && product.price <= max)
       .slice(startIndex, endIndex);
 
-    console.log("fetching all products finished".green);
+    // console.log("fetching all products finished".green);
 
     return {
       totalPages: totalPages,

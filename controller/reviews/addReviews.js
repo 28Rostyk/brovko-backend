@@ -29,7 +29,7 @@ const addReviews = async (req, res) => {
   }
 
   const user = await User.findById(userId);
-  console.log(`${user}`.green);
+  // console.log(`${user}`.green);
 
   if (!user) {
     throw HttpError(404, "User not found");
@@ -55,7 +55,8 @@ const addReviews = async (req, res) => {
       // Оновлення масиву об'єктів з текстом та датою створення
       userComment.text.push({
         text: newText,
-        reviewURL: [...reviewURLs
+        reviewURL: [
+          ...reviewURLs,
           // , ...userComment.text[0].reviewURL
         ],
         status: {

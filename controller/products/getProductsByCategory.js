@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { ctrlWrapper } = require("../../helpers");
 const { Products } = require("../../models");
 
@@ -14,8 +15,8 @@ const getProductsByCategory = async (req, res) => {
   } = req.query;
 
   const query = { categoryId: categoryId };
-  console.log(category);
-  console.log(categoryId);
+  // console.log(category);
+  // console.log(categoryId);
 
   if (priceMin && priceMax) {
     query.price = { $gte: parseFloat(priceMin), $lte: parseFloat(priceMax) };

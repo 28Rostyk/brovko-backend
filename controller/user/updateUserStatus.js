@@ -7,7 +7,7 @@ const { HttpError } = require("../../helpers");
 const updateUserStatus = async (req, res) => {
   const { email, password, _id, status } = req.body;
 
-  console.log(status);
+  // console.log(status);
 
   const user = await User.findOne({ email });
 

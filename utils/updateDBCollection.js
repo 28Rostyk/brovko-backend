@@ -21,8 +21,8 @@ async function addDataToDBCollection(Model, updates) {
       reviewUpdates
     );
 
-    console.log("Updated documents :".bgBlue, `${modifiedCount}`.brightBlue);
-    console.log("Matched documents :".bgBlue, `${matchedCount}`.brightBlue);
+    // console.log("Updated documents :".bgBlue, `${modifiedCount}`.brightBlue);
+    // console.log("Matched documents :".bgBlue, `${matchedCount}`.brightBlue);
 
     // console.log("Оновлено документів:".bgGreen, updateResult.nModified);
   } catch (error) {

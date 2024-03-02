@@ -27,7 +27,6 @@ const generateSignature = (req, res) => {
 
   try {
     const merchantSignature = generateMerchantSignature(paymentData);
-    console.log(merchantSignature);
     res.json({ success: true, signature: merchantSignature });
   } catch (error) {
     console.error("Помилка генерації підпису:", error);

@@ -5,7 +5,7 @@ const removeLocation = async (req, res) => {
   try {
     // const { id } = req.params;
     const { ids } = req.body;
-    console.log("ids :>> ".bgMagenta, req.body);
+    // console.log("ids :>> ".bgMagenta, req.body);
 
     // Видалення локації
     // const deletedLocation = await Location.findByIdAndDelete(id);

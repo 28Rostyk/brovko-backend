@@ -132,7 +132,7 @@ async function autoFetchProducts(url) {
 
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    console.log("== products updating".magenta);
+    // console.log("== products updating".magenta);
     try {
       const response = await axios.get(url);
       const xml = response.data;

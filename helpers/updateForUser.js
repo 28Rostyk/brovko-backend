@@ -1,7 +1,7 @@
 const { Feedback } = require("../models");
 
 async function updateForUser(userId, updatedUserData) {
-  console.log(userId);
+  // console.log(userId);
   try {
     const feedbacksToUpdate = await Feedback.find({ "user._id": userId });
 
@@ -10,7 +10,7 @@ async function updateForUser(userId, updatedUserData) {
       await feedback.save();
     }
 
-    console.log(`Updated feedbacks for user ${userId}`);
+    // console.log(`Updated feedbacks for user ${userId}`);
   } catch (error) {
     console.error("Error updating feedbacks for user:", error);
     throw error;
