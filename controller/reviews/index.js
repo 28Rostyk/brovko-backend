@@ -3,6 +3,7 @@ const { getReviews } = require("./getReviews");
 const { getReviewsByProductId } = require("./getReviewsByProductId");
 const { controlReview } = require("./controlReview");
 const { getReviewsByStatus } = require("./getReviewsByStatus");
+const { deleteReview } = require("./deleteReview");
 
 module.exports = {
   addReviews,
@@ -10,4 +11,5 @@ module.exports = {
   getReviewsByProductId,
   controlReview,
   getReviewsByStatus,
+  deleteReview,
 };
