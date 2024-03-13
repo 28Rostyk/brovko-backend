@@ -8,7 +8,7 @@ const createFeedback = async (feedbackData) => {
   if (user) {
     isLogin = true;
   }
-
+console.log('feedbackData', feedbackData)
   const newFeedback = new Feedback({
     ...feedbackData,
     isLogin: isLogin,
