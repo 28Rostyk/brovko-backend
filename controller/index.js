@@ -36,6 +36,7 @@ const {
   getReviewsByProductId,
   controlReview,
   getReviewsByStatus,
+  deleteReview,
 } = require("./reviews");
 
 // Генерація Ключа
@@ -80,6 +81,7 @@ module.exports = {
   getReviewsByProductId,
   getReviewsByStatus,
   addReviews,
+  deleteReview,
   controlReview,
   addProduct,
   removeProducts,
