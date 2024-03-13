@@ -2,7 +2,8 @@ const { ctrlWrapper } = require("../../helpers");
 const { Reviews } = require("../../models");
 
 const getReviewsByStatus = async (req, res) => {
-  const { status } = req.body; // реагує лише на значення "new", "approved" і "rejected"
+  const { status, page = 1, limit = 10 } = req.params; // реагує лише на значення "new", "approved" і "rejected"
+  console.log("{status, page, limit} :>> ".magenta, { status, page, limit });
 
   let approvedValue;
   let approvedByValue;
@@ -29,7 +30,7 @@ const getReviewsByStatus = async (req, res) => {
   }
 
   try {
-    const reviews = await Reviews.aggregate([
+    const allReviews = await Reviews.aggregate([
       { $unwind: "$comments" }, // Розгортає масив коментарів
       { $unwind: "$comments.text" },
 
@@ -50,7 +51,6 @@ const getReviewsByStatus = async (req, res) => {
       },
       {
         $project: {
-          // інші поля
           _id: 0,
           commentId: "$comments._id",
           textId: "$comments.text._id",
@@ -69,19 +69,27 @@ const getReviewsByStatus = async (req, res) => {
           "status.approvedBy.userId": approvedByValue,
         },
       },
+      // { $skip: Number(skip) },
+      // { $limit: Number(limit) },
       { $sort: { createdAt: -1 } },
     ]);
 
-    if (!reviews) {
+    if (!allReviews) {
       // console.log("REVIEWS NOT FOUND");
       return res.status(404).json({ error: "Reviews not found" });
     }
 
-    // console.log(
-    //   "reviews :>> ".bgMagenta,
-    //   `${JSON.stringify(reviews, null, 2)}`.yellow
-    // );
-    return res.status(200).json(reviews);
+    const totalPages = Math.ceil(allReviews.length / limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const reviews = allReviews.slice(startIndex, endIndex);
+
+    console.log(
+      "reviews :>> ".bgMagenta,
+      `${JSON.stringify(reviews, null, 2)}`.yellow
+    );
+    return res.status(200).json({ totalPages, reviews });
   } catch (error) {
     console.log(error.red);
     return res.status(500).json({ error: "Server error" });
