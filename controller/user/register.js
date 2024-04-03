@@ -12,7 +12,7 @@ const {
 } = process.env;
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, products } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
@@ -42,6 +42,7 @@ const register = async (req, res) => {
   await User.findByIdAndUpdate(result._id, {
     accessToken,
     refreshToken,
+    productInBasket: products,
   });
 
   const updatedUser = await User.findById(result._id);
