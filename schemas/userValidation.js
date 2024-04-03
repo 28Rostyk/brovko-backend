@@ -31,6 +31,7 @@ const userValidation = Joi.object({
 
       return lowercaseEmail;
     }),
+  products: Joi.array().optional(),
 });
 
 const refreshValidation = Joi.object({
